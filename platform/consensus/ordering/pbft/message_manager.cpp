@@ -145,7 +145,8 @@ bool MessageManager::MayConsensusChangeStatus(
       break;
     case Request::TYPE_PREPARE:
       if (*status == TransactionStatue::READY_PREPARE &&
-          config_.GetMinDataReceiveNum() <= received_count) {
+         (config_.GetMinDataReceiveNum() <= received_count ||
+          config_.GetSelfInfo().id() != GetCurrentPrimary())) {
         TransactionStatue old_status = TransactionStatue::READY_PREPARE;
         return status->compare_exchange_strong(
             old_status, TransactionStatue::READY_COMMIT,
@@ -154,7 +155,7 @@ bool MessageManager::MayConsensusChangeStatus(
       break;
     case Request::TYPE_COMMIT:
       if (*status == TransactionStatue::READY_COMMIT &&
-          config_.GetMinDataReceiveNum() <= received_count) {
+          1 <= received_count) {
         TransactionStatue old_status = TransactionStatue::READY_COMMIT;
         return status->compare_exchange_strong(
             old_status, TransactionStatue::READY_EXECUTE,

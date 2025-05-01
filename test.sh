@@ -12,7 +12,7 @@ CONF="service/tools/config/interface/service.config"
 
 echo "beginning basic benchmark"
 
-while [ $SECONDS -le 100 ]
+while [ $SECONDS -le 30 ]
 do
     for j in $(seq 1 1000)
     do

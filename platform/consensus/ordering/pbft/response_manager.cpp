@@ -237,7 +237,7 @@ void ResponseManager::SendResponseToClient(
   for (size_t i = 0; i < context_list.size(); ++i) {
     auto& context = context_list[i];
     if (context->client == nullptr) {
-      LOG(ERROR) << " no channel:";
+      // LOG(ERROR) << " no channel:";
       continue;
     }
     int ret = context->client->SendRawMessageData(batch_response.response(i));

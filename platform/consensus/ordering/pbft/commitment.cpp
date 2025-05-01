@@ -64,8 +64,7 @@ void Commitment::SetNeedCommitQC(bool need_qc) { need_qc_ = need_qc; }
 
 // Handle the user request and send a pre-prepare message to others.
 // TODO if not a primary, redicet to the primary replica.
-int Commitment::ProcessNewRequest(std::unique_ptr<Context> context,
-                                  std::unique_ptr<Request> user_request) {
+int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_ptr<Request> user_request) {
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
     return -2;
@@ -156,8 +155,7 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context,
 
 // Receive the pre-prepare message from the primary.
 // TODO check whether the sender is the primary.
-int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context,
-                                  std::unique_ptr<Request> request) {
+int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
   if (global_stats_->IsFaulty() || context == nullptr ||
       context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
@@ -229,14 +227,15 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context,
   CollectorResultCode ret =
       message_manager_->AddConsensusMsg(context->signature, std::move(request));
   if (ret == CollectorResultCode::STATE_CHANGED) {
-    replica_communicator_->BroadCast(*prepare_request);
+    // CHANGED FOR 2PC
+    replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
+    replica_communicator_->SendMessage(*prepare_request,  message_manager_->GetCurrentPrimary());
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
 // If receive 2f+1 prepare message, broadcast a commit message.
-int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,
-                                  std::unique_ptr<Request> request) {
+int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_ptr<Request> request) {
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
     return -2;
@@ -272,13 +271,14 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,
     }
     global_stats_->RecordStateTime("prepare");
     replica_communicator_->BroadCast(*commit_request);
+    // 2PC MOD
+    replica_communicator_->SendMessage(*commit_request, config_.GetSelfInfo().id());
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
 // If receive 2f+1 commit message, commit the request.
-int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context,
-                                 std::unique_ptr<Request> request) {
+int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject"
                << " context:" << (context == nullptr);

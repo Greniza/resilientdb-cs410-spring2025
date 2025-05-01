@@ -147,6 +147,7 @@ int ConsensusManagerPBFT::ConsensusCommit(std::unique_ptr<Context> context,
   if (config_.GetConfigData().enable_viewchange()) {
     view_change_manager_->MayStart();
     if (view_change_manager_->IsInViewChange()) {
+      // If we are in viewchange, then we can add this new txn to the queue
       switch (request->type()) {
         case Request::TYPE_NEW_TXNS:
         case Request::TYPE_PRE_PREPARE:
@@ -156,16 +157,21 @@ int ConsensusManagerPBFT::ConsensusCommit(std::unique_ptr<Context> context,
           return 0;
       }
     } else {
+      // Otherwise, it's time to start performing requests
       while (true) {
+        // Get a new,  unresolved request
         auto new_request = PopPendingRequest();
+        // check if new_request is OK
         if (!new_request.ok()) {
           break;
         }
+        // If it is, move to an internal commit
         InternalConsensusCommit(std::move((*new_request).first),
                                 std::move((*new_request).second));
       }
     }
   }
+  // Now, we have that the queue is empty, we start moving these things to internal commit
   int ret = InternalConsensusCommit(std::move(context), std::move(request));
   if (config_.GetConfigData().enable_viewchange()) {
     if (ret == -4) {

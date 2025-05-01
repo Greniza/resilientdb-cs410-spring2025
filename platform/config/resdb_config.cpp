@@ -117,23 +117,33 @@ const ReplicaInfo& ResDBConfig::GetSelfInfo() const { return self_info_; }
 size_t ResDBConfig::GetReplicaNum() const { return replicas_.size(); }
 
 int ResDBConfig::GetMinDataReceiveNum() const {
-  int f = (replicas_.size() - 1) / 3;
-  return std::max(2 * f + 1, 1);
+  // 2PC CHANGE!
+  int f = replicas_.size() - 1;
+  return f;
+  // return std::max(2 * f + 1, 1);
 }
 
 int ResDBConfig::GetMinClientReceiveNum() const {
-  int f = (replicas_.size() - 1) / 3;
-  return std::max(f + 1, 1);
+  // 2PC CHANGE!
+  int f = replicas_.size() - 1;
+  return f;
+  // int f = (replicas_.size() - 1) / 3;
+  // return std::max(f + 1, 1);
 }
 
 int ResDBConfig::GetMinCheckpointReceiveNum() const {
-  int f = (replicas_.size() - 1) / 3;
-  return std::max(f + 1, 1);
+  // 2PC CHANGE!
+  int f = replicas_.size() - 1;
+  return f;
+  // int f = (replicas_.size() - 1) / 3;
+  // return std::max(f + 1, 1);
 }
 
 size_t ResDBConfig::GetMaxMaliciousReplicaNum() const {
-  int f = (replicas_.size() - 1) / 3;
-  return std::max(f, 0);
+  // 2PC CHANGE!
+  return 1;
+  // int f = (replicas_.size() - 1) / 3;
+  // return std::max(f, 0);
 }
 
 void ResDBConfig::SetClientTimeoutMs(int timeout_ms) {
