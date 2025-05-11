@@ -229,8 +229,8 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
   if (ret == CollectorResultCode::STATE_CHANGED) {
     // CHANGED FOR 2PC
     replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
-    replica_communicator_->SendMessage(*prepare_request,  message_manager_->GetCurrentPrimary());
   }
+  replica_communicator_->SendMessage(*prepare_request,  message_manager_->GetCurrentPrimary());
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
