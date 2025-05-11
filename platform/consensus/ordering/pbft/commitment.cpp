@@ -270,9 +270,11 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
       //           << commit_request->data_signature().DebugString();
     }
     global_stats_->RecordStateTime("prepare");
-    replica_communicator_->BroadCast(*commit_request);
-    // 2PC MOD
-    replica_communicator_->SendMessage(*commit_request, config_.GetSelfInfo().id());
+    if (config_.GetSelfInfo().id() != message_manager_->GetCurrentPrimary()) {
+      replica_communicator_->BroadCast(*commit_request);
+      // 2PC MOD
+      replica_communicator_->SendMessage(*commit_request, config_.GetSelfInfo().id());
+    }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
