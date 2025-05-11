@@ -1,0 +1,26 @@
+var classresdb_1_1common_1_1ProtocolBase =
+[
+    [ "BroadcastCallFuncType", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a6e76f4fca590eaabbb00824164ef851a", null ],
+    [ "CommitFuncType", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a45bea5f3439c59e5749235403dcc756d", null ],
+    [ "SingleCallFuncType", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a04eb7efc469c9850fa364412e45c6bff", null ],
+    [ "ProtocolBase", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a1aaccbc84df6985e9f23eb7923e63b2d", null ],
+    [ "ProtocolBase", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#acf928fa25efed71716bd46e2fb849f34", null ],
+    [ "~ProtocolBase", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a3299645b9b1a69a9b0c6f87e634c8bfb", null ],
+    [ "Broadcast", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#aa9a9bba3543f6ca0edefbe8562f044a8", null ],
+    [ "Commit", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#afeba52c4f39026349767611314d3c4d6", null ],
+    [ "IsStop", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#ae14f2091b62e5b0fd198daf71be2146f", null ],
+    [ "SendMessage", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#af69fc7faec9ae5d0ab8943e401d48822", null ],
+    [ "SetBroadcastCallFunc", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#abb8dcd33def26e7204b2aecdd5b63ebb", null ],
+    [ "SetCommitFunc", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a23ce68a2fe0faaac87410367c407f6de", null ],
+    [ "SetSignatureVerifier", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#ae5be3649128fc841af159f97f7af3175", null ],
+    [ "SetSingleCallFunc", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a1715f5fc9fb63d1dfe71866c59e26417", null ],
+    [ "Stop", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a9095b44c83c8260905606f6c66f99957", null ],
+    [ "broadcast_call_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a4e51fc97c6b9434bb94646d2cda61797", null ],
+    [ "commit_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#aa44e07170237ce72496211d51b335145", null ],
+    [ "f_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a490aab348454351719ded5558b2c2e6c", null ],
+    [ "id_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a4ea47bffc49f1053fb6749d371db1406", null ],
+    [ "single_call_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a220ae9a6fed40944032aad4f7ddb9817", null ],
+    [ "stop_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a0ae56ffee63e9b0cb6e9ac9d89a46459", null ],
+    [ "total_num_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a28805ef7db80ef7c26a4f9e0d9eb64c5", null ],
+    [ "verifier_", "dc/da3/classresdb_1_1common_1_1ProtocolBase.html#ad154b8d744b9481ee25e9106d8cf7eb8", null ]
+];
