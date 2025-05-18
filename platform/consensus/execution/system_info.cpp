@@ -72,4 +72,90 @@ void SystemInfo::ProcessRequest(const SystemInfoRequest& request) {
   }
 }
 
+//Implemented For Assignment 3 
+
+//Returns # of Shards
+size_t SystemInfo::GetShardCount() const {
+  return shard_count_;
+}
+
+//Returns # of Nodes In Shard with given ID
+//Returns 0 if shard doesn't exist
+size_t SystemInfo::GetShardSize(uint32_t shard_id) const {
+    auto it = shard_to_nodes_.find(shard_id);    
+    return it != shard_to_nodes_.end() ? it->second.size() : 0;                        
+                                                
+}
+
+//Returns a vector of node ID's apart of shard
+//If Does Not Exist, returns empty
+std::vector<uint32_t> SystemInfo::GetNodesInShard(uint32_t shard_id) const {
+   auto it = shard_to_nodes_.find(shard_id);   
+   return it != shard_to_nodes_.end() ? it->second : std::vector<uint32_t>{}; 
+}
+
+//Returns Specific ID of given node
+//Reutns invalid id if not assigned
+uint32_t SystemInfo::GetShardOfNode(uint32_t node_id) const {
+  auto it = node_to_shard_.find(node_id);
+  return it != node_to_shard_.end() ? it->second : UINT32_MAX;
+}
+
+//Returns the NodeID that is primary for a given shard ID
+//Returns invalid if there is no primary
+uint32_t SystemInfo::GetPrimaryOfShard(uint32_t shard_id) const {
+  auto it = shard_primaries_.find(shard_id);
+  return it != shard_primaries.end() ? it->second : UINT_MAX;
+
+}
+
+//Sets # of Shards & clears shard mapping
+void SysttemInfo::SetShardCount(size_t count){
+
+  shard_count_ = count;
+  node_to_shard_.clear();
+  shard_to_nodes_.clear();
+  shard_primaries_.clear();
+}
+
+
+
+
+ // overrides AddReplica()
+ // Adds a replica to the least populated shard
+ // Tracks shard membership & designates first node in shard 
+void SystemInfo::AddReplicaToShard(const ReplicaInfo& replica)  {
+ //Check for initalization
+  if(shard_count_ == 0) {
+    LOG(ERROR) << "Set the shard count";
+    return
+  }
+
+//Find shard with smallest # of nodes
+  size_t target = 0;
+  size_t min_size = SIZE_MAX;
+
+  for(int i = 0; i < shard_count_; ++i){
+    size_t sz = shard_to_nodes[i].size();
+    if (sz < min_size){
+      target = i;
+      min_size = sz;
+    }
+  }
+//Add replica
+replicas_.push_back(replica);
+
+//Record which shard the node belongs to 
+node_to_shard_[replica.id()] = target;
+
+//Add node to list
+shard_to_nodes_[target].push_back(replica.id());
+
+//Check heirarchy, and designates as primary if it is first
+if(shard_primaries_.find(target) == shard_primaries_.end()){
+  shard_primaries_[target] = replica.id();
+}
+//Log for debug
+LOG(INFO) << "Node: " << replica.id() << "Shard: " << target;
+
 }  // namespace resdb
