@@ -138,7 +138,11 @@ bool TransactionExecutor::NeedResponse() {
 }
 
 int TransactionExecutor::Commit(std::unique_ptr<Request> message) {
+  // Update stats.
   global_stats_->IncPendingExecute();
+
+  // We check whether or not we're out of order. In either case, though,
+  // Something gets put on commit_queue_.
   if (transaction_manager_ && transaction_manager_->IsOutOfOrder()) {
     // LOG(ERROR)<<"add out of order exe:"<<message->seq()<<" from
     // proxy:"<<message->proxy_id();
@@ -169,6 +173,8 @@ std::unique_ptr<Request> TransactionExecutor::GetNextData() {
 
 void TransactionExecutor::OrderMessage() {
   while (!IsStop()) {
+    // This is the only point at which we pop from commit_queue_.
+    // Ergo, performing database modification must follow from this.
     auto message = commit_queue_.Pop();
     if (message != nullptr) {
       global_stats_->IncExecute();
@@ -187,6 +193,11 @@ void TransactionExecutor::OrderMessage() {
       if (message == nullptr) {
         break;
       }
+      // At this point, I'm kind of grasping at straws, because it seems
+      // like we've lost our message, but...
+      // It seems like it's been abstractly translated into the queue that GetNextData
+      // pulls from?
+      // And it follows that messages move from commit to execute.
       execute_queue_.Push(std::move(message));
       next_execute_seq_++;
       if (seq_update_notify_func_) {
@@ -205,14 +216,20 @@ void TransactionExecutor::AddExecuteMessage(std::unique_ptr<Request> message) {
 
 void TransactionExecutor::ExecuteMessage() {
   while (!IsStop()) {
+    // And now this is the only place we pop from execute_queue_.
+    // Let's presume we pik up from here.
+    // Check if null...
     auto message = execute_queue_.Pop();
     if (message == nullptr) {
       continue;
     }
+    // OK! we check whether or not we're out of order, and only demand
+    // if we are in order.
     bool need_execute = true;
     if (transaction_manager_ && transaction_manager_->IsOutOfOrder()) {
       need_execute = false;
     }
+    // Another rabbit hole...
     Execute(std::move(message), need_execute);
   }
 }
@@ -253,16 +270,22 @@ void TransactionExecutor::OnlyExecute(std::unique_ptr<Request> request) {
   // global_stats_->IncExecuteDone();
 }
 
-void TransactionExecutor::Execute(std::unique_ptr<Request> request,
-                                  bool need_execute) {
+void TransactionExecutor::Execute(std::unique_ptr<Request> request, bool need_execute) {
+  // OK! This is the big one. It has to be. Right???
+  // This seems to just note the execution.
   RegisterExecute(request->seq());
+  // Let's get some data loaded
   std::unique_ptr<BatchUserRequest> batch_request = nullptr;
   std::unique_ptr<std::vector<std::unique_ptr<google::protobuf::Message>>> data;
   std::vector<std::unique_ptr<google::protobuf::Message>> * data_p = nullptr;
+  // WHY IS THIS ALWAYS NULL? HUH. It gets updated later to contain request.
   BatchUserRequest* batch_request_p = nullptr;
 
   // Execute the request, then send the response back to the user.
   if (batch_request_p == nullptr) {
+    // This  block of code always happens.
+
+    // Create new batch request, fill with data from request
     batch_request = std::make_unique<BatchUserRequest>();
     if (!batch_request->ParseFromString(request->data())) {
       LOG(ERROR) << "parse data fail";
@@ -273,10 +296,13 @@ void TransactionExecutor::Execute(std::unique_ptr<Request> request,
     }
     batch_request->set_seq(request->seq());
     batch_request->set_proxy_id(request->proxy_id());
+
+    // Set batch_request_p to this new request.
     batch_request_p = batch_request.get();
     // LOG(ERROR)<<"get data from req:";
   } else {
-  assert(batch_request_p);
+    // This block of code NEVER HAPPENS?
+    assert(batch_request_p);
     batch_request_p->set_seq(request->seq());
     batch_request_p->set_proxy_id(request->proxy_id());
     // LOG(ERROR)<<" get from cache:"<<uid;
@@ -287,16 +313,26 @@ void TransactionExecutor::Execute(std::unique_ptr<Request> request,
   // << batch_request.user_requests_size()<<" proxy id:"
   //  <<request->proxy_id()<<" need execute:"<<need_execute;
 
+  // Declare response
   std::unique_ptr<BatchUserResponse> response;
+  // Stats stuff
+  // WAIT IS THIS THE THING THAT DOES THE STUFF?
   global_stats_->GetTransactionDetails(*batch_request_p);
+
+  // OK, so it seems like we have yet more obfuscation.
   if (transaction_manager_ && need_execute) {
     if (execute_thread_num_ == 1) {
+
+      // I think this is the rabbit hole to follow...
+      // ... This function doesn't do anything.
       response = transaction_manager_->ExecuteBatch(*batch_request_p);
     } else {
       std::vector<std::unique_ptr<std::string>> response_v;
 
       if(data_p == nullptr) {
+        
         int64_t start_time = GetCurrentTime();
+        // Although this might be something too.
         data = std::move(transaction_manager_->Prepare(*batch_request_p));
         int64_t end_time = GetCurrentTime();
         if (end_time - start_time > 10) {

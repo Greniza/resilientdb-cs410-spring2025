@@ -32,23 +32,26 @@ bool TransactionManager::NeedResponse() { return need_response_; }
 
 std::unique_ptr<std::string> TransactionManager::ExecuteData(
     const std::string& request) {
+  // WHAT THE FUCK DOES THIS DOOOOOOOO
+  // THIS DOES NOTHING???? WHAT????
   return std::make_unique<std::string>();
 }
 
 std::unique_ptr<google::protobuf::Message> TransactionManager::ParseData(
     const std::string& data) {
+  // WAIT THIS VOIDS STUFF TOO?
+  // WHAT WHAT WHAT WHAT WHAT
   return nullptr;
 }
 
+// THIS ENTIRE FUNCTION JUST RETURNS AN ARRAY OF NULLPTRS?
 std::unique_ptr<std::vector<std::unique_ptr<google::protobuf::Message>>>
 TransactionManager::Prepare(const BatchUserRequest& request) {
-  std::unique_ptr<std::vector<std::unique_ptr<google::protobuf::Message>>>
-      batch_response = std::make_unique<
-          std::vector<std::unique_ptr<google::protobuf::Message>>>();
+  std::unique_ptr<std::vector<std::unique_ptr<google::protobuf::Message>>> batch_response = std::make_unique<std::vector<std::unique_ptr<google::protobuf::Message>>>();
   {
     for (auto& sub_request : request.user_requests()) {
-      std::unique_ptr<google::protobuf::Message> response =
-          ParseData(sub_request.request().data());
+      // THIS RETURNS A NULLPTR? THIS CANNOT BE RIGHT.
+      std::unique_ptr<google::protobuf::Message> response = ParseData(sub_request.request().data());
       batch_response->push_back(std::move(response));
     }
     // LOG(ERROR)<<"prepare data size:"<<batch_response.size();
@@ -57,17 +60,19 @@ TransactionManager::Prepare(const BatchUserRequest& request) {
   return batch_response;
 }
 
+// returns nullptr
 std::unique_ptr<std::string> TransactionManager::ExecuteRequest(
     const google::protobuf::Message& request) {
+  // ok how many of these just don't do anything
   return nullptr;
 }
 
-std::vector<std::unique_ptr<std::string>> TransactionManager::ExecuteBatchData(
-    const std::vector<std::unique_ptr<google::protobuf::Message>>& requests) {
+std::vector<std::unique_ptr<std::string>> TransactionManager::ExecuteBatchData(const std::vector<std::unique_ptr<google::protobuf::Message>>& requests) {
   // LOG(ERROR)<<"execute data:"<<requests.size();
   std::vector<std::unique_ptr<std::string>> ret;
   {
     for (auto& sub_request : requests) {
+      // executerequest returns nullptr
       std::unique_ptr<std::string> response = ExecuteRequest(*sub_request);
       if (response == nullptr) {
         response = std::make_unique<std::string>();
@@ -79,13 +84,13 @@ std::vector<std::unique_ptr<std::string>> TransactionManager::ExecuteBatchData(
 }
 
 
-std::unique_ptr<BatchUserResponse> TransactionManager::ExecuteBatch(
-    const BatchUserRequest& request) {
-  std::unique_ptr<BatchUserResponse> batch_response =
-      std::make_unique<BatchUserResponse>();
+std::unique_ptr<BatchUserResponse> TransactionManager::ExecuteBatch(const BatchUserRequest& request) {
+  // So, this should be the thing that does stuff, right?
+  std::unique_ptr<BatchUserResponse> batch_response = std::make_unique<BatchUserResponse>();
+
   for (auto& sub_request : request.user_requests()) {
-    std::unique_ptr<std::string> response =
-        ExecuteData(sub_request.request().data());
+    // Oh, we're another level down. THIS ONE HAS TO BE IT. RIGHT? WHEN ARE WE WRITING TO THE DATABASE?
+    std::unique_ptr<std::string> response = ExecuteData(sub_request.request().data());
     if (response == nullptr) {
       response = std::make_unique<std::string>();
     }

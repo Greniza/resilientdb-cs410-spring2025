@@ -66,22 +66,21 @@ std::vector<RequestInfo> TransactionCollector::GetPreparedProof() {
   return prepared_info;
 }
 
-int TransactionCollector::AddRequest(
-    std::unique_ptr<Request> request, const SignatureInfo& signature,
-    bool is_main_request,
-    std::function<void(const Request&, int received_count, CollectorDataType*,
-                       std::atomic<TransactionStatue>* status, bool force)>
-        call_back) {
+int TransactionCollector::AddRequest(std::unique_ptr<Request> request, const SignatureInfo& signature, bool is_main_request, std::function<void(const Request&, int received_count, CollectorDataType*, std::atomic<TransactionStatue>* status, bool force)> call_back) {
+  
+  // If the request is NULL, we error.
   if (request == nullptr) {
     LOG(ERROR) << "request empty";
     return -2;
   }
 
+  // Extract data from request
   int32_t sender_id = request->sender_id();
   std::string hash = request->hash();
   int type = request->type();
   uint64_t seq = request->seq();
   uint64_t view = request->current_view();
+  // check if committed or mid-commit
   if (is_committed_) {
     return -2;
   }
@@ -89,22 +88,28 @@ int TransactionCollector::AddRequest(
     return -2;
   }
 
+  // Check if bad seq number
   if (seq_ != static_cast<uint64_t>(request->seq())) {
     // LOG(ERROR) << "data invalid, seq not the same:" << seq
     //           << " collect seq:" << seq_;
     return -2;
   }
 
+  // Check if main request. If we are...
   if (is_main_request) {
     auto request_info = std::make_unique<RequestInfo>();
     request_info->signature = signature;
     request_info->request = std::move(request);
+    // Only force transaction if it's new and we aren't prepared.
     bool force = false;
     if (view_ && view_ < view && !is_prepared_) {
       force = true;
       atomic_mian_request_.Clear();
     }
+    // Set our old main transaction as our new one
     int ret = atomic_mian_request_.Set(request_info);
+
+    // Check failures
     if (!ret) {
       other_main_request_.insert(std::move(request_info));
       LOG(ERROR) << "set main request fail: data existed:" << seq
@@ -116,9 +121,13 @@ int TransactionCollector::AddRequest(
       LOG(ERROR) << "set main request data fail";
       return -2;
     }
+
+    // Change view
     view_ = view;
     call_back(*main_request->request.get(), 1, nullptr, &status_, force);
     return 0;
+  
+  // If we aren't the main request...
   } else {
     if (enable_viewchange_) {
       if (type == Request::TYPE_PREPARE) {
@@ -195,6 +204,8 @@ int TransactionCollector::AddRequest(
 }
 
 int TransactionCollector::Commit() {
+  // Looks like we're ready to commit! Let's do this!
+  // First, we change state to "EXECUTED"
   TransactionStatue old_status = TransactionStatue::READY_EXECUTE;
   bool res = status_.compare_exchange_strong(
       old_status, TransactionStatue::EXECUTED, std::memory_order_acq_rel,
@@ -203,12 +214,15 @@ int TransactionCollector::Commit() {
     return -2;
   }
 
+  // Then, if we don't have a main request, we fail.
   auto main_request = atomic_mian_request_.Reference();
   if (main_request == nullptr) {
     LOG(ERROR) << "no main";
     return -2;
   }
 
+  // We iterate through the commit certs. (I'm not sure what this does,
+  //  but it seems like we're just marking stuff as executed externally)
   is_committed_ = true;
   if (executor_ && main_request->request) {
     if (!commit_certs_.empty()) {
@@ -218,6 +232,7 @@ int TransactionCollector::Commit() {
         // LOG(ERROR) << "add sig:" << sig.DebugString();
       }
     }
+    // Now, we move to... executor... to commit the main request.
     executor_->Commit(std::move(main_request->request));
   }
   return 0;
