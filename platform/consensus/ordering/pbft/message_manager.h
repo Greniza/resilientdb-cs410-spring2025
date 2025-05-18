@@ -118,6 +118,8 @@ class MessageManager {
   std::vector<uint32_t> MessageManager::GetNodesInShard(uint32_t shard_id) const;
   uint32_t MessageManager::GetShardOfNode(uint32_t node_id) const;
   uint32_t MessageManager::GetPrimaryOfShard(uint32_t shard_id) const;
+  bool MessageManager::IDsInSameShard(uint32_t node_id_1, uint32_t node_id_2) const;
+  uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const;
 
  private:
   bool IsValidMsg(const Request& request);

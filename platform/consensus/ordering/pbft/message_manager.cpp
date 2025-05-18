@@ -100,6 +100,14 @@ uint32_t MessageManager::GetShardOfNode(uint32_t node_id) const {
 uint32_t MessageManager::GetPrimaryOfShard(uint32_t shard_id) const {
   return system_info_->GetPrimaryOfShard(shard_id);
 }
+
+bool MessageManager::IDsInSameShard(uint32_t node_id_1, uint32_t node_id_2) const {
+  return (system_info_->GetShardOfNode(node_id_1) == system_info_->GetShardOfNode(node_id_2));
+}
+
+uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const {
+  return system_info_->GetPrimaryOfShard(system_info_->GetShardOfNode(node_id));
+}
 // End Project 3 New Functions
 
 uint64_t MessageManager ::GetCurrentView() const {
