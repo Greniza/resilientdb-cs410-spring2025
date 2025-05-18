@@ -128,34 +128,29 @@ $(function(){initNavTree('d3/d80/system__info_8cpp_source.html','../../'); initR
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d5/d10/namespaceresdb.html">resdb</a> {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#aeb62c083885a498b239fe1056e8ecdb8">   26</a></span><a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#aeb62c083885a498b239fe1056e8ecdb8">SystemInfo::SystemInfo</a>() : primary_id_(1), view_(1) {}</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#aeb62c083885a498b239fe1056e8ecdb8">SystemInfo::SystemInfo</a>() : primary_id_(1), view_(1) {}</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#a53272449614d0c097a8bbf75f63d91e4">   28</a></span><a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#aeb62c083885a498b239fe1056e8ecdb8">SystemInfo::SystemInfo</a>(<span class="keyword">const</span> <a class="code hl_class" href="../../db/ddb/classresdb_1_1ResDBConfig.html">ResDBConfig</a>&amp; config)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>SystemInfo::SystemInfo(<span class="keyword">const</span> <a class="code hl_class" href="../../d6/d06/classResDBConfig.html">ResDBConfig</a>&amp; config)</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    : primary_id_(config.GetReplicaInfos()[0].id()), view_(1) {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#a885e077922f7da557cb7e5acd266def0">SetReplicas</a>(config.<a class="code hl_function" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ae5e1d332c3af26e735f2a5005a78c00d">GetReplicaInfos</a>());</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  SetReplicas(config.<a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ae5e1d332c3af26e735f2a5005a78c00d">GetReplicaInfos</a>());</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;get primary id:&quot;</span> &lt;&lt; primary_id_;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
-</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#a20a65e5f27cd8e12f4926efcba793f4b">   34</a></span>uint32_t <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#a20a65e5f27cd8e12f4926efcba793f4b">SystemInfo::GetPrimaryId</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> primary_id_; }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>uint32_t SystemInfo::GetPrimaryId()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> primary_id_; }</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#a252fcff099191e66fc26eceb27185c49">   36</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#a252fcff099191e66fc26eceb27185c49">SystemInfo::SetPrimary</a>(uint32_t <span class="keywordtype">id</span>) { primary_id_ = id; }</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keywordtype">void</span> SystemInfo::SetPrimary(uint32_t <span class="keywordtype">id</span>) { primary_id_ = id; }</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#adc08eba38f8ab761c0da6a47f9cc98c7">   38</a></span>uint64_t <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#adc08eba38f8ab761c0da6a47f9cc98c7">SystemInfo::GetCurrentView</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> view_; }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>uint64_t SystemInfo::GetCurrentView()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> view_; }</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#a10c3fee50f6d66b9840ec4c16ba03038">   40</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#a10c3fee50f6d66b9840ec4c16ba03038">SystemInfo::SetCurrentView</a>(uint64_t view_id) { view_ = view_id; }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> SystemInfo::SetCurrentView(uint64_t view_id) { view_ = view_id; }</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#a9f330c84793c32b5d10d5a3abd6a0b9b">   42</a></span>std::vector&lt;ReplicaInfo&gt; <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#a9f330c84793c32b5d10d5a3abd6a0b9b">SystemInfo::GetReplicas</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> replicas_; }</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>std::vector&lt;ReplicaInfo&gt; SystemInfo::GetReplicas()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> replicas_; }</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#a885e077922f7da557cb7e5acd266def0">   44</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#a885e077922f7da557cb7e5acd266def0">SystemInfo::SetReplicas</a>(<span class="keyword">const</span> std::vector&lt;ReplicaInfo&gt;&amp; replicas) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> SystemInfo::SetReplicas(<span class="keyword">const</span> std::vector&lt;ReplicaInfo&gt;&amp; replicas) {</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  replicas_ = replicas;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
-</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#aaa7c0106eb4509b9fdc22d428d65aa41">   48</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#aaa7c0106eb4509b9fdc22d428d65aa41">SystemInfo::AddReplica</a>(<span class="keyword">const</span> ReplicaInfo&amp; replica) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keywordtype">void</span> SystemInfo::AddReplica(<span class="keyword">const</span> ReplicaInfo&amp; replica) {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <span class="keywordflow">if</span> (replica.id() == 0 || replica.ip().empty() || replica.port() == 0) {</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  }</div>
@@ -168,35 +163,110 @@ $(function(){initNavTree('d3/d80/system__info_8cpp_source.html','../../'); initR
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;add new replica:&quot;</span> &lt;&lt; replica.DebugString();</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  replicas_.push_back(replica);</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
-</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="../../d9/d27/classresdb_1_1SystemInfo.html#ad5ae8c87438c22d455cfe465ed0e6ae6">   62</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#ad5ae8c87438c22d455cfe465ed0e6ae6">SystemInfo::ProcessRequest</a>(<span class="keyword">const</span> SystemInfoRequest&amp; request) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keywordtype">void</span> SystemInfo::ProcessRequest(<span class="keyword">const</span> SystemInfoRequest&amp; request) {</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="keywordflow">switch</span> (request.type()) {</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">case</span> SystemInfoRequest::ADD_REPLICA: {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      NewReplicaRequest info;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      <span class="keywordflow">if</span> (info.ParseFromString(request.request())) {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <a class="code hl_function" href="../../d9/d27/classresdb_1_1SystemInfo.html#aaa7c0106eb4509b9fdc22d428d65aa41">AddReplica</a>(info.replica_info());</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        AddReplica(info.replica_info());</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      }</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    } <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">default</span>:</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  }</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}  <span class="comment">// namespace resdb</span></div>
-<div class="ttc" id="aclassresdb_1_1ResDBConfig_html"><div class="ttname"><a href="../../db/ddb/classresdb_1_1ResDBConfig.html">resdb::ResDBConfig</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d9a/resdb__config_8h_source.html#l00028">resdb_config.h:28</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ResDBConfig_html_ae5e1d332c3af26e735f2a5005a78c00d"><div class="ttname"><a href="../../db/ddb/classresdb_1_1ResDBConfig.html#ae5e1d332c3af26e735f2a5005a78c00d">resdb::ResDBConfig::GetReplicaInfos</a></div><div class="ttdeci">const std::vector&lt; ReplicaInfo &gt; &amp; GetReplicaInfos() const</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d41/resdb__config_8cpp_source.html#l00111">resdb_config.cpp:111</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_a10c3fee50f6d66b9840ec4c16ba03038"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#a10c3fee50f6d66b9840ec4c16ba03038">resdb::SystemInfo::SetCurrentView</a></div><div class="ttdeci">void SetCurrentView(uint64_t)</div><div class="ttdef"><b>Definition</b> <a href="#l00040">system_info.cpp:40</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_a20a65e5f27cd8e12f4926efcba793f4b"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#a20a65e5f27cd8e12f4926efcba793f4b">resdb::SystemInfo::GetPrimaryId</a></div><div class="ttdeci">uint32_t GetPrimaryId() const</div><div class="ttdef"><b>Definition</b> <a href="#l00034">system_info.cpp:34</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_a252fcff099191e66fc26eceb27185c49"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#a252fcff099191e66fc26eceb27185c49">resdb::SystemInfo::SetPrimary</a></div><div class="ttdeci">void SetPrimary(uint32_t id)</div><div class="ttdef"><b>Definition</b> <a href="#l00036">system_info.cpp:36</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_a885e077922f7da557cb7e5acd266def0"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#a885e077922f7da557cb7e5acd266def0">resdb::SystemInfo::SetReplicas</a></div><div class="ttdeci">void SetReplicas(const std::vector&lt; ReplicaInfo &gt; &amp;replicas)</div><div class="ttdef"><b>Definition</b> <a href="#l00044">system_info.cpp:44</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_a9f330c84793c32b5d10d5a3abd6a0b9b"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#a9f330c84793c32b5d10d5a3abd6a0b9b">resdb::SystemInfo::GetReplicas</a></div><div class="ttdeci">std::vector&lt; ReplicaInfo &gt; GetReplicas() const</div><div class="ttdef"><b>Definition</b> <a href="#l00042">system_info.cpp:42</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_aaa7c0106eb4509b9fdc22d428d65aa41"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#aaa7c0106eb4509b9fdc22d428d65aa41">resdb::SystemInfo::AddReplica</a></div><div class="ttdeci">void AddReplica(const ReplicaInfo &amp;replica)</div><div class="ttdef"><b>Definition</b> <a href="#l00048">system_info.cpp:48</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_ad5ae8c87438c22d455cfe465ed0e6ae6"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#ad5ae8c87438c22d455cfe465ed0e6ae6">resdb::SystemInfo::ProcessRequest</a></div><div class="ttdeci">void ProcessRequest(const SystemInfoRequest &amp;request)</div><div class="ttdef"><b>Definition</b> <a href="#l00062">system_info.cpp:62</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_adc08eba38f8ab761c0da6a47f9cc98c7"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#adc08eba38f8ab761c0da6a47f9cc98c7">resdb::SystemInfo::GetCurrentView</a></div><div class="ttdeci">uint64_t GetCurrentView() const</div><div class="ttdef"><b>Definition</b> <a href="#l00038">system_info.cpp:38</a></div></div>
-<div class="ttc" id="aclassresdb_1_1SystemInfo_html_aeb62c083885a498b239fe1056e8ecdb8"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#aeb62c083885a498b239fe1056e8ecdb8">resdb::SystemInfo::SystemInfo</a></div><div class="ttdeci">SystemInfo()</div><div class="ttdef"><b>Definition</b> <a href="#l00026">system_info.cpp:26</a></div></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">//Implemented For Assignment 3 </span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment">//Returns # of Shards</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keywordtype">size_t</span> SystemInfo::GetShardCount()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keywordflow">return</span> shard_count_;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment">//Returns # of Nodes In Shard with given ID</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">//Returns 0 if shard doesn&#39;t exist</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="keywordtype">size_t</span> SystemInfo::GetShardSize(uint32_t shard_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keyword">auto</span> it = shard_to_nodes_.find(shard_id);    </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordflow">return</span> it != shard_to_nodes_.end() ? it-&gt;second.size() : 0;                        </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                                                </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>}</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment">//Returns a vector of node ID&#39;s apart of shard</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment">//If Does Not Exist, returns empty</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>std::vector&lt;uint32_t&gt; SystemInfo::GetNodesInShard(uint32_t shard_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>   <span class="keyword">auto</span> it = shard_to_nodes_.find(shard_id);   </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>   <span class="keywordflow">return</span> it != shard_to_nodes_.end() ? it-&gt;second : std::vector&lt;uint32_t&gt;{}; </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment">//Returns Specific ID of given node</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment">//Reutns invalid id if not assigned</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>uint32_t SystemInfo::GetShardOfNode(uint32_t node_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="keyword">auto</span> it = node_to_shard_.find(node_id);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="keywordflow">return</span> it != node_to_shard_.end() ? it-&gt;second : UINT32_MAX;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment">//Returns the NodeID that is primary for a given shard ID</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment">//Returns invalid if there is no primary</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>uint32_t SystemInfo::GetPrimaryOfShard(uint32_t shard_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keyword">auto</span> it = shard_primaries_.find(shard_id);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keywordflow">return</span> it != shard_primaries.end() ? it-&gt;second : UINT_MAX;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment">//Sets # of Shards &amp; clears shard mapping</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keywordtype">void</span> SysttemInfo::SetShardCount(<span class="keywordtype">size_t</span> count){</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  shard_count_ = count;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  node_to_shard_.clear();</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  shard_to_nodes_.clear();</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  shard_primaries_.clear();</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>}</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> <span class="comment">// overrides AddReplica()</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="comment">// Adds a replica to the least populated shard</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <span class="comment">// Tracks shard membership &amp; designates first node in shard </span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="keywordtype">void</span> SystemInfo::AddReplicaToShard(<span class="keyword">const</span> ReplicaInfo&amp; replica)  {</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> <span class="comment">//Check for initalization</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  <span class="keywordflow">if</span>(shard_count_ == 0) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;Set the shard count&quot;</span>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordflow">return</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">//Find shard with smallest # of nodes</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="keywordtype">size_t</span> target = 0;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  <span class="keywordtype">size_t</span> min_size = SIZE_MAX;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; shard_count_; ++i){</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordtype">size_t</span> sz = shard_to_nodes[i].size();</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordflow">if</span> (sz &lt; min_size){</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>      target = i;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>      min_size = sz;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    }</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment">//Add replica</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>replicas_.push_back(replica);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment">//Record which shard the node belongs to </span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>node_to_shard_[replica.id()] = target;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment">//Add node to list</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>shard_to_nodes_[target].push_back(replica.id());</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment">//Check heirarchy, and designates as primary if it is first</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="keywordflow">if</span>(shard_primaries_.find(target) == shard_primaries_.end()){</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  shard_primaries_[target] = replica.id();</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>}</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment">//Log for debug</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>LOG(INFO) &lt;&lt; <span class="stringliteral">&quot;Node: &quot;</span> &lt;&lt; replica.id() &lt;&lt; <span class="stringliteral">&quot;Shard: &quot;</span> &lt;&lt; target;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>}  <span class="comment">// namespace resdb</span></div>
+<div class="ttc" id="aclassResDBConfig_html"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html">ResDBConfig</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d9a/resdb__config_8h_source.html#l00028">resdb_config.h:28</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_ae5e1d332c3af26e735f2a5005a78c00d"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ae5e1d332c3af26e735f2a5005a78c00d">ResDBConfig::GetReplicaInfos</a></div><div class="ttdeci">const std::vector&lt; ReplicaInfo &gt; &amp; GetReplicaInfos() const</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d41/resdb__config_8cpp_source.html#l00111">resdb_config.cpp:111</a></div></div>
+<div class="ttc" id="aclassresdb_1_1SystemInfo_html_aeb62c083885a498b239fe1056e8ecdb8"><div class="ttname"><a href="../../d9/d27/classresdb_1_1SystemInfo.html#aeb62c083885a498b239fe1056e8ecdb8">resdb::SystemInfo::SystemInfo</a></div><div class="ttdeci">SystemInfo()</div></div>
 <div class="ttc" id="anamespaceresdb_html"><div class="ttname"><a href="../../d5/d10/namespaceresdb.html">resdb</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d85/chain__state_8cpp_source.html#l00024">chain_state.cpp:24</a></div></div>
 <div class="ttc" id="asystem__info_8h_html"><div class="ttname"><a href="../../d2/d50/system__info_8h.html">system_info.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
