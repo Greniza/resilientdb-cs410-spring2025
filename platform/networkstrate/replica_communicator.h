@@ -28,6 +28,9 @@
 #include "platform/proto/resdb.pb.h"
 #include "platform/statistic/stats.h"
 
+// Including the System.info class for node-shard identification
+#include "platform/consensus/execution/system_info.h"
+
 namespace resdb {
 
 // ReplicaCommunicator is used for replicas to send messages
@@ -54,7 +57,79 @@ class ReplicaCommunicator {
   virtual int SendBatchMessage(
       const std::vector<std::unique_ptr<Request>>& messages,
       const ReplicaInfo& replica_info);
+  
+  /**
+  * Broadcasts a message to all nodes in a specified shard, it shard_id is not provided
+  * Use current shard to commence broadcast
+  * 
+  * Parameters:
+  * message: The message to be broadcast
+  * system_info: The system info containing replica and shard info
+  * shard_id: Optional shard ID (default is current shard_id)
+  *
+  * Returns:
+  * Returns the number of successful sends via broadcast
+  */
 
+  int BroadCastToShard(const google::protobuf::Message& message,
+                        SystemInfo* system_info,
+                        int32_t shard_id = -1);
+
+  /**
+  * Sends a message to the coordinator replica of a specified shard.
+  * If shard_id is not provided, sends to the current shard's coordinator
+  *
+  * Parameters:
+  * message: The message to be broadcast
+  * system_info: The system info containing replica and shard info
+  * shard_id: Optional shard ID (default is current shard_id)
+  *
+  * Returns:
+  * Returns code 1 for success and code 0 for failure
+  */
+
+  int SendToShardCoordinator(const google::protobuf::Message& message,
+                            SystemInfo* system_info,
+                            int32_t shard_id = -1);
+
+  /**
+  * Broadcasts a message to all shard leaders except the current shard's leader.
+  *
+  * Parameters:
+  * message: The message to be broadcast
+  * system_info: The system info containing replica and shard info
+  *
+  * Returns:
+  * Returns the number of successful sends to shard coordinators
+  */
+  
+  int BroadcastToOtherShardLeaders(const google::protobuf::Message& message,
+                                  SystemInfo* system_info);
+
+  /**
+  * Gets the current shard ID for this node
+  *
+  * Parameters:
+  * system_info: The system info containing replica and shard info
+  * 
+  * Returns:
+  * The shard ID for the current node
+  */                                
+
+  uint32_t GetCurrentShardID(SystemInfo* system_info) const;
+
+  /**
+  * Helper function to get a collection of replica infos for a specific set of node IDs
+  *
+  * Parameters:
+  * node_ids Vector of node IDs to get replica info for
+  *
+  * Returns:
+  * Vector of ReplicaInfo for the requested nodes
+  */
+
+  std::vector<ReplicaInfo> GetReplicasForNodes(const std::vector<int64_t>& node_ids) const;
+  
   void UpdateClientReplicas(const std::vector<ReplicaInfo>& replicas);
   std::vector<ReplicaInfo> GetClientReplicas();
 

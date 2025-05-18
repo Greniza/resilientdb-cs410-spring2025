@@ -280,6 +280,134 @@ int ReplicaCommunicator::SendMessageInternal(
   return ret;
 }
 
+uint32_t ReplicaCommunicator::GetCurrentShardID(SystemInfo* system_info) const {
+  // Get the current node ID
+  for (const auto& replica : replicas_) {
+    if (replica.ip() == NetChannel::GetLocalAddress()) {
+      // Local node found
+      return system_info->GetShardOfNode(replica.id());
+    }
+  }
+
+  // If we couldn't find the local node, log the error
+  LOG(ERROR) << "Could not determine local node for shard identification";
+  return 0; // default shard ID
+}
+
+std::vector<ReplicaInfo> ReplicaCommunicator::GetReplicasForNodes(
+    const std::vector<uint32_t>& node_ids) const {
+  std::vector<ReplicaInfo> target_replicas;
+
+  //Check known replicas
+  for (const auto& replica : replicas_) {
+    if (std::find(node_ids.begin(), node_ids.end(), replica.id()) != node_ids.end()) {
+      target_replicas.push_back(replica);
+    }
+  }
+
+  // If not found in replicas, check client replicas too
+  if (target_replicas.size() < node_ids.size()) {
+    for (const auto& replica : GetClientReplicas()) {
+      if (std::find(node_ids.begin(), node_ids.end(), replica.id()) != node_ids.end() &&
+          std::find_if(target_replicas.begin(), target_replicas.end(),
+                      [&](const ReplicaInfo& r) {return r.id() == replica.id(); }) == target_replicas.end()) {
+        target_replicas.pushback(replica);
+      }
+    } 
+  }
+  return target_replicas;
+}
+
+int ReplicaCommunicator::BroadCastToShard(const google::protobuf::Message& message,
+                                          SystemInfo* system_info,
+                                          int32_t shard_id) {
+  // Determine which shard to broadcast to
+  uint32_t target_shard = (shard_id < 0) ? GetCurrentShardID(system_info): static_cast<uint32_t>(shard_id);
+
+  // Get all nodes in the target shard
+  std::vector<uint32_t> shard_nodes = system_info->GetNodesInShard(target_shard);
+
+  // If the target shard is empty log the error
+  if (shard_nodes.empty()) {
+    LOG(WARNING) << "Attempted to broadcast to an empty shard" << target_shard;
+    return 0;
+  }
+
+  // Get ReplicaInfo objects for all nodes in the shard
+  std::vector<ReplicaInfo> target_replicas = GetReplicasForNodes(shard_nodes);
+
+  // Log an error if we can not find all the replicas within the shard
+  if (target_replicas.size() < shard_nodes.size()) {
+    LOG(WARNING) << "Could only find " << target_replicas.size()
+                << " replicas out of " <<shard_nodes.size()
+                << " nodes in shard " <<target_shard;
+  }
+
+  // Send the message to all replicas within the shard
+  if (is_use_long_conn) {
+    BroadcastData broadcast_data;
+    std::string data = NetChannel::GetRawMessageString(message, verifier);
+    broadcast_data.add_data()->swap(data);
+    return SendMessageFromPool(broadcast_data, target_replicas);
+  } else {
+    return SendMessageInternal(message, target_replicas);
+  }
+}
+
+int ReplicaCommunicator::SendToShardCoordinator(const google::protobuf::Message& message,
+                                              SystemInfo* system_info,
+                                              int32_t shard_id) {
+  // Determine which shard's coordiantor to send to
+  uint32_t target_shard = (shard_id < 0) ? GetCurrentShardID(system_info) : static_cast<uint32_t>(shard_id);
+
+  // Get the coordinator replica of the target shard
+  uint32_t coordinator_id = system_info->GetPrimaryOfShard(target_shard);
+
+  // Find the ReplicaInfo for the coordinator
+  for (const auto& replica : replicas_) {
+    if (replica.id() == coordiantor) {
+      // Found the coordinator -> sending message
+      return SendMessage(message, replica);
+    }
+  }
+
+  // Failed to find the coordinator
+  LOG(ERROR) << "Coordinator for shard " << target_shard << " (node "<< coordinator_id <<") not found in replicas list";
+  return 0;
+}
+
+int ReplicaCommunicator::BroadcastToOtherShardLeaders(const google::protobuf::Message& message,
+                                                    SystemInfo* system_info) {
+  // Get total number of shards
+  size_t shard_count = system_info->GetShardCount();
+
+  // Collect all shard leader IDs
+  std::vector<uint32_t> leader_ids;
+  for (uint32_t shard_id = 0; shard_id < shard_count; ++shard_id) {
+    leader_ids.push_back(system_info->GetPrimaryOfShard(shard_id));
+  }
+
+  // Get ReplicaInfo objects for all shard leaders
+  std::vector<ReplicaInfo> leader_replicas = GetReplicasForNodes(leader_ids);
+
+  // Log for the case where we cannot find all leader replicas
+  if (leader_replicas.size() < leader_ids.size()) {
+    LOG(WARNING) << "Could only find " << leader_replicas.size()
+                << " replicas out of " << leader_ids.size()
+                << " shard leaders";
+  }
+
+  // Send the message to all shard leaders
+  if (is_use_long_conn_) {
+    BroadcastData broadcast_data;
+    std::string data = NetChannel::GetRawMessageString(message, verifier_);
+    broadcast_data.add_data()->swap(data);
+    return SendMessageFromPool(broadcast_data, leader_replicas);
+  } else {
+    return SendMessageInternal(message, leader_replicas);
+  }
+}
+
 AsyncReplicaClient* ReplicaCommunicator::GetClientFromPool(
     const std::string& ip, int port) {
   if (client_pools_.find(std::make_pair(ip, port)) == client_pools_.end()) {
