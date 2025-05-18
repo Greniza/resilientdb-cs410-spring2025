@@ -112,6 +112,13 @@ class MessageManager {
 
   LockFreeCollectorPool* GetCollectorPool();
 
+  // Project 3 New Functions
+  size_t MessageManager::GetShardCount() const;
+  size_t MessageManager::GetShardSize(uint32_t shard_id) const;
+  std::vector<uint32_t> MessageManager::GetNodesInShard(uint32_t shard_id) const;
+  uint32_t MessageManager::GetShardOfNode(uint32_t node_id) const;
+  uint32_t MessageManager::GetPrimaryOfShard(uint32_t shard_id) const;
+
  private:
   bool IsValidMsg(const Request& request);
 
