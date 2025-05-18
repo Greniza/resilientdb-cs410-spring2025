@@ -1,5 +1,15 @@
 var NAVTREEINDEX12 =
 {
+"df/d5e/signature__utils_8h_source.html":[2,0,3,0,7],
+"df/d63/transaction__collector_8h.html":[2,0,8,2,2,2,24],
+"df/d63/transaction__collector_8h_source.html":[2,0,8,2,2,2,24],
+"df/d64/structresdb_1_1QueueItem.html":[0,0,7,57],
+"df/d64/structresdb_1_1QueueItem.html":[1,0,0,53],
+"df/d64/structresdb_1_1QueueItem.html#abf80ccdb8babb39e0e8bcea057da0e63":[0,0,7,57,0],
+"df/d64/structresdb_1_1QueueItem.html#abf80ccdb8babb39e0e8bcea057da0e63":[1,0,0,53,0],
+"df/d64/structresdb_1_1QueueItem.html#adbb9562a60f46103f6ab23a723351b1b":[0,0,7,57,1],
+"df/d64/structresdb_1_1QueueItem.html#adbb9562a60f46103f6ab23a723351b1b":[1,0,0,53,1],
+"df/d68/tcp__socket_8h.html":[2,0,8,0,1,6],
 "df/d68/tcp__socket_8h_source.html":[2,0,8,0,1,6],
 "df/d80/replica__communicator__test_8cpp.html":[2,0,8,3,14],
 "df/d80/replica__communicator__test_8cpp_source.html":[2,0,8,3,14],
@@ -239,15 +249,5 @@ var NAVTREEINDEX12 =
 "functions_type.html":[1,3,3],
 "functions_u.html":[1,3,0,19],
 "functions_v.html":[1,3,0,20],
-"functions_vars.html":[1,3,2],
-"functions_vars.html":[1,3,2,0],
-"functions_vars_c.html":[1,3,2,1],
-"functions_vars_d.html":[1,3,2,2],
-"functions_vars_e.html":[1,3,2,3],
-"functions_vars_f.html":[1,3,2,4],
-"functions_vars_g.html":[1,3,2,5],
-"functions_vars_h.html":[1,3,2,6],
-"functions_vars_i.html":[1,3,2,7],
-"functions_vars_l.html":[1,3,2,8],
-"functions_vars_m.html":[1,3,2,9]
+"functions_vars.html":[1,3,2]
 };
