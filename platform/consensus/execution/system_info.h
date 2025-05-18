@@ -46,9 +46,26 @@ class SystemInfo {
   uint64_t GetCurrentView() const;
   void SetCurrentView(uint64_t);
 
+
+// New Functions & Members
+
+size_t shard_count_;
+std::unordered_map<uint32_t, uint32_t> node_to_shard_; //node_id -> shard_id
+std::unordered_map<uint32_t, std::vector<uint32_t>> shard_to_nodes_; // shard_id -> list of nodes
+std::unordered_map<uint32_t, uint32_t> shard_primaries_;  // shard_id -> node_id 
+
+size_t GetShardCount();
+size_t GetShardSize(uint32_t shard_id) const;
+std::vector<uint32_t> GetNodesInShard(uint32_t shard_id) const;
+uint32_t GetShardOfNode(uint32_t node_id) const;
+uint32_t GetPrimaryOfShard(uint32_t shard_id) const;
+void SetShardCount(size_t count);
+void AddReplicaToShard(const ReplicaInfo& replica); // overrides AddReplica
+
  private:
   std::vector<ReplicaInfo> replicas_;
   std::atomic<uint32_t> primary_id_;
   std::atomic<uint64_t> view_;
+
 };
 }  // namespace resdb

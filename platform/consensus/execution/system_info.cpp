@@ -158,4 +158,6 @@ if(shard_primaries_.find(target) == shard_primaries_.end()){
 //Log for debug
 LOG(INFO) << "Node: " << replica.id() << "Shard: " << target;
 
-}  // namespace resdb
+ }
+} // namespace resdb
+ 

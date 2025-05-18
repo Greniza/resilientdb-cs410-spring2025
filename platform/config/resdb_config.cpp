@@ -263,4 +263,7 @@ void ResDBConfig::SetViewchangeCommitTimeout(uint64_t timeout_ms) {
   config_data_.set_view_change_timeout_ms(timeout_ms);
 }
 
+//Added for Assignment 3 
+config.set_shard_count(config_proto.shard_count()); //Logic for loading # of shards
+
 }  // namespace resdb
