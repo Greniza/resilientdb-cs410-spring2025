@@ -102,6 +102,7 @@ $(function(){initNavTree('d9/d27/classresdb_1_1SystemInfo.html','../../'); initR
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../d0/dc2/classresdb_1_1SystemInfo-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">resdb::SystemInfo Class Reference</div></div>
 </div><!--header-->
@@ -133,6 +134,31 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adc08eba38f8ab761c0da6a47f9cc98c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10c3fee50f6d66b9840ec4c16ba03038" id="r_a10c3fee50f6d66b9840ec4c16ba03038"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10c3fee50f6d66b9840ec4c16ba03038">SetCurrentView</a> (uint64_t)</td></tr>
 <tr class="separator:a10c3fee50f6d66b9840ec4c16ba03038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ad41220eb0a4f8c4861481cea70fa29" id="r_a9ad41220eb0a4f8c4861481cea70fa29"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ad41220eb0a4f8c4861481cea70fa29">GetShardCount</a> ()</td></tr>
+<tr class="separator:a9ad41220eb0a4f8c4861481cea70fa29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad339a9d259be60c45fabec5395c784a7" id="r_ad339a9d259be60c45fabec5395c784a7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad339a9d259be60c45fabec5395c784a7">GetShardSize</a> (uint32_t shard_id) const</td></tr>
+<tr class="separator:ad339a9d259be60c45fabec5395c784a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5026ce7d7258c14cfd7fb7fb2eede8e4" id="r_a5026ce7d7258c14cfd7fb7fb2eede8e4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5026ce7d7258c14cfd7fb7fb2eede8e4">GetNodesInShard</a> (uint32_t shard_id) const</td></tr>
+<tr class="separator:a5026ce7d7258c14cfd7fb7fb2eede8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc9fb38bb670272884e0217646e8ac6" id="r_a7bc9fb38bb670272884e0217646e8ac6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7bc9fb38bb670272884e0217646e8ac6">GetShardOfNode</a> (uint32_t node_id) const</td></tr>
+<tr class="separator:a7bc9fb38bb670272884e0217646e8ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c0578175ccf24dbd4d871173fad911a" id="r_a2c0578175ccf24dbd4d871173fad911a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c0578175ccf24dbd4d871173fad911a">GetPrimaryOfShard</a> (uint32_t shard_id) const</td></tr>
+<tr class="separator:a2c0578175ccf24dbd4d871173fad911a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f65035f16b25f5bb8e89ec9deafec7" id="r_a63f65035f16b25f5bb8e89ec9deafec7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63f65035f16b25f5bb8e89ec9deafec7">SetShardCount</a> (size_t count)</td></tr>
+<tr class="separator:a63f65035f16b25f5bb8e89ec9deafec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2face1763c49535d16817863c27699eb" id="r_a2face1763c49535d16817863c27699eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2face1763c49535d16817863c27699eb">AddReplicaToShard</a> (const ReplicaInfo &amp;replica)</td></tr>
+<tr class="separator:a2face1763c49535d16817863c27699eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a56568094ecfd882354c276e017319feb" id="r_a56568094ecfd882354c276e017319feb"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56568094ecfd882354c276e017319feb">shard_count_</a></td></tr>
+<tr class="separator:a56568094ecfd882354c276e017319feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42942c64d8a457d2b60b92b212d5409d" id="r_a42942c64d8a457d2b60b92b212d5409d"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint32_t, uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42942c64d8a457d2b60b92b212d5409d">node_to_shard_</a></td></tr>
+<tr class="separator:a42942c64d8a457d2b60b92b212d5409d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a296fac8783a4dd78cb7b0f7fd0afdcd4" id="r_a296fac8783a4dd78cb7b0f7fd0afdcd4"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint32_t, std::vector&lt; uint32_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a296fac8783a4dd78cb7b0f7fd0afdcd4">shard_to_nodes_</a></td></tr>
+<tr class="separator:a296fac8783a4dd78cb7b0f7fd0afdcd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f64d61a457e2897675d0c22ee9b335" id="r_a73f64d61a457e2897675d0c22ee9b335"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint32_t, uint32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73f64d61a457e2897675d0c22ee9b335">shard_primaries_</a></td></tr>
+<tr class="separator:a73f64d61a457e2897675d0c22ee9b335"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -153,6 +179,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00026">26</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a53272449614d0c097a8bbf75f63d91e4" name="a53272449614d0c097a8bbf75f63d91e4"></a>
@@ -169,6 +197,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00028">28</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
 
 </div>
 </div>
@@ -213,6 +243,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00048">48</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2face1763c49535d16817863c27699eb" name="a2face1763c49535d16817863c27699eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2face1763c49535d16817863c27699eb">&#9670;&#160;</a></span>AddReplicaToShard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resdb::SystemInfo::AddReplicaToShard </td>
+          <td>(</td>
+          <td class="paramtype">const ReplicaInfo &amp;</td>          <td class="paramname"><span class="paramname"><em>replica</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
 </div>
 </div>
 <a id="adc08eba38f8ab761c0da6a47f9cc98c7" name="adc08eba38f8ab761c0da6a47f9cc98c7"></a>
@@ -229,6 +280,27 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00038">38</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5026ce7d7258c14cfd7fb7fb2eede8e4" name="a5026ce7d7258c14cfd7fb7fb2eede8e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5026ce7d7258c14cfd7fb7fb2eede8e4">&#9670;&#160;</a></span>GetNodesInShard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; uint32_t &gt; resdb::SystemInfo::GetNodesInShard </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>shard_id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00092">92</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
 
 </div>
 </div>
@@ -247,6 +319,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00034">34</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2c0578175ccf24dbd4d871173fad911a" name="a2c0578175ccf24dbd4d871173fad911a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c0578175ccf24dbd4d871173fad911a">&#9670;&#160;</a></span>GetPrimaryOfShard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t resdb::SystemInfo::GetPrimaryOfShard </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>shard_id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00106">106</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a9f330c84793c32b5d10d5a3abd6a0b9b" name="a9f330c84793c32b5d10d5a3abd6a0b9b"></a>
@@ -263,6 +356,65 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00042">42</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9ad41220eb0a4f8c4861481cea70fa29" name="a9ad41220eb0a4f8c4861481cea70fa29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ad41220eb0a4f8c4861481cea70fa29">&#9670;&#160;</a></span>GetShardCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t resdb::SystemInfo::GetShardCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00078">78</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7bc9fb38bb670272884e0217646e8ac6" name="a7bc9fb38bb670272884e0217646e8ac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bc9fb38bb670272884e0217646e8ac6">&#9670;&#160;</a></span>GetShardOfNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t resdb::SystemInfo::GetShardOfNode </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>node_id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad339a9d259be60c45fabec5395c784a7" name="ad339a9d259be60c45fabec5395c784a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad339a9d259be60c45fabec5395c784a7">&#9670;&#160;</a></span>GetShardSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t resdb::SystemInfo::GetShardSize </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>shard_id</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00084">84</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,6 +433,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a10c3fee50f6d66b9840ec4c16ba03038" name="a10c3fee50f6d66b9840ec4c16ba03038"></a>
@@ -292,11 +446,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void resdb::SystemInfo::SetCurrentView </td>
           <td>(</td>
-          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>view_id</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00040">40</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
 
 </div>
 </div>
@@ -315,6 +471,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00036">36</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a885e077922f7da557cb7e5acd266def0" name="a885e077922f7da557cb7e5acd266def0"></a>
@@ -331,6 +489,90 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d80/system__info_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../d3/d80/system__info_8cpp_source.html">system_info.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a63f65035f16b25f5bb8e89ec9deafec7" name="a63f65035f16b25f5bb8e89ec9deafec7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63f65035f16b25f5bb8e89ec9deafec7">&#9670;&#160;</a></span>SetShardCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resdb::SystemInfo::SetShardCount </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>count</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a42942c64d8a457d2b60b92b212d5409d" name="a42942c64d8a457d2b60b92b212d5409d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42942c64d8a457d2b60b92b212d5409d">&#9670;&#160;</a></span>node_to_shard_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;uint32_t, uint32_t&gt; resdb::SystemInfo::node_to_shard_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d50/system__info_8h_source.html#l00053">53</a> of file <a class="el" href="../../d2/d50/system__info_8h_source.html">system_info.h</a>.</p>
+
+</div>
+</div>
+<a id="a56568094ecfd882354c276e017319feb" name="a56568094ecfd882354c276e017319feb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56568094ecfd882354c276e017319feb">&#9670;&#160;</a></span>shard_count_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t resdb::SystemInfo::shard_count_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d50/system__info_8h_source.html#l00052">52</a> of file <a class="el" href="../../d2/d50/system__info_8h_source.html">system_info.h</a>.</p>
+
+</div>
+</div>
+<a id="a73f64d61a457e2897675d0c22ee9b335" name="a73f64d61a457e2897675d0c22ee9b335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73f64d61a457e2897675d0c22ee9b335">&#9670;&#160;</a></span>shard_primaries_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;uint32_t, uint32_t&gt; resdb::SystemInfo::shard_primaries_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d50/system__info_8h_source.html#l00055">55</a> of file <a class="el" href="../../d2/d50/system__info_8h_source.html">system_info.h</a>.</p>
+
+</div>
+</div>
+<a id="a296fac8783a4dd78cb7b0f7fd0afdcd4" name="a296fac8783a4dd78cb7b0f7fd0afdcd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296fac8783a4dd78cb7b0f7fd0afdcd4">&#9670;&#160;</a></span>shard_to_nodes_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;uint32_t, std::vector&lt;uint32_t&gt; &gt; resdb::SystemInfo::shard_to_nodes_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d50/system__info_8h_source.html#l00054">54</a> of file <a class="el" href="../../d2/d50/system__info_8h_source.html">system_info.h</a>.</p>
 
 </div>
 </div>

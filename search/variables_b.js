@@ -6,5 +6,6 @@ var searchData=
   ['new_5fview_5fis_5fsent_5f_3',['new_view_is_sent_',['../d1/db2/classresdb_1_1ViewChangeManager.html#a0695d21c5286f671b0c3d32088bcc941',1,'resdb::ViewChangeManager']]],
   ['next_5fregion_5f_4',['next_region_',['../d4/d2d/classresdb_1_1GeoGlobalExecutor.html#ae8f6618324ecbc85c5a60a58765420f4',1,'resdb::GeoGlobalExecutor']]],
   ['next_5fseq_5f_5',['next_seq_',['../d4/d2d/classresdb_1_1GeoGlobalExecutor.html#a0c04f167cecc372d4656f71f6bdd06f9',1,'resdb::GeoGlobalExecutor']]],
-  ['num_6',['num',['../d5/db6/classresdb_1_1BatchQueue.html#a881837f76bf243bdd21eefd3c1a5fc34',1,'resdb::BatchQueue']]]
+  ['node_5fto_5fshard_5f_6',['node_to_shard_',['../d9/d27/classresdb_1_1SystemInfo.html#a42942c64d8a457d2b60b92b212d5409d',1,'resdb::SystemInfo']]],
+  ['num_7',['num',['../d5/db6/classresdb_1_1BatchQueue.html#a881837f76bf243bdd21eefd3c1a5fc34',1,'resdb::BatchQueue']]]
 ];

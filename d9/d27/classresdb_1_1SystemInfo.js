@@ -4,11 +4,22 @@ var classresdb_1_1SystemInfo =
     [ "SystemInfo", "d9/d27/classresdb_1_1SystemInfo.html#a53272449614d0c097a8bbf75f63d91e4", null ],
     [ "~SystemInfo", "d9/d27/classresdb_1_1SystemInfo.html#a3ae5c30ab977c21d79f2f07c6444e787", null ],
     [ "AddReplica", "d9/d27/classresdb_1_1SystemInfo.html#aaa7c0106eb4509b9fdc22d428d65aa41", null ],
+    [ "AddReplicaToShard", "d9/d27/classresdb_1_1SystemInfo.html#a2face1763c49535d16817863c27699eb", null ],
     [ "GetCurrentView", "d9/d27/classresdb_1_1SystemInfo.html#adc08eba38f8ab761c0da6a47f9cc98c7", null ],
+    [ "GetNodesInShard", "d9/d27/classresdb_1_1SystemInfo.html#a5026ce7d7258c14cfd7fb7fb2eede8e4", null ],
     [ "GetPrimaryId", "d9/d27/classresdb_1_1SystemInfo.html#a20a65e5f27cd8e12f4926efcba793f4b", null ],
+    [ "GetPrimaryOfShard", "d9/d27/classresdb_1_1SystemInfo.html#a2c0578175ccf24dbd4d871173fad911a", null ],
     [ "GetReplicas", "d9/d27/classresdb_1_1SystemInfo.html#a9f330c84793c32b5d10d5a3abd6a0b9b", null ],
+    [ "GetShardCount", "d9/d27/classresdb_1_1SystemInfo.html#a9ad41220eb0a4f8c4861481cea70fa29", null ],
+    [ "GetShardOfNode", "d9/d27/classresdb_1_1SystemInfo.html#a7bc9fb38bb670272884e0217646e8ac6", null ],
+    [ "GetShardSize", "d9/d27/classresdb_1_1SystemInfo.html#ad339a9d259be60c45fabec5395c784a7", null ],
     [ "ProcessRequest", "d9/d27/classresdb_1_1SystemInfo.html#ad5ae8c87438c22d455cfe465ed0e6ae6", null ],
     [ "SetCurrentView", "d9/d27/classresdb_1_1SystemInfo.html#a10c3fee50f6d66b9840ec4c16ba03038", null ],
     [ "SetPrimary", "d9/d27/classresdb_1_1SystemInfo.html#a252fcff099191e66fc26eceb27185c49", null ],
-    [ "SetReplicas", "d9/d27/classresdb_1_1SystemInfo.html#a885e077922f7da557cb7e5acd266def0", null ]
+    [ "SetReplicas", "d9/d27/classresdb_1_1SystemInfo.html#a885e077922f7da557cb7e5acd266def0", null ],
+    [ "SetShardCount", "d9/d27/classresdb_1_1SystemInfo.html#a63f65035f16b25f5bb8e89ec9deafec7", null ],
+    [ "node_to_shard_", "d9/d27/classresdb_1_1SystemInfo.html#a42942c64d8a457d2b60b92b212d5409d", null ],
+    [ "shard_count_", "d9/d27/classresdb_1_1SystemInfo.html#a56568094ecfd882354c276e017319feb", null ],
+    [ "shard_primaries_", "d9/d27/classresdb_1_1SystemInfo.html#a73f64d61a457e2897675d0c22ee9b335", null ],
+    [ "shard_to_nodes_", "d9/d27/classresdb_1_1SystemInfo.html#a296fac8783a4dd78cb7b0f7fd0afdcd4", null ]
 ];
