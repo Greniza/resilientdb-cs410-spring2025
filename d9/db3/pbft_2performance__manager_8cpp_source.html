@@ -293,7 +293,7 @@ $(function(){initNavTree('d9/db3/pbft_2performance__manager_8cpp_source.html','.
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordflow">case</span> Request::TYPE_RESPONSE:</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>      <span class="comment">// if receive f+1 response results, ack to the caller.</span></div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>      <span class="keywordflow">if</span> (*status == <a class="code hl_enumvalue" href="../../d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a8f60578a1667fd6eb91ee90a6e368fab">TransactionStatue::None</a> &amp;&amp;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>          config_.GetMinClientReceiveNum() &lt;= received_count) {</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>          ((system_info_-&gt;GetNodesInShard() - 1) / 3) + 1 &lt;= received_count) {</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        <a class="code hl_enumeration" href="../../d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0">TransactionStatue</a> old_status = <a class="code hl_enumvalue" href="../../d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a8f60578a1667fd6eb91ee90a6e368fab">TransactionStatue::None</a>;</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="keywordflow">return</span> status-&gt;compare_exchange_strong(</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            old_status, <a class="code hl_enumvalue" href="../../d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a71ceed164ea4750776c99b47b9725dbc">TransactionStatue::EXECUTED</a>, std::memory_order_acq_rel,</div>
@@ -377,157 +377,166 @@ $(function(){initNavTree('d9/db3/pbft_2performance__manager_8cpp_source.html','.
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>  eval_ready_future_.get();</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>  <span class="keywordflow">while</span> (!stop_) {</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="comment">// std::lock_guard&lt;std::mutex&gt; lk(mutex_);</span></div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordflow">if</span> (send_num_[GetPrimary()] &gt;= config_.GetMaxProcessTxn()) {</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>      usleep(100000);</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    }</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keywordflow">if</span> (batch_req.size() &lt; config_.ClientBatchNum()) {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>      std::unique_ptr&lt;QueueItem&gt; item =</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>          batch_queue_.Pop(config_.ClientBatchWaitTimeMS());</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>      <span class="keywordflow">if</span> (item == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>      }</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>      batch_req.push_back(std::move(item));</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>      <span class="keywordflow">if</span> (batch_req.size() &lt; config_.ClientBatchNum()) {</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>      }</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <span class="keywordtype">int</span> ret = DoBatch(batch_req);</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    batch_req.clear();</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <span class="keywordflow">if</span> (ret != 0) {</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>      Response response;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>      response.set_result(Response::ERROR);</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; batch_req.size(); ++i) {</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        <span class="keywordflow">if</span> (batch_req[i]-&gt;context &amp;&amp; batch_req[i]-&gt;context-&gt;client) {</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>          <span class="keywordtype">int</span> ret = batch_req[i]-&gt;context-&gt;client-&gt;SendRawMessage(response);</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>          <span class="keywordflow">if</span> (ret) {</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send resp&quot;</span> &lt;&lt; response.DebugString()</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                       &lt;&lt; <span class="stringliteral">&quot; fail ret:&quot;</span> &lt;&lt; ret;</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>          }</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        }</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>      }</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    }</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  }</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>}</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="keywordtype">int</span> PerformanceManager::DoBatch(</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keyword">const</span> std::vector&lt;std::unique_ptr&lt;QueueItem&gt;&gt;&amp; batch_req) {</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>  <span class="keyword">auto</span> new_request =</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>      <a class="code hl_function" href="../../d6/dfb/namespaceresdb_1_1comm.html#a79c1017c46a4abc33043d8538731262f">NewRequest</a>(Request::TYPE_NEW_TXNS, Request(), config_.GetSelfInfo().id());</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>  <span class="keywordflow">if</span> (new_request == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    <span class="keywordflow">return</span> -2;</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>  }</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>  std::vector&lt;std::unique_ptr&lt;Context&gt;&gt; context_list;</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>  BatchUserRequest batch_request;</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; batch_req.size(); ++i) {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    BatchUserRequest::UserRequest* req = batch_request.add_user_requests();</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    *req-&gt;mutable_request() = *batch_req[i]-&gt;user_request.get();</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordflow">if</span> (batch_req[i]-&gt;context) {</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>      *req-&gt;mutable_signature() = batch_req[i]-&gt;context-&gt;signature;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    }</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    req-&gt;set_id(i);</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>  }</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>  batch_request.set_createtime(<a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>());</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  batch_request.set_local_id(local_id_++);</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  batch_request.SerializeToString(new_request-&gt;mutable_data());</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>  <span class="keywordflow">if</span> (verifier_) {</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="keyword">auto</span> signature_or = verifier_-&gt;SignMessage(new_request-&gt;data());</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keywordflow">if</span> (!signature_or.ok()) {</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>      LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;Sign message fail&quot;</span>;</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>      <span class="keywordflow">return</span> -2;</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    }</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    *new_request-&gt;mutable_data_signature() = *signature_or;</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>  }</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>  new_request-&gt;set_hash(SignatureVerifier::CalculateHash(new_request-&gt;data()));</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>  new_request-&gt;set_proxy_id(config_.GetSelfInfo().id());</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>  replica_communicator_-&gt;SendMessage(*new_request, GetPrimary());</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>  global_stats_-&gt;BroadCastMsg();</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>  send_num_[GetPrimary()]++;</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>  <span class="keywordflow">if</span> (total_num_++ == 1000000) {</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    stop_ = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    LOG(WARNING) &lt;&lt; <span class="stringliteral">&quot;total num is done:&quot;</span> &lt;&lt; total_num_;</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>  }</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>  <span class="keywordflow">if</span> (total_num_ % 10000 == 0) {</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    LOG(WARNING) &lt;&lt; <span class="stringliteral">&quot;total num is :&quot;</span> &lt;&lt; total_num_;</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>  }</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>  global_stats_-&gt;IncClientCall();</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  AddWaitingResponseRequest(std::move(new_request));</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>}</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> </div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="keywordtype">void</span> PerformanceManager::AddWaitingResponseRequest(</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>    std::unique_ptr&lt;Request&gt; request) {</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>  <span class="keywordflow">if</span> (!config_.GetConfigData().enable_viewchange()) {</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>  }</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>  pm_lock_.lock();</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>  uint64_t time = <a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>() + this-&gt;timeout_length_;</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>  client_timeout_min_heap_.push(</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>      PerformanceClientTimeout(request-&gt;hash(), time));</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>  waiting_response_batches_.insert(</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>      make_pair(request-&gt;hash(), std::move(request)));</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>  pm_lock_.unlock();</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>  sem_post(&amp;request_sent_signal_);</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>}</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span> </div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span><span class="keywordtype">void</span> PerformanceManager::RemoveWaitingResponseRequest(std::string hash) {</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>  <span class="keywordflow">if</span> (!config_.GetConfigData().enable_viewchange()) {</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>  }</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>  pm_lock_.lock();</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>  <span class="keywordflow">if</span> (waiting_response_batches_.find(hash) != waiting_response_batches_.end()) {</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>    waiting_response_batches_.erase(waiting_response_batches_.find(hash));</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>  }</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>  pm_lock_.unlock();</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>}</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span><span class="keywordtype">bool</span> PerformanceManager::CheckTimeOut(std::string hash) {</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>  pm_lock_.lock();</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>  <span class="keywordtype">bool</span> value =</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>      (waiting_response_batches_.find(hash) != waiting_response_batches_.end());</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>  pm_lock_.unlock();</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>  <span class="keywordflow">return</span> value;</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>}</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>std::unique_ptr&lt;Request&gt; PerformanceManager::GetTimeOutRequest(</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    std::string hash) {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordtype">bool</span> dosleep = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordflow">for</span> (uint32_t i=0; i&lt;system_info_-&gt;GetShardCount(); i++) {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>      <span class="keywordflow">if</span> (send_num_[system_info_-&gt;GetPrimaryOfShard(i)] &gt;= config_.GetMaxProcessTxn()) {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        dosleep = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>      }</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    }</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keywordflow">if</span> (dosleep) {</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>      usleep(100000);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">if</span> (batch_req.size() &lt; config_.ClientBatchNum()) {</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>      std::unique_ptr&lt;QueueItem&gt; item =</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>          batch_queue_.Pop(config_.ClientBatchWaitTimeMS());</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>      <span class="keywordflow">if</span> (item == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>      }</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>      batch_req.push_back(std::move(item));</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>      <span class="keywordflow">if</span> (batch_req.size() &lt; config_.ClientBatchNum()) {</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>      }</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    }</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordtype">int</span> ret = DoBatch(batch_req);</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    batch_req.clear();</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keywordflow">if</span> (ret != 0) {</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>      Response response;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>      response.set_result(Response::ERROR);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>      <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; batch_req.size(); ++i) {</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keywordflow">if</span> (batch_req[i]-&gt;context &amp;&amp; batch_req[i]-&gt;context-&gt;client) {</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>          <span class="keywordtype">int</span> ret = batch_req[i]-&gt;context-&gt;client-&gt;SendRawMessage(response);</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>          <span class="keywordflow">if</span> (ret) {</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;send resp&quot;</span> &lt;&lt; response.DebugString()</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                       &lt;&lt; <span class="stringliteral">&quot; fail ret:&quot;</span> &lt;&lt; ret;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>          }</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        }</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>      }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    }</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>  }</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>}</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="keywordtype">int</span> PerformanceManager::DoBatch(</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    <span class="keyword">const</span> std::vector&lt;std::unique_ptr&lt;QueueItem&gt;&gt;&amp; batch_req) {</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>  <span class="keyword">auto</span> new_request =</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>      <a class="code hl_function" href="../../d6/dfb/namespaceresdb_1_1comm.html#a79c1017c46a4abc33043d8538731262f">NewRequest</a>(Request::TYPE_NEW_TXNS, Request(), config_.GetSelfInfo().id());</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  <span class="keywordflow">if</span> (new_request == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="keywordflow">return</span> -2;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>  }</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>  std::vector&lt;std::unique_ptr&lt;Context&gt;&gt; context_list;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>  BatchUserRequest batch_request;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; batch_req.size(); ++i) {</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    BatchUserRequest::UserRequest* req = batch_request.add_user_requests();</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    *req-&gt;mutable_request() = *batch_req[i]-&gt;user_request.get();</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    <span class="keywordflow">if</span> (batch_req[i]-&gt;context) {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>      *req-&gt;mutable_signature() = batch_req[i]-&gt;context-&gt;signature;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    }</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    req-&gt;set_id(i);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>  }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> </div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>  batch_request.set_createtime(<a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>());</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  batch_request.set_local_id(local_id_++);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>  batch_request.SerializeToString(new_request-&gt;mutable_data());</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>  <span class="keywordflow">if</span> (verifier_) {</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    <span class="keyword">auto</span> signature_or = verifier_-&gt;SignMessage(new_request-&gt;data());</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    <span class="keywordflow">if</span> (!signature_or.ok()) {</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>      LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;Sign message fail&quot;</span>;</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>      <span class="keywordflow">return</span> -2;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    }</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    *new_request-&gt;mutable_data_signature() = *signature_or;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>  }</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>  new_request-&gt;set_hash(SignatureVerifier::CalculateHash(new_request-&gt;data()));</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>  new_request-&gt;set_proxy_id(config_.GetSelfInfo().id());</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>  <span class="comment">// Project 3: Ensuring proxy alternates to whom it sends the messages</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>  <span class="keywordtype">int</span> target = system_info_-&gt;GetPrimaryOfShard(total_num_ % system_info_-&gt;GetShardCount());</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>  replica_communicator_-&gt;SendMessage(*new_request, target);</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>  global_stats_-&gt;BroadCastMsg();</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  send_num_[target]++;</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>  <span class="keywordflow">if</span> (total_num_++ == 1000000) {</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    stop_ = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    LOG(WARNING) &lt;&lt; <span class="stringliteral">&quot;total num is done:&quot;</span> &lt;&lt; total_num_;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>  }</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>  <span class="keywordflow">if</span> (total_num_ % 10000 == 0) {</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>    LOG(WARNING) &lt;&lt; <span class="stringliteral">&quot;total num is :&quot;</span> &lt;&lt; total_num_;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>  }</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>  global_stats_-&gt;IncClientCall();</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>  AddWaitingResponseRequest(std::move(new_request));</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>}</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="keywordtype">void</span> PerformanceManager::AddWaitingResponseRequest(</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    std::unique_ptr&lt;Request&gt; request) {</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>  <span class="keywordflow">if</span> (!config_.GetConfigData().enable_viewchange()) {</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>  }</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>  pm_lock_.lock();</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>  uint64_t time = <a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>() + this-&gt;timeout_length_;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>  client_timeout_min_heap_.push(</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>      PerformanceClientTimeout(request-&gt;hash(), time));</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>  waiting_response_batches_.insert(</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>      make_pair(request-&gt;hash(), std::move(request)));</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>  pm_lock_.unlock();</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>  sem_post(&amp;request_sent_signal_);</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>}</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="keywordtype">void</span> PerformanceManager::RemoveWaitingResponseRequest(std::string hash) {</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>  <span class="keywordflow">if</span> (!config_.GetConfigData().enable_viewchange()) {</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>  }</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>  pm_lock_.lock();</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>  <span class="keywordflow">if</span> (waiting_response_batches_.find(hash) != waiting_response_batches_.end()) {</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    waiting_response_batches_.erase(waiting_response_batches_.find(hash));</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>  }</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>  pm_lock_.unlock();</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>}</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span> </div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span><span class="keywordtype">bool</span> PerformanceManager::CheckTimeOut(std::string hash) {</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>  pm_lock_.lock();</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>  <span class="keyword">auto</span> value = std::move(waiting_response_batches_.find(hash)-&gt;second);</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>  pm_lock_.unlock();</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>  <span class="keywordflow">return</span> value;</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>}</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span><span class="keywordtype">void</span> PerformanceManager::MonitoringClientTimeOut() {</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>  <span class="keywordflow">while</span> (!stop_) {</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    sem_wait(&amp;request_sent_signal_);</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    pm_lock_.lock();</div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>    <span class="keywordflow">if</span> (client_timeout_min_heap_.empty()) {</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>      pm_lock_.unlock();</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>    }</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="keyword">auto</span> client_timeout = client_timeout_min_heap_.top();</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    client_timeout_min_heap_.pop();</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    pm_lock_.unlock();</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    <span class="keywordflow">if</span> (client_timeout.timeout_time &gt; <a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>()) {</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>      usleep(client_timeout.timeout_time - <a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>());</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    }</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    <span class="keywordflow">if</span> (CheckTimeOut(client_timeout.hash)) {</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>      <span class="keyword">auto</span> request = GetTimeOutRequest(client_timeout.hash);</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>      <span class="keywordflow">if</span> (request) {</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        replica_communicator_-&gt;BroadCast(*request);</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>      }</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    }</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>  }</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>}</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>  <span class="keywordtype">bool</span> value =</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>      (waiting_response_batches_.find(hash) != waiting_response_batches_.end());</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>  pm_lock_.unlock();</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>  <span class="keywordflow">return</span> value;</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>}</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span> </div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>std::unique_ptr&lt;Request&gt; PerformanceManager::GetTimeOutRequest(</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    std::string hash) {</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>  pm_lock_.lock();</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>  <span class="keyword">auto</span> value = std::move(waiting_response_batches_.find(hash)-&gt;second);</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>  pm_lock_.unlock();</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>  <span class="keywordflow">return</span> value;</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>}</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> </div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span><span class="keywordtype">void</span> PerformanceManager::MonitoringClientTimeOut() {</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>  <span class="keywordflow">while</span> (!stop_) {</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    sem_wait(&amp;request_sent_signal_);</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    pm_lock_.lock();</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>    <span class="keywordflow">if</span> (client_timeout_min_heap_.empty()) {</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>      pm_lock_.unlock();</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    }</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keyword">auto</span> client_timeout = client_timeout_min_heap_.top();</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    client_timeout_min_heap_.pop();</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>    pm_lock_.unlock();</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keywordflow">if</span> (client_timeout.timeout_time &gt; <a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>()) {</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>      usleep(client_timeout.timeout_time - <a class="code hl_function" href="../../d5/d10/namespaceresdb.html#a60842c77d7913e381a97c08279a383a7">GetCurrentTime</a>());</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    }</div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> </div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>}  <span class="comment">// namespace resdb</span></div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    <span class="keywordflow">if</span> (CheckTimeOut(client_timeout.hash)) {</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>      <span class="keyword">auto</span> request = GetTimeOutRequest(client_timeout.hash);</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>      <span class="keywordflow">if</span> (request) {</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        replica_communicator_-&gt;BroadCast(*request);</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>      }</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    }</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>  }</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>}</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>}  <span class="comment">// namespace resdb</span></div>
 <div class="ttc" id="aclassresdb_1_1LockFreeCollectorPool_html"><div class="ttname"><a href="../../d7/d31/classresdb_1_1LockFreeCollectorPool.html">resdb::LockFreeCollectorPool</a></div><div class="ttdef"><b>Definition</b> <a href="../../dc/db8/lock__free__collector__pool_8h_source.html#l00028">lock_free_collector_pool.h:28</a></div></div>
 <div class="ttc" id="aclassresdb_1_1PerformanceClientTimeout_html_a41a6e5feca14be3441726e14d269fb35"><div class="ttname"><a href="../../d7/dbd/classresdb_1_1PerformanceClientTimeout.html#a41a6e5feca14be3441726e14d269fb35">resdb::PerformanceClientTimeout::hash</a></div><div class="ttdeci">std::string hash</div><div class="ttdef"><b>Definition</b> <a href="../../de/d13/pbft_2performance__manager_8h_source.html#l00041">performance_manager.h:41</a></div></div>
 <div class="ttc" id="aclassresdb_1_1PerformanceClientTimeout_html_a6d912d241b05d3739c15c335b5cb1ff8"><div class="ttname"><a href="../../d7/dbd/classresdb_1_1PerformanceClientTimeout.html#a6d912d241b05d3739c15c335b5cb1ff8">resdb::PerformanceClientTimeout::PerformanceClientTimeout</a></div><div class="ttdeci">PerformanceClientTimeout(std::string hash_, uint64_t time_)</div><div class="ttdef"><b>Definition</b> <a href="#l00028">performance_manager.cpp:28</a></div></div>
