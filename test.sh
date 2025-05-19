@@ -16,8 +16,9 @@ while [ $SECONDS -le 30 ]
 do
     for j in $(seq 1 1000)
     do
-    $SRV_TOOL --config $CONF --cmd set --key $j --value $SECONDS
+    $SRV_TOOL --config $CONF --cmd set --key $j --value $SECONDS > /dev/null
     done
+    echo $SECONDS
 done
 
 # killall -9 kv_service

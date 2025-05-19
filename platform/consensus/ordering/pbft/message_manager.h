@@ -113,17 +113,17 @@ class MessageManager {
   LockFreeCollectorPool* GetCollectorPool();
 
   // Project 3 New Functions
-  size_t MessageManager::GetShardCount() const;
-  size_t MessageManager::GetShardSize(uint32_t shard_id) const;
-  std::vector<uint32_t> MessageManager::GetNodesInShard(uint32_t shard_id) const;
-  uint32_t MessageManager::GetShardOfNode(uint32_t node_id) const;
-  uint32_t MessageManager::GetPrimaryOfShard(uint32_t shard_id) const;
-  bool MessageManager::NodesInSameShard(uint32_t node_id_1, uint32_t node_id_2) const;
-  uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const;
+  size_t GetShardCount() const;
+  size_t GetShardSize(uint32_t shard_id) const;
+  std::vector<uint32_t> GetNodesInShard(uint32_t shard_id) const;
+  uint32_t GetShardOfNode(uint32_t node_id) const;
+  uint32_t GetPrimaryOfShard(uint32_t shard_id) const;
+  bool NodesInSameShard(uint32_t node_id_1, uint32_t node_id_2) const;
+  uint32_t GetPrimaryOfNode(uint32_t node_id) const;
 
  private:
 
-  int MessageManager::_GetShardConsensusCount(uint32_t shard_id) const; // New for project 3
+  int _GetShardConsensusCount(uint32_t shard_id) const; // New for project 3
   bool IsValidMsg(const Request& request);
 
   bool MayConsensusChangeStatus(int type, int received_count,
