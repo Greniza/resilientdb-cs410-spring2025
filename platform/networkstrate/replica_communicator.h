@@ -57,7 +57,8 @@ class ReplicaCommunicator {
   virtual int SendBatchMessage(
       const std::vector<std::unique_ptr<Request>>& messages,
       const ReplicaInfo& replica_info);
-  
+      
+  //Note may need to adjust message sending functionality
   /**
   * Broadcasts a message to all nodes in a specified shard, it shard_id is not provided
   * Use current shard to commence broadcast
