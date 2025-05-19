@@ -7,5 +7,6 @@ var searchData=
   ['broadcast_4',['Broadcast',['../dc/da3/classresdb_1_1common_1_1ProtocolBase.html#aa9a9bba3543f6ca0edefbe8562f044a8',1,'resdb::common::ProtocolBase::Broadcast()'],['../db/deb/classresdb_1_1common_1_1Consensus.html#a2449f5dcf95fa48e2bd0bacac5b5c451',1,'resdb::common::Consensus::Broadcast()']]],
   ['broadcastmsg_5',['BroadCastMsg',['../de/d0d/classresdb_1_1Stats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'resdb::Stats::BroadCastMsg()'],['../db/df7/classStats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'Stats::BroadCastMsg()']]],
   ['broadcasttoothershardleaders_6',['BroadcastToOtherShardLeaders',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a6010a89bf4cc03ab84b20663b97077f6',1,'resdb::ReplicaCommunicator']]],
-  ['broadcasttoshard_7',['BroadCastToShard',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a51111f0a70157ce92289e8ecbd66f9d6',1,'resdb::ReplicaCommunicator']]]
+  ['broadcasttoshard_7',['BroadCastToShard',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a13e1249374ec1e2f043452ab8d1b17c8',1,'resdb::ReplicaCommunicator']]],
+  ['broadcasttoshardparticipants_8',['BroadcastToShardParticipants',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a3741aa8b89fc0440fbbced1005a94c0b',1,'resdb::ReplicaCommunicator']]]
 ];

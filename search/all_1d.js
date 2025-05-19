@@ -26,7 +26,7 @@ var searchData=
   ['sendresponse_23',['SendResponse',['../d7/d18/classresdb_1_1MessageManager.html#a3f341b293f7cebba8632546d8fd9fbbd',1,'resdb::MessageManager']]],
   ['sendsinglemessage_24',['SendSingleMessage',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a295d6ca3d0221236d3d470d7751f4e3c',1,'resdb::ReplicaCommunicator']]],
   ['sendsummary_25',['SendSummary',['../de/d0d/classresdb_1_1Stats.html#af9dac0a1652714d7f634c644fe97b9f9',1,'resdb::Stats::SendSummary()'],['../db/df7/classStats.html#af9dac0a1652714d7f634c644fe97b9f9',1,'Stats::SendSummary()']]],
-  ['sendtoshardcoordinator_26',['SendToShardCoordinator',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a284acf625f6086070ede108e85979fe4',1,'resdb::ReplicaCommunicator']]],
+  ['sendtoshardcoordinator_26',['SendToShardCoordinator',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#aa2bcfbd8d2758abdb8152ae64fa5b8ed',1,'resdb::ReplicaCommunicator']]],
   ['seq_27',['Seq',['../d7/d95/classresdb_1_1TransactionCollector.html#a5204b67bb1f3c45644b998f88f6c9934',1,'resdb::TransactionCollector']]],
   ['seqfail_28',['SeqFail',['../de/d0d/classresdb_1_1Stats.html#a19bad9e11d3b57c8d21ad851b5a1960c',1,'resdb::Stats::SeqFail()'],['../db/df7/classStats.html#a19bad9e11d3b57c8d21ad851b5a1960c',1,'Stats::SeqFail()']]],
   ['seqgap_29',['SeqGap',['../de/d0d/classresdb_1_1Stats.html#af394c1231df947472d61b5ea6e82f476',1,'resdb::Stats::SeqGap()'],['../db/df7/classStats.html#af394c1231df947472d61b5ea6e82f476',1,'Stats::SeqGap()']]],
