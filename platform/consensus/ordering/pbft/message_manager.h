@@ -120,6 +120,7 @@ class MessageManager {
   uint32_t GetPrimaryOfShard(uint32_t shard_id) const;
   bool NodesInSameShard(uint32_t node_id_1, uint32_t node_id_2) const;
   uint32_t GetPrimaryOfNode(uint32_t node_id) const;
+  SystemInfo* GetSystemInfo();
 
  private:
 

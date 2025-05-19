@@ -27,7 +27,7 @@
 #include "platform/proto/replica_info.pb.h"
 #include "platform/proto/resdb.pb.h"
 #include "platform/statistic/stats.h"
-#include "platform/consensus/ordering/pbft/message_manager.h"
+#include "platform/config/resdb_config.h"
 
 // Including the System.info class for node-shard identification
 #include "platform/consensus/execution/system_info.h"
@@ -73,7 +73,7 @@ class ReplicaCommunicator {
   */
 
   virtual int BroadCastToShard(const google::protobuf::Message& message,
-                        MessageManager* system_info,
+                        SystemInfo* system_info,
                         int32_t shard_id);
 
   /**
@@ -89,7 +89,7 @@ class ReplicaCommunicator {
   */
 
   virtual int SendToShardCoordinator(const google::protobuf::Message& message,
-                            MessageManager* system_info,
+                            SystemInfo* system_info,
                             int32_t shard_id);
 
   /**
@@ -104,7 +104,7 @@ class ReplicaCommunicator {
   */
   
   virtual int BroadcastToAllShardLeaders(const google::protobuf::Message& message,
-                                  MessageManager* system_info);
+                                  SystemInfo* system_info);
   
   /**
   * Broadcasts a message to all participant nodes within a shard, except the coordinator node.
@@ -119,7 +119,7 @@ class ReplicaCommunicator {
   */
 
   virtual int BroadcastToShardParticipants(const google::protobuf::Message& message,
-                                          MessageManager* system_info,
+                                          SystemInfo* system_info,
                                           int32_t shard_id);
 
   /**

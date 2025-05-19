@@ -162,7 +162,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
     
     // Retransmit to shard coord
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-    replica_communicator_->SendToShardCoordinator(*request, message_manager_, coord);
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_->GetSystemInfo(), shard);
 
     LOG(INFO) << "Subnode recieved message meant for coordinator, "
               << coord;
@@ -252,7 +252,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
     else {
       // (PHASE 3.5)
       // Broadcast prepare to entire shard
-      replica_communicator_->BroadCastToShard(*prepare_request, message_manager_, message_manager_->GetShardOfNode(config_.GetSelfInfo().id()));
+      replica_communicator_->BroadCastToShard(*prepare_request, message_manager_->GetSystemInfo(), message_manager_->GetShardOfNode(config_.GetSelfInfo().id()));
     }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
@@ -266,7 +266,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     
     // Retransmit to shard coord
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-    replica_communicator_->SendToShardCoordinator(*request, message_manager_, shard);
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_->GetSystemInfo(), shard);
 
     LOG(INFO) << "Subnode recieved message meant for coordinator, "
               << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
@@ -317,7 +317,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     }
     else {
       // We're on the local phase, so we broadcast the commit message locally
-      replica_communicator_->BroadCastToShard(*commit_request, message_manager_, message_manager_->GetShardOfNode(config_.GetSelfInfo().id()));
+      replica_communicator_->BroadCastToShard(*commit_request, message_manager_->GetSystemInfo(), message_manager_->GetShardOfNode(config_.GetSelfInfo().id()));
     }
 
   }
@@ -331,7 +331,7 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
     
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-    replica_communicator_->SendToShardCoordinator(*request, message_manager_, shard);
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_->GetSystemInfo(), shard);
 
     LOG(INFO) << "Subnode recieved message meant for coordinator, "
               << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
@@ -366,15 +366,15 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
       // (PHASE 3) Move to local PBFT
       // broadcast a propose request to current shard's participants (excluding self)
       std::unique_ptr<Request> propose_request = resdb::NewRequest(
-        Request::TYPE_PROPOSE, *request, config_.GetSelfInfo().id());
+        Request::TYPE_PRE_PREPARE, *request, config_.GetSelfInfo().id());
       uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-      replica_communicator_->BroadcastToShardParticipants(*propose_request, message_manager_, shard);
+      replica_communicator_->BroadcastToShardParticipants(*propose_request, message_manager_->GetSystemInfo(), shard);
       
       // We also broadcast a prepare request here, because we've implicitly bypassed proposing the 
       // txn to ourselves.
       std::unique_ptr<Request> prepare_request = resdb::NewRequest(
         Request::TYPE_PREPARE, *request, config_.GetSelfInfo().id());
-      replica_communicator_->BroadCastToShard(*propose_request, message_manager_, shard);
+      replica_communicator_->BroadCastToShard(*propose_request, message_manager_->GetSystemInfo(), shard);
     }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;

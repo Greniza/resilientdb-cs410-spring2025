@@ -109,6 +109,10 @@ uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const {
   return system_info_->GetPrimaryOfShard(system_info_->GetShardOfNode(node_id));
 }
 
+SystemInfo* GetSystemInfo() {
+  return system_info_;
+}
+
 int MessageManager::_GetShardConsensusCount(uint32_t shard_id) const {
   // This should probably 
   int f = system_info_->GetShardSize(shard_id) - 1;

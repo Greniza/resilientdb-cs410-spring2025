@@ -306,7 +306,7 @@ std::vector<ReplicaInfo> ReplicaCommunicator::GetReplicasForNodes(
 }
 
 int ReplicaCommunicator::BroadCastToShard(const google::protobuf::Message& message,
-                                          MessageManager* system_info,
+                                          SystemInfo* system_info,
                                           int32_t shard_id) {
   
   // Get all nodes in the target shard
@@ -340,7 +340,7 @@ int ReplicaCommunicator::BroadCastToShard(const google::protobuf::Message& messa
 }
 
 int ReplicaCommunicator::SendToShardCoordinator(const google::protobuf::Message& message,
-                                              MessageManager* system_info,
+                                              SystemInfo* system_info,
                                               int32_t shard_id) {
   
   // Get the coordinator replica of the target shard
@@ -360,7 +360,7 @@ int ReplicaCommunicator::SendToShardCoordinator(const google::protobuf::Message&
 }
 
 int ReplicaCommunicator::BroadcastToShardParticipants(const google::protobuf::Message& message,
-                                                    MessageManager* system_info,
+                                                    SystemInfo* system_info,
                                                     int32_t shard_id) {
   
   // Get all nodes in the target shard
@@ -408,7 +408,7 @@ int ReplicaCommunicator::BroadcastToShardParticipants(const google::protobuf::Me
 
 
 int ReplicaCommunicator::BroadcastToAllShardLeaders(const google::protobuf::Message& message,
-                                                    MessageManager* system_info) {
+                                                    SystemInfo* system_info) {
   // Get total number of shards
   size_t shard_count = system_info->GetShardCount();
 
