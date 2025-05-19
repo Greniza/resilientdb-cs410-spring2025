@@ -10,7 +10,7 @@ var classresdb_1_1SystemInfo =
     [ "GetPrimaryId", "d9/d27/classresdb_1_1SystemInfo.html#a20a65e5f27cd8e12f4926efcba793f4b", null ],
     [ "GetPrimaryOfShard", "d9/d27/classresdb_1_1SystemInfo.html#a2c0578175ccf24dbd4d871173fad911a", null ],
     [ "GetReplicas", "d9/d27/classresdb_1_1SystemInfo.html#a9f330c84793c32b5d10d5a3abd6a0b9b", null ],
-    [ "GetShardCount", "d9/d27/classresdb_1_1SystemInfo.html#a9ad41220eb0a4f8c4861481cea70fa29", null ],
+    [ "GetShardCount", "d9/d27/classresdb_1_1SystemInfo.html#aecb65ca7e158bcb35f7b29733e69a5b4", null ],
     [ "GetShardOfNode", "d9/d27/classresdb_1_1SystemInfo.html#a7bc9fb38bb670272884e0217646e8ac6", null ],
     [ "GetShardSize", "d9/d27/classresdb_1_1SystemInfo.html#ad339a9d259be60c45fabec5395c784a7", null ],
     [ "ProcessRequest", "d9/d27/classresdb_1_1SystemInfo.html#ad5ae8c87438c22d455cfe465ed0e6ae6", null ],
