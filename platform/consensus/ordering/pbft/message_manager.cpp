@@ -109,10 +109,6 @@ uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const {
   return system_info_->GetPrimaryOfShard(system_info_->GetShardOfNode(node_id));
 }
 
-SystemInfo* GetSystemInfo() {
-  return system_info_;
-}
-
 int MessageManager::_GetShardConsensusCount(uint32_t shard_id) const {
   // This should probably 
   int f = system_info_->GetShardSize(shard_id) - 1;
@@ -200,7 +196,7 @@ bool MessageManager::MayConsensusChangeStatus(
       if (type == Request::TYPE_PREPARE) {
         if ((received_count >= system_info_->GetShardCount() ||
             (config_.GetSelfInfo().id() != GetCurrentPrimary() &&
-             recieved_count >= 1))) {
+             received_count >= 1))) {
           return status->compare_exchange_strong(
             old_status, TransactionStatue::READY_COMMIT,
             std::memory_order_acq_rel, std::memory_order_acq_rel);
@@ -223,13 +219,13 @@ bool MessageManager::MayConsensusChangeStatus(
         bool ok = false;
         if (config_.GetSelfInfo().id() != GetCurrentPrimary()) {
           // Nonprimary nodes need to have recieved 2f+1 prepare requests
-          ok = (received_count >= _GetShardConsensusCount());
+          ok = (received_count >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
         }
         else {
           // The supercoordinator recieves votes in the form of prepare messages,
           // and if we reach this point, we know that we've recieved one from
           // each shard coordinator.
-          ok = (recieved_count - (system_info_->GetShardCount() - 1) >= _GetShardConsensusCount());
+          ok = (received_count - (system_info_->GetShardCount() - 1) >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
         }
         if (ok) {
           return status->compare_exchange_strong(
@@ -241,7 +237,7 @@ bool MessageManager::MayConsensusChangeStatus(
     case TransactionStatue::READY_LOCAL_COMMIT:
       // (PHASE 5) Commit phase of local PBFT
       if (type == Request::TYPE_COMMIT) {
-        if (received_count >= _GetShardConsensusCount()) {
+        if (received_count >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id()))) {
           return status->compare_exchange_strong(
               old_status, TransactionStatue::READY_EXECUTE,
               std::memory_order_acq_rel, std::memory_order_acq_rel);

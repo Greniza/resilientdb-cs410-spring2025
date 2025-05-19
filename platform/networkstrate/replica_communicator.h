@@ -30,7 +30,7 @@
 #include "platform/config/resdb_config.h"
 
 // Including the System.info class for node-shard identification
-#include "platform/consensus/execution/system_info.h"
+// #include "platform/consensus/execution/system_info.h"
 
 namespace resdb {
 

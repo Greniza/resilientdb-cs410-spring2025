@@ -149,7 +149,10 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
   user_request->set_primary_id(config_.GetSelfInfo().id());
 
   // Project 3: Broadcast to shard coordinators instead of all nodes
-  replica_communicator_->BroadcastToAllShardLeaders(*user_request, message_manager_);
+  for (int i = 0; i<message_manager_->GetShardCount(); i++) {
+        replica_communicator_->SendMessage(*user_request, message_manager_->GetPrimaryOfShard(i));
+    }
+  // replica_communicator_->BroadcastToAllShardLeaders(*user_request, message_manager_);
 
   return 0;
 }
@@ -164,8 +167,8 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
     replica_communicator_->SendMessage(*request, message_manager_->GetPrimaryOfShard(shard));
 
-    LOG(INFO) << "Subnode recieved message meant for coordinator, "
-              << coord;
+    LOG(INFO) << "Subnode recieved message meant for shard coordinator in, "
+              << message_manager_->GetPrimaryOfShard(shard);
     return -3;
   }
   if (global_stats_->IsFaulty() || context == nullptr ||
@@ -318,8 +321,8 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     }
     else {
       // We're on the local phase, so we broadcast the commit message locally
-      for (int i = 0; i<message_manager_->GetShardOfNode(message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))); i++)
-        replica_communicator_->SendMessage(*prepare_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
+      for (int i = 0; i<message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id())); i++)
+        replica_communicator_->SendMessage(*commit_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
     }
 
   }
@@ -370,7 +373,7 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
       std::unique_ptr<Request> propose_request = resdb::NewRequest(
         Request::TYPE_PRE_PREPARE, *request, config_.GetSelfInfo().id());
       uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-      for (int i = 0; i<message_manager_->GetShardOfNode(message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))); i++)
+      for (int i = 0; i<message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id())); i++)
         if (message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i] != config_.GetSelfInfo().id())
         replica_communicator_->SendMessage(*propose_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
       
@@ -378,7 +381,7 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
       // txn to ourselves.
       std::unique_ptr<Request> prepare_request = resdb::NewRequest(
         Request::TYPE_PREPARE, *request, config_.GetSelfInfo().id());
-      for (int i = 0; i<message_manager_->GetShardOfNode(message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))); i++)
+      for (int i = 0; i<message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id())); i++)
         replica_communicator_->SendMessage(*prepare_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
     }
   }
