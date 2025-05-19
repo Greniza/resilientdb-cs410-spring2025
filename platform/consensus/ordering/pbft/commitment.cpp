@@ -157,7 +157,7 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
 // Receive the pre-prepare message from the primary.
 int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
-  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo()).id())
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
     
     // Retransmit to shard coord
@@ -261,12 +261,12 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
 // If receive 2f+1 prepare message, broadcast a commit message.
 int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_ptr<Request> request) {
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
-  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo()).id())
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
     
     // Retransmit to shard coord
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-    replica_communicator_->SendToShardCoordinator(*request, message_manager_, coord);
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_, shard);
 
     LOG(INFO) << "Subnode recieved message meant for coordinator, "
               << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
@@ -327,11 +327,11 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
 // If receive 2f+1 commit message, commit the request.
 int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
-  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo()).id())
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
     
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-    replica_communicator_->SendToShardCoordinator(*request, message_manager_, coord);
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_, shard);
 
     LOG(INFO) << "Subnode recieved message meant for coordinator, "
               << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
