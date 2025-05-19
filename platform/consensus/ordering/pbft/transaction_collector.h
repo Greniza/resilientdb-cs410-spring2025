@@ -33,8 +33,10 @@ enum TransactionStatue {
   Prepare = -999,
   READY_PREPARE = 1,
   READY_COMMIT = 2,
-  READY_EXECUTE = 3,
-  EXECUTED = 4,
+  READY_LOCAL_PREPARE = 3,  // New state for project 3
+  READY_LOCAL_COMMIT = 4,   // New state for project 3
+  READY_EXECUTE = 5,        // Moved up for project 3
+  EXECUTED = 6,             // Moved up for project 3
 };
 
 struct RequestInfo {

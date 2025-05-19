@@ -101,12 +101,18 @@ uint32_t MessageManager::GetPrimaryOfShard(uint32_t shard_id) const {
   return system_info_->GetPrimaryOfShard(shard_id);
 }
 
-bool MessageManager::IDsInSameShard(uint32_t node_id_1, uint32_t node_id_2) const {
+bool MessageManager::NodesInSameShard(uint32_t node_id_1, uint32_t node_id_2) const {
   return (system_info_->GetShardOfNode(node_id_1) == system_info_->GetShardOfNode(node_id_2));
 }
 
 uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const {
   return system_info_->GetPrimaryOfShard(system_info_->GetShardOfNode(node_id));
+}
+
+int MessageManager::_GetShardConsensusCount(uint32_t shard_id) const {
+  // This should probably 
+  int f = system_info_->GetShardSize(shard_id) - 1;
+  return ((f / 3) * 2) + 1;
 }
 // End Project 3 New Functions
 
@@ -161,37 +167,82 @@ bool MessageManager::IsValidMsg(const Request& request) {
   return true;
 }
 
-// TODO: Add new states for project 3
+// Changed for Project 3
 bool MessageManager::MayConsensusChangeStatus(
     int type, int received_count, std::atomic<TransactionStatue>* status,
     bool ret) {
-  switch (type) {
-    case Request::TYPE_PRE_PREPARE:
-      if (*status == TransactionStatue::None) {
-        TransactionStatue old_status = TransactionStatue::None;
-        return status->compare_exchange_strong(
+  TransactionStatue old_status = *status;
+  switch(*status) {
+    case TransactionStatue::None:
+      if (type == Request::TYPE_PRE_PREPARE) {
+        // (PHASE 1) Shard leaders recieve a prepare message from primary.
+        if (config_.GetSelfInfo().id() == GetPrimaryOfNode(config_.GetSelfInfo().id())) {
+          return status->compare_exchange_strong(
             old_status, TransactionStatue::READY_PREPARE,
             std::memory_order_acq_rel, std::memory_order_acq_rel);
+        }
+        // (PHASE 3.5) Shard participants recieve a (local) prepare message from shard leader.
+        //             We skip to the ready_local_prepare state.
+        else {
+          return status->compare_exchange_strong(
+            old_status, TransactionStatue::READY_LOCAL_PREPARE,
+            std::memory_order_acq_rel, std::memory_order_acq_rel);
+        }
       }
       break;
-    case Request::TYPE_PREPARE:
-      if (*status == TransactionStatue::READY_PREPARE &&
-         (config_.GetMinDataReceiveNum() <= received_count ||
-          config_.GetSelfInfo().id() != GetCurrentPrimary())) {
-        TransactionStatue old_status = TransactionStatue::READY_PREPARE;
-        return status->compare_exchange_strong(
+    case TransactionStatue::READY_PREPARE:
+      // (PHASE 2) Nonprimary shard leaders send their vote to primary leader.
+      //           Primary waits for enough votes (in the form of prepare messages) before sending commit messages.
+      if (type == Request::TYPE_PREPARE) {
+        if ((received_count >= system_info_->GetShardCount() ||
+            (config_.GetSelfInfo().id() != GetCurrentPrimary() &&
+             recieved_count >= 1))) {
+          return status->compare_exchange_strong(
             old_status, TransactionStatue::READY_COMMIT,
             std::memory_order_acq_rel, std::memory_order_acq_rel);
+        }
       }
       break;
-    case Request::TYPE_COMMIT:
-      if (*status == TransactionStatue::READY_COMMIT &&
-          1 <= received_count) {
-        TransactionStatue old_status = TransactionStatue::READY_COMMIT;
-        return status->compare_exchange_strong(
-            old_status, TransactionStatue::READY_EXECUTE,
+    case TransactionStatue::READY_COMMIT:
+      // (PHASE 3) Shard leaders move to local PBFT, sending proposal messages to their participants.
+      if (type == Request::TYPE_COMMIT) {
+        if (received_count >= 1) {
+          return status->compare_exchange_strong(
+            old_status, TransactionStatue::READY_LOCAL_PREPARE,
             std::memory_order_acq_rel, std::memory_order_acq_rel);
-        return true;
+        }
+      }
+      break;
+    case TransactionStatue::READY_LOCAL_PREPARE:
+      // (PHASE 4) Prepare phase of local PBFT
+      if (type == Request::TYPE_PREPARE) {
+        bool ok = false;
+        if (config_.GetSelfInfo().id() != GetCurrentPrimary()) {
+          // Nonprimary nodes need to have recieved 2f+1 prepare requests
+          ok = (received_count >= _GetShardConsensusCount());
+        }
+        else {
+          // The supercoordinator recieves votes in the form of prepare messages,
+          // and if we reach this point, we know that we've recieved one from
+          // each shard coordinator.
+          ok = (recieved_count - (system_info_->GetShardCount() - 1) >= _GetShardConsensusCount());
+        }
+        if (ok) {
+          return status->compare_exchange_strong(
+            old_status, TransactionStatue::READY_LOCAL_COMMIT,
+            std::memory_order_acq_rel, std::memory_order_acq_rel);
+        }
+      }
+      break;
+    case TransactionStatue::READY_LOCAL_COMMIT:
+      // (PHASE 5) Commit phase of local PBFT
+      if (type == Request::TYPE_COMMIT) {
+        if (received_count >= _GetShardConsensusCount()) {
+          return status->compare_exchange_strong(
+              old_status, TransactionStatue::READY_EXECUTE,
+              std::memory_order_acq_rel, std::memory_order_acq_rel);
+          return true;
+        }
       }
       break;
   }

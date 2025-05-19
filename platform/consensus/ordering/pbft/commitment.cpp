@@ -63,7 +63,7 @@ void Commitment::SetPreVerifyFunc(
 void Commitment::SetNeedCommitQC(bool need_qc) { need_qc_ = need_qc; }
 
 // Handle the user request and send a pre-prepare message to others.
-// TODO if not a primary, redicet to the primary replica.
+// TODO: Make it so that the shard that recieves the request becomes the primary shard for that txn.
 int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_ptr<Request> user_request) {
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
@@ -148,14 +148,26 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
   user_request->set_sender_id(config_.GetSelfInfo().id());
   user_request->set_primary_id(config_.GetSelfInfo().id());
 
-  replica_communicator_->BroadCast(*user_request);
+  // Project 3: Broadcast to shard coordinators instead of all nodes
+  replica_communicator_->BroadcastToAllShardLeaders(*user_request, message_manager_);
 
   return 0;
 }
 
 // Receive the pre-prepare message from the primary.
-// TODO check whether the sender is the primary.
 int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
+  // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo()).id())
+      && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
+    
+    // Retransmit to shard coord
+    uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_, coord);
+
+    LOG(INFO) << "Subnode recieved message meant for coordinator, "
+              << coord;
+    return -3;
+  }
   if (global_stats_->IsFaulty() || context == nullptr ||
       context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
@@ -175,8 +187,11 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
                                              std::move(request));
   }
 
-  if (request->sender_id() != message_manager_->GetCurrentPrimary()) {
-    LOG(ERROR) << "the request is not from primary. sender:"
+
+  // Propose may come from either shard coord or primary
+  if ((request->sender_id() != message_manager_->GetCurrentPrimary()) &&
+      (request->sender_id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
+    LOG(ERROR) << "the request is not from primary/shard coordinator. sender:"
                << request->sender_id() << " seq:" << request->seq();
     return -2;
   }
@@ -222,20 +237,41 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
   prepare_request->clear_data();
 
   // Add request to message_manager.
-  // If it has received enough same requests(2f+1), broadcast the prepare
-  // message.
-  CollectorResultCode ret =
-      message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  // Changed for project 3
+  CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
   if (ret == CollectorResultCode::STATE_CHANGED) {
-    // CHANGED FOR 2PC
-    replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
+    
+    if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {
+      // (PHASE 1)
+      replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
+    
+      if (request->sender_id() != message_manager_->GetCurrentPrimary()) {
+        replica_communicator_->SendMessage(*prepare_request,  message_manager_->GetCurrentPrimary());
+      }
+    }
+    else {
+      // (PHASE 3.5)
+      // Broadcast prepare to entire shard
+      replica_communicator_->BroadCastToShard(*prepare_request, message_manager_, message_manager_->GetShardOfNode(config_.GetSelfInfo().id()));
+    }
   }
-  replica_communicator_->SendMessage(*prepare_request,  message_manager_->GetCurrentPrimary());
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
 // If receive 2f+1 prepare message, broadcast a commit message.
 int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_ptr<Request> request) {
+  // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo()).id())
+      && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
+    
+    // Retransmit to shard coord
+    uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_, coord);
+
+    LOG(INFO) << "Subnode recieved message meant for coordinator, "
+              << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
+    return -3;
+  }
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
     return -2;
@@ -252,8 +288,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
   // If it has received enough same requests(2f+1), broadcast the commit
   // message.
   uint64_t seq_ = request->seq();
-  CollectorResultCode ret =
-      message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
   if (ret == CollectorResultCode::STATE_CHANGED) {
     if (message_manager_->GetHighestPreparedSeq() < seq_) {
       message_manager_->SetHighestPreparedSeq(seq_);
@@ -269,18 +304,39 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
       // LOG(ERROR) << "sign hash"
       //           << commit_request->data_signature().DebugString();
     }
-    global_stats_->RecordStateTime("prepare");
-    if (config_.GetSelfInfo().id() != message_manager_->GetCurrentPrimary()) {
-      replica_communicator_->BroadCast(*commit_request);
-      // 2PC MOD
-      replica_communicator_->SendMessage(*commit_request, config_.GetSelfInfo().id());
+
+    // Project 3
+    // If we're in the top-level 2pc, handle it
+    if (message_manager_->GetTransactionState(seq_) == TransactionStatue::READY_COMMIT) {
+      // (PHASE 2)
+      global_stats_->RecordStateTime("prepare");
+      if (config_.GetSelfInfo().id() == message_manager_->GetCurrentPrimary()) {
+        replica_communicator_->BroadCast(*commit_request);
+        // 2PC MOD
+      }
     }
+    else {
+      // We're on the local phase, so we broadcast the commit message locally
+      replica_communicator_->BroadCastToShard(*commit_request, message_manager_, message_manager_->GetShardOfNode(config_.GetSelfInfo().id()));
+    }
+
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
 // If receive 2f+1 commit message, commit the request.
 int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
+  // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo()).id())
+      && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
+    
+    uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+    replica_communicator_->SendToShardCoordinator(*request, message_manager_, coord);
+
+    LOG(INFO) << "Subnode recieved message meant for coordinator, "
+              << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
+    return -3;
+  }
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject"
                << " context:" << (context == nullptr);
@@ -294,18 +350,40 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
   // Add request to message_manager.
   // If it has received enough same requests(2f+1), message manager will
   // commit the request.
+
+  // Altered for project 3.
   CollectorResultCode ret =
       message_manager_->AddConsensusMsg(context->signature, std::move(request));
   if (ret == CollectorResultCode::STATE_CHANGED) {
+    
     // LOG(ERROR)<<request->data().size();
     // global_stats_->GetTransactionDetails(request->data());
-    global_stats_->RecordStateTime("commit");
+    if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_EXECUTE) {
+      // (PHASE 5) In this case, we've actually performed a commit operation
+      global_stats_->RecordStateTime("commit");
+    }
+    else  {
+      // (PHASE 3) Move to local PBFT
+      // broadcast a propose request to current shard's participants (excluding self)
+      std::unique_ptr<Request> propose_request = resdb::NewRequest(
+        Request::TYPE_PROPOSE, *request, config_.GetSelfInfo().id());
+      uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+      replica_communicator_->BroadcastToShardParticipants(*propose_request, message_manager_, shard);
+      
+      // We also broadcast a prepare request here, because we've implicitly bypassed proposing the 
+      // txn to ourselves.
+      std::unique_ptr<Request> prepare_request = resdb::NewRequest(
+        Request::TYPE_PREPARE, *request, config_.GetSelfInfo().id());
+      replica_communicator_->BroadCastToShard(*propose_request, message_manager_, shard);
+    }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
 // =========== private threads ===========================
 // If the transaction is executed, send back to the proxy.
+
+// TODO: Only one shard replies to the client.
 int Commitment::PostProcessExecutedMsg() {
   while (!stop_) {
     auto batch_resp = message_manager_->GetResponseMsg();

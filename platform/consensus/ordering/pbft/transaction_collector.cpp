@@ -131,7 +131,8 @@ int TransactionCollector::AddRequest(std::unique_ptr<Request> request, const Sig
   } else {
     if (enable_viewchange_) {
       if (type == Request::TYPE_PREPARE) {
-        if (status_.load() <= TransactionStatue::READY_PREPARE) {
+        if ((status_.load() == TransactionStatue::READY_LOCAL_PREPARE) ||
+            (status_.load() == TransactionStatue::READY_COMMIT)) {
           auto request_info = std::make_unique<RequestInfo>();
           request_info->signature = signature;
           request_info->request = std::make_unique<Request>(*request);
@@ -146,7 +147,7 @@ int TransactionCollector::AddRequest(std::unique_ptr<Request> request, const Sig
           senders_[type][hash][sender_id] = 1;
           call_back(*request, senders_[type][hash].count(), nullptr, &status_,
                     false);
-          if (status_.load() == TransactionStatue::READY_COMMIT) {
+          if (status_.load() == TransactionStatue::READY_LOCAL_COMMIT) {
             is_prepared_ = true;
             if (atomic_mian_request_.Reference() != nullptr &&
                 atomic_mian_request_.Reference()->request->hash() != hash) {
@@ -172,16 +173,18 @@ int TransactionCollector::AddRequest(std::unique_ptr<Request> request, const Sig
             prepared_proof_.erase(prepared_proof_.begin() + pos,
                                   prepared_proof_.end());
           }
+          return 0;
         }
-        return 0;
       }
     }
     if (request->type() == Request::TYPE_COMMIT) {
-      if (request->has_data_signature() &&
-          request->data_signature().node_id() > 0) {
-        std::lock_guard<std::mutex> lk(mutex_);
-        LOG(ERROR) << "add qc signature";
-        commit_certs_.push_back(request->data_signature());
+      if (status_.load() >= TransactionStatue::READY_LOCAL_PREPARE) {
+        if (request->has_data_signature() &&
+            request->data_signature().node_id() > 0) {
+          std::lock_guard<std::mutex> lk(mutex_);
+          LOG(ERROR) << "add qc signature";
+          commit_certs_.push_back(request->data_signature());
+        }
       }
     }
 
