@@ -280,7 +280,6 @@ int ReplicaCommunicator::SendMessageInternal(
   return ret;
 }
 
-// Note may need to adjust message sending functionality
 uint32_t ReplicaCommunicator::GetCurrentShardID(SystemInfo* system_info) const {
   // Get the current node ID
   for (const auto& replica : replicas_) {
