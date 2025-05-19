@@ -280,7 +280,7 @@ int ReplicaCommunicator::SendMessageInternal(
   return ret;
 }
 
-
+/*
 std::vector<ReplicaInfo> ReplicaCommunicator::GetReplicasForNodes(
     const std::vector<uint32_t>& node_ids) const {
   std::vector<ReplicaInfo> target_replicas;
@@ -438,6 +438,7 @@ int ReplicaCommunicator::BroadcastToAllShardLeaders(const google::protobuf::Mess
     return SendMessageInternal(message, leader_replicas);
   }
 }
+*/
 
 AsyncReplicaClient* ReplicaCommunicator::GetClientFromPool(
     const std::string& ip, int port) {

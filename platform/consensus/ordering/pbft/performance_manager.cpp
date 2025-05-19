@@ -172,7 +172,8 @@ bool PerformanceManager::MayConsensusChangeStatus(
     case Request::TYPE_RESPONSE:
       // if receive f+1 response results, ack to the caller.
       if (*status == TransactionStatue::None &&
-          ((system_info_->GetNodesInShard() - 1) / 3) + 1 <= received_count) {
+          // ((system_info_->GetNodesInShard() - 1) / 3) + 1 <= received_count) {
+          ((4 - 1) / 3) + 1 <= received_count) {
         TransactionStatue old_status = TransactionStatue::None;
         return status->compare_exchange_strong(
             old_status, TransactionStatue::EXECUTED, std::memory_order_acq_rel,
