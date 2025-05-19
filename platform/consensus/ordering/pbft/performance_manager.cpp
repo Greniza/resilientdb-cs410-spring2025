@@ -172,7 +172,7 @@ bool PerformanceManager::MayConsensusChangeStatus(
     case Request::TYPE_RESPONSE:
       // if receive f+1 response results, ack to the caller.
       if (*status == TransactionStatue::None &&
-          config_.GetMinClientReceiveNum() <= received_count) {
+          ((system_info_->GetNodesInShard() - 1) / 3) + 1 <= received_count) {
         TransactionStatue old_status = TransactionStatue::None;
         return status->compare_exchange_strong(
             old_status, TransactionStatue::EXECUTED, std::memory_order_acq_rel,
@@ -256,7 +256,14 @@ int PerformanceManager::BatchProposeMsg() {
   eval_ready_future_.get();
   while (!stop_) {
     // std::lock_guard<std::mutex> lk(mutex_);
-    if (send_num_[GetPrimary()] >= config_.GetMaxProcessTxn()) {
+    bool dosleep = false;
+    for (uint32_t i=0; i<system_info_->GetShardCount(); i++) {
+      if (send_num_[system_info_->GetPrimaryOfShard(i)] >= config_.GetMaxProcessTxn()) {
+        dosleep = true;
+        break;
+      }
+    }
+    if (dosleep) {
       usleep(100000);
       continue;
     }
@@ -324,9 +331,11 @@ int PerformanceManager::DoBatch(
   new_request->set_hash(SignatureVerifier::CalculateHash(new_request->data()));
   new_request->set_proxy_id(config_.GetSelfInfo().id());
 
-  replica_communicator_->SendMessage(*new_request, GetPrimary());
+  // Project 3: Ensuring proxy alternates to whom it sends the messages
+  int target = system_info_->GetPrimaryOfShard(total_num_ % system_info_->GetShardCount());
+  replica_communicator_->SendMessage(*new_request, target);
   global_stats_->BroadCastMsg();
-  send_num_[GetPrimary()]++;
+  send_num_[target]++;
   if (total_num_++ == 1000000) {
     stop_ = true;
     LOG(WARNING) << "total num is done:" << total_num_;

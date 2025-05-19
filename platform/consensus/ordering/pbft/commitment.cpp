@@ -63,7 +63,7 @@ void Commitment::SetPreVerifyFunc(
 void Commitment::SetNeedCommitQC(bool need_qc) { need_qc_ = need_qc; }
 
 // Handle the user request and send a pre-prepare message to others.
-// TODO: Make it so that the shard that recieves the request becomes the primary shard for that txn.
+// Project 3: Make it so that the shard that recieves the request becomes the primary shard for that txn.
 int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_ptr<Request> user_request) {
   if (context == nullptr || context->signature.signature().empty()) {
     LOG(ERROR) << "user request doesn't contain signature, reject";
@@ -78,15 +78,15 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
     return -2;
   }
 
-  if (config_.GetSelfInfo().id() != message_manager_->GetCurrentPrimary()) {
+  if (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id())) {
     // LOG(ERROR) << "current node is not primary. primary:"
     //            << message_manager_->GetCurrentPrimary()
     //            << " seq:" << user_request->seq()
     //            << " hash:" << user_request->hash();
-    LOG(INFO) << "NOT PRIMARY, Primary is "
-              << message_manager_->GetCurrentPrimary();
+    LOG(INFO) << "NOT SHARD COORDINATOR, shard_coordinator is "
+              << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
     replica_communicator_->SendMessage(*user_request,
-                                       message_manager_->GetCurrentPrimary());
+                                       message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()));
     {
       std::lock_guard<std::mutex> lk(rc_mutex_);
       request_complained_.push(
@@ -391,17 +391,19 @@ int Commitment::PostProcessExecutedMsg() {
       continue;
     }
     global_stats_->SendSummary();
-    Request request;
-    request.set_hash(batch_resp->hash());
-    request.set_seq(batch_resp->seq());
-    request.set_type(Request::TYPE_RESPONSE);
-    request.set_sender_id(config_.GetSelfInfo().id());
-    request.set_current_view(batch_resp->current_view());
-    request.set_proxy_id(batch_resp->proxy_id());
-    request.set_primary_id(batch_resp->primary_id());
-    // LOG(ERROR)<<"send back to proxy:"<<batch_resp->proxy_id();
-    batch_resp->SerializeToString(request.mutable_data());
-    replica_communicator_->SendMessage(request, request.proxy_id());
+    if (message_manager_->NodesInSameShard(batch_resp->primary_id(), config_.GetSelfInfo().id())) {
+      Request request;
+      request.set_hash(batch_resp->hash());
+      request.set_seq(batch_resp->seq());
+      request.set_type(Request::TYPE_RESPONSE);
+      request.set_sender_id(config_.GetSelfInfo().id());
+      request.set_current_view(batch_resp->current_view());
+      request.set_proxy_id(batch_resp->proxy_id());
+      request.set_primary_id(batch_resp->primary_id());
+      // LOG(ERROR)<<"send back to proxy:"<<batch_resp->proxy_id();
+      batch_resp->SerializeToString(request.mutable_data());
+      replica_communicator_->SendMessage(request, request.proxy_id());
+    }
   }
   return 0;
 }
