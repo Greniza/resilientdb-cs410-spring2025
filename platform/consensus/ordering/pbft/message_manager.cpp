@@ -80,6 +80,36 @@ int64_t MessageManager::GetCurrentPrimary() const {
   return system_info_->GetPrimaryId();
 }
 
+// Project 3 New Functions
+size_t MessageManager::GetShardCount() const {
+  return system_info_->GetShardCount();
+}
+
+size_t MessageManager::GetShardSize(uint32_t shard_id) const {
+  return system_info_->GetShardSize(shard_id);
+}
+
+std::vector<uint32_t> MessageManager::GetNodesInShard(uint32_t shard_id) const {
+  return system_info_->GetNodesInShard(shard_id);
+}
+
+uint32_t MessageManager::GetShardOfNode(uint32_t node_id) const {
+  return system_info_->GetShardOfNode(node_id);
+}
+
+uint32_t MessageManager::GetPrimaryOfShard(uint32_t shard_id) const {
+  return system_info_->GetPrimaryOfShard(shard_id);
+}
+
+bool MessageManager::IDsInSameShard(uint32_t node_id_1, uint32_t node_id_2) const {
+  return (system_info_->GetShardOfNode(node_id_1) == system_info_->GetShardOfNode(node_id_2));
+}
+
+uint32_t MessageManager::GetPrimaryOfNode(uint32_t node_id) const {
+  return system_info_->GetPrimaryOfShard(system_info_->GetShardOfNode(node_id));
+}
+// End Project 3 New Functions
+
 uint64_t MessageManager ::GetCurrentView() const {
   return system_info_->GetCurrentView();
 }
@@ -131,6 +161,7 @@ bool MessageManager::IsValidMsg(const Request& request) {
   return true;
 }
 
+// TODO: Add new states for project 3
 bool MessageManager::MayConsensusChangeStatus(
     int type, int received_count, std::atomic<TransactionStatue>* status,
     bool ret) {
