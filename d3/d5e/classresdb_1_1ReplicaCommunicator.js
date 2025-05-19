@@ -3,7 +3,7 @@ var classresdb_1_1ReplicaCommunicator =
     [ "ReplicaCommunicator", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a72be9f140c4811734f04baa74401fc24", null ],
     [ "~ReplicaCommunicator", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a5f9f44ab6f7faf07cfc102f0ce4003b1", null ],
     [ "BroadCast", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a14668b5802825c825f8a64eeb3388323", null ],
-    [ "BroadcastToOtherShardLeaders", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a6010a89bf4cc03ab84b20663b97077f6", null ],
+    [ "BroadcastToAllShardLeaders", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a943cc084797d5095812e118b7d6a6199", null ],
     [ "BroadCastToShard", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a13e1249374ec1e2f043452ab8d1b17c8", null ],
     [ "BroadcastToShardParticipants", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a3741aa8b89fc0440fbbced1005a94c0b", null ],
     [ "GetClient", "d3/d5e/classresdb_1_1ReplicaCommunicator.html#a6626f42ecb400e1319ae1f4bbb3ad7fd", null ],
