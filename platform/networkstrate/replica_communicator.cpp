@@ -376,7 +376,7 @@ int ReplicaCommunicator::BroadcastToShardParticipants(const google::protobuf::Me
   for (const auto& node_id : shard_nodes) {
     if (node_id != coordinator_id) {
       participant_ids.push_back(node_id)
-    }
+    };
   }
   // If the target shard is empty log the error
   if (participant_ids.empty()) {
@@ -407,7 +407,7 @@ int ReplicaCommunicator::BroadcastToShardParticipants(const google::protobuf::Me
 }
 
 
-int ReplicaCommunicator::BroadcastToOtherShardLeaders(const google::protobuf::Message& message,
+int ReplicaCommunicator::BroadcastToAllShardLeaders(const google::protobuf::Message& message,
                                                     SystemInfo* system_info) {
   // Get total number of shards
   size_t shard_count = system_info->GetShardCount();

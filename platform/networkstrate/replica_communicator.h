@@ -102,7 +102,7 @@ class ReplicaCommunicator {
   * Returns the number of successful sends to shard coordinators
   */
   
-  virtual int BroadcastToOtherShardLeaders(const google::protobuf::Message& message,
+  virtual int BroadcastToAllShardLeaders(const google::protobuf::Message& message,
                                   SystemInfo* system_info);
   
   /**
