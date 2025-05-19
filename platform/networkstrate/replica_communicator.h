@@ -27,6 +27,7 @@
 #include "platform/proto/replica_info.pb.h"
 #include "platform/proto/resdb.pb.h"
 #include "platform/statistic/stats.h"
+#include "platform/consensus/ordering/pbft/message_manager.h"
 
 // Including the System.info class for node-shard identification
 #include "platform/consensus/execution/system_info.h"
