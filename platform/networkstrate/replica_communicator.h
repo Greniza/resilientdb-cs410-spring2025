@@ -71,13 +71,12 @@ class ReplicaCommunicator {
   * Returns the number of successful sends via broadcast
   */
 
-  int BroadCastToShard(const google::protobuf::Message& message,
+  virtual int BroadCastToShard(const google::protobuf::Message& message,
                         SystemInfo* system_info,
-                        int32_t shard_id = -1);
+                        int32_t shard_id);
 
   /**
   * Sends a message to the coordinator replica of a specified shard.
-  * If shard_id is not provided, sends to the current shard's coordinator
   *
   * Parameters:
   * message: The message to be broadcast
@@ -88,12 +87,12 @@ class ReplicaCommunicator {
   * Returns code 1 for success and code 0 for failure
   */
 
-  int SendToShardCoordinator(const google::protobuf::Message& message,
+  virtual int SendToShardCoordinator(const google::protobuf::Message& message,
                             SystemInfo* system_info,
-                            int32_t shard_id = -1);
+                            int32_t shard_id);
 
   /**
-  * Broadcasts a message to all shard leaders except the current shard's leader.
+  * Broadcasts a message to all shard leaders including the current shard's leader.
   *
   * Parameters:
   * message: The message to be broadcast
@@ -103,20 +102,24 @@ class ReplicaCommunicator {
   * Returns the number of successful sends to shard coordinators
   */
   
-  int BroadcastToOtherShardLeaders(const google::protobuf::Message& message,
+  virtual int BroadcastToOtherShardLeaders(const google::protobuf::Message& message,
                                   SystemInfo* system_info);
-
+  
   /**
-  * Gets the current shard ID for this node
+  * Broadcasts a message to all participant nodes within a shard, except the coordinator node.
   *
   * Parameters:
-  * system_info: The system info containing replica and shard info
-  * 
+  * message: The message to be broadcast
+  * system_info: The system info containing replica and shard data
+  * shard_id: The shard ID whose participants we wish to broadcast to
+  *
   * Returns:
-  * The shard ID for the current node
-  */                                
+  * Returns code 1 for success and code 0 for failure
+  */
 
-  uint32_t GetCurrentShardID(SystemInfo* system_info) const;
+  virtual int BroadcastToShardParticipants(const google::protobuf::Message& message,
+                                          SystemInfo* system_info,
+                                          int32_t shard_id);
 
   /**
   * Helper function to get a collection of replica infos for a specific set of node IDs
