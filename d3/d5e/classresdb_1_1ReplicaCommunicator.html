@@ -138,6 +138,21 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad13ada80abc6ed59ae769f1a2ec6fdac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d236f8ea506a312ef8399a4b5ac9707" id="r_a9d236f8ea506a312ef8399a4b5ac9707"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d236f8ea506a312ef8399a4b5ac9707">SendBatchMessage</a> (const std::vector&lt; std::unique_ptr&lt; Request &gt; &gt; &amp;messages, const ReplicaInfo &amp;replica_info)</td></tr>
 <tr class="separator:a9d236f8ea506a312ef8399a4b5ac9707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51111f0a70157ce92289e8ecbd66f9d6" id="r_a51111f0a70157ce92289e8ecbd66f9d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51111f0a70157ce92289e8ecbd66f9d6">BroadCastToShard</a> (const google::protobuf::Message &amp;message, <a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *system_info, int32_t shard_id=-1)</td></tr>
+<tr class="memdesc:a51111f0a70157ce92289e8ecbd66f9d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a message to all nodes in a specified shard, it shard_id is not provided Use current shard to commence broadcast.  <br /></td></tr>
+<tr class="separator:a51111f0a70157ce92289e8ecbd66f9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a284acf625f6086070ede108e85979fe4" id="r_a284acf625f6086070ede108e85979fe4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a284acf625f6086070ede108e85979fe4">SendToShardCoordinator</a> (const google::protobuf::Message &amp;message, <a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *system_info, int32_t shard_id=-1)</td></tr>
+<tr class="memdesc:a284acf625f6086070ede108e85979fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a message to the coordinator replica of a specified shard.  <br /></td></tr>
+<tr class="separator:a284acf625f6086070ede108e85979fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6010a89bf4cc03ab84b20663b97077f6" id="r_a6010a89bf4cc03ab84b20663b97077f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6010a89bf4cc03ab84b20663b97077f6">BroadcastToOtherShardLeaders</a> (const google::protobuf::Message &amp;message, <a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *system_info)</td></tr>
+<tr class="memdesc:a6010a89bf4cc03ab84b20663b97077f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts a message to all shard leaders except the current shard's leader.  <br /></td></tr>
+<tr class="separator:a6010a89bf4cc03ab84b20663b97077f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4541b1cdd61c856be5a17ebe48cdf31d" id="r_a4541b1cdd61c856be5a17ebe48cdf31d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4541b1cdd61c856be5a17ebe48cdf31d">GetCurrentShardID</a> (<a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *system_info) const</td></tr>
+<tr class="memdesc:a4541b1cdd61c856be5a17ebe48cdf31d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current shard ID for this node.  <br /></td></tr>
+<tr class="separator:a4541b1cdd61c856be5a17ebe48cdf31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2e5eb2d800b2409d88d1922c5c5601c" id="r_ae2e5eb2d800b2409d88d1922c5c5601c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; ReplicaInfo &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2e5eb2d800b2409d88d1922c5c5601c">GetReplicasForNodes</a> (const std::vector&lt; int64_t &gt; &amp;node_ids) const</td></tr>
+<tr class="memdesc:ae2e5eb2d800b2409d88d1922c5c5601c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a collection of replica infos for a specific set of node IDs.  <br /></td></tr>
+<tr class="separator:ae2e5eb2d800b2409d88d1922c5c5601c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae93d03a61ab026c280b2a85da8b99076" id="r_ae93d03a61ab026c280b2a85da8b99076"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae93d03a61ab026c280b2a85da8b99076">UpdateClientReplicas</a> (const std::vector&lt; ReplicaInfo &gt; &amp;replicas)</td></tr>
 <tr class="separator:ae93d03a61ab026c280b2a85da8b99076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa998887439d733db45e23e70b6c420f7" id="r_aa998887439d733db45e23e70b6c420f7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; ReplicaInfo &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa998887439d733db45e23e70b6c420f7">GetClientReplicas</a> ()</td></tr>
@@ -166,7 +181,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="../../d0/dd9/replica__communicator_8h_source.html#l00035">35</a> of file <a class="el" href="../../d0/dd9/replica__communicator_8h_source.html">replica_communicator.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dd9/replica__communicator_8h_source.html#l00038">38</a> of file <a class="el" href="../../d0/dd9/replica__communicator_8h_source.html">replica_communicator.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a72be9f140c4811734f04baa74401fc24" name="a72be9f140c4811734f04baa74401fc24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72be9f140c4811734f04baa74401fc24">&#9670;&#160;</a></span>ReplicaCommunicator()</h2>
@@ -257,7 +272,66 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00299">299</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00427">427</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6010a89bf4cc03ab84b20663b97077f6" name="a6010a89bf4cc03ab84b20663b97077f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6010a89bf4cc03ab84b20663b97077f6">&#9670;&#160;</a></span>BroadcastToOtherShardLeaders()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int resdb::ReplicaCommunicator::BroadcastToOtherShardLeaders </td>
+          <td>(</td>
+          <td class="paramtype">const google::protobuf::Message &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *</td>          <td class="paramname"><span class="paramname"><em>system_info</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Broadcasts a message to all shard leaders except the current shard's leader. </p>
+<p>Parameters: message: The message to be broadcast system_info: The system info containing replica and shard info</p>
+<p>Returns: Returns the number of successful sends to shard coordinators </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00379">379</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a51111f0a70157ce92289e8ecbd66f9d6" name="a51111f0a70157ce92289e8ecbd66f9d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51111f0a70157ce92289e8ecbd66f9d6">&#9670;&#160;</a></span>BroadCastToShard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int resdb::ReplicaCommunicator::BroadCastToShard </td>
+          <td>(</td>
+          <td class="paramtype">const google::protobuf::Message &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *</td>          <td class="paramname"><span class="paramname"><em>system_info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>shard_id</em></span><span class="paramdefsep"> = </span><span class="paramdefval">-1</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Broadcasts a message to all nodes in a specified shard, it shard_id is not provided Use current shard to commence broadcast. </p>
+<p>Parameters: message: The message to be broadcast system_info: The system info containing replica and shard info shard_id: Optional shard ID (default is current shard_id)</p>
+<p>Returns: Returns the number of successful sends via broadcast </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00321">321</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
 
 </div>
 </div>
@@ -288,7 +362,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00294">294</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00422">422</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
 
 </div>
 </div>
@@ -319,7 +393,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00283">283</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00411">411</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
 
 </div>
 </div>
@@ -339,6 +413,52 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00089">89</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4541b1cdd61c856be5a17ebe48cdf31d" name="a4541b1cdd61c856be5a17ebe48cdf31d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4541b1cdd61c856be5a17ebe48cdf31d">&#9670;&#160;</a></span>GetCurrentShardID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t resdb::ReplicaCommunicator::GetCurrentShardID </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *</td>          <td class="paramname"><span class="paramname"><em>system_info</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the current shard ID for this node. </p>
+<p>Parameters: system_info: The system info containing replica and shard info</p>
+<p>Returns: The shard ID for the current node </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00283">283</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae2e5eb2d800b2409d88d1922c5c5601c" name="ae2e5eb2d800b2409d88d1922c5c5601c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2e5eb2d800b2409d88d1922c5c5601c">&#9670;&#160;</a></span>GetReplicasForNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; ReplicaInfo &gt; resdb::ReplicaCommunicator::GetReplicasForNodes </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; int64_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>node_ids</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Helper function to get a collection of replica infos for a specific set of node IDs. </p>
+<p>Parameters: node_ids Vector of node IDs to get replica info for</p>
+<p>Returns: Vector of ReplicaInfo for the requested nodes </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00297">297</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
 
 </div>
 </div>
@@ -539,7 +659,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00306">306</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00434">434</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
 
 </div>
 </div>
@@ -633,6 +753,39 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00172">172</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a284acf625f6086070ede108e85979fe4" name="a284acf625f6086070ede108e85979fe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a284acf625f6086070ede108e85979fe4">&#9670;&#160;</a></span>SendToShardCoordinator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int resdb::ReplicaCommunicator::SendToShardCoordinator </td>
+          <td>(</td>
+          <td class="paramtype">const google::protobuf::Message &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d9/d27/classresdb_1_1SystemInfo.html">SystemInfo</a> *</td>          <td class="paramname"><span class="paramname"><em>system_info</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>shard_id</em></span><span class="paramdefsep"> = </span><span class="paramdefval">-1</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a message to the coordinator replica of a specified shard. </p>
+<p>If shard_id is not provided, sends to the current shard's coordinator</p>
+<p>Parameters: message: The message to be broadcast system_info: The system info containing replica and shard info shard_id: Optional shard ID (default is current shard_id)</p>
+<p>Returns: Returns code 1 for success and code 0 for failure </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html#l00357">357</a> of file <a class="el" href="../../d0/df5/replica__communicator_8cpp_source.html">replica_communicator.cpp</a>.</p>
 
 </div>
 </div>
