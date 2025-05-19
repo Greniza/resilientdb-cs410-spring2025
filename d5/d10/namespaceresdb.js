@@ -166,7 +166,6 @@ var namespaceresdb =
     [ "ReadConfig", "d5/d10/namespaceresdb.html#a67842a19269800fb4efcff8d4082118b", null ],
     [ "ReadConfigFromFile", "d5/d10/namespaceresdb.html#aa55fc1c659f788583d9b656c93a8455b", null ],
     [ "SendData", "d5/d10/namespaceresdb.html#a50f2133434c829fd6c5b4e980065a408", null ],
-    [ "set_shard_count", "d5/d10/namespaceresdb.html#aaff0289ba5fa3b2168c4fa987705e27a", null ],
     [ "TEST", "d5/d10/namespaceresdb.html#ad80063b9797bc83c1fce71f3a06ce1b0", null ],
     [ "TEST", "d5/d10/namespaceresdb.html#a90d9d655454585293866274a273df0bc", null ],
     [ "TEST", "d5/d10/namespaceresdb.html#a4ecd7634f8fe560417eef9495ecbff98", null ],
