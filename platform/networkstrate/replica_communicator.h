@@ -72,7 +72,7 @@ class ReplicaCommunicator {
   */
 
   virtual int BroadCastToShard(const google::protobuf::Message& message,
-                        SystemInfo* system_info,
+                        MessageManager* system_info,
                         int32_t shard_id);
 
   /**
@@ -88,7 +88,7 @@ class ReplicaCommunicator {
   */
 
   virtual int SendToShardCoordinator(const google::protobuf::Message& message,
-                            SystemInfo* system_info,
+                            MessageManager* system_info,
                             int32_t shard_id);
 
   /**
@@ -103,7 +103,7 @@ class ReplicaCommunicator {
   */
   
   virtual int BroadcastToAllShardLeaders(const google::protobuf::Message& message,
-                                  SystemInfo* system_info);
+                                  MessageManager* system_info);
   
   /**
   * Broadcasts a message to all participant nodes within a shard, except the coordinator node.
@@ -118,7 +118,7 @@ class ReplicaCommunicator {
   */
 
   virtual int BroadcastToShardParticipants(const google::protobuf::Message& message,
-                                          SystemInfo* system_info,
+                                          MessageManager* system_info,
                                           int32_t shard_id);
 
   /**
