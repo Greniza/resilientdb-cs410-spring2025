@@ -27,7 +27,7 @@ var classresdb_1_1MessageManager =
     [ "MessageManager::GetShardCount", "d7/d18/classresdb_1_1MessageManager.html#acdf923a05defb7b6ade573aa2031a58a", null ],
     [ "MessageManager::GetShardOfNode", "d7/d18/classresdb_1_1MessageManager.html#a35b464de41e78903b39ab91697a11ba9", null ],
     [ "MessageManager::GetShardSize", "d7/d18/classresdb_1_1MessageManager.html#a8c6f0b8442d80b01deb17f4f54bc73b1", null ],
-    [ "MessageManager::IDsInSameShard", "d7/d18/classresdb_1_1MessageManager.html#a7acdd597fd6beecf1d9ef82365a263bb", null ],
+    [ "MessageManager::NodesInSameShard", "d7/d18/classresdb_1_1MessageManager.html#abb8a46e40bb8dfebaa67cb443ed7514f", null ],
     [ "SendResponse", "d7/d18/classresdb_1_1MessageManager.html#a3f341b293f7cebba8632546d8fd9fbbd", null ],
     [ "SetDuplicateManager", "d7/d18/classresdb_1_1MessageManager.html#a086f2369e6e992e3f186cd8c4c60a168", null ],
     [ "SetHighestPreparedSeq", "d7/d18/classresdb_1_1MessageManager.html#a4cf2194e60da0708bcc87d09c2a4a133", null ],

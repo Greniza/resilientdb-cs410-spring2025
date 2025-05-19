@@ -139,6 +139,8 @@ var namespaceresdb =
       [ "Prepare", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a3279973d22efc152fd87dfe4f1710def", null ],
       [ "READY_PREPARE", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a61578c8a1b468d7935d2bdf02dea3d1c", null ],
       [ "READY_COMMIT", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0af630efee5e3abf6506559b871738ad3d", null ],
+      [ "READY_LOCAL_PREPARE", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a85908c860217921cf533c905da41b166", null ],
+      [ "READY_LOCAL_COMMIT", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a1cbdd9ed33037a3563800c0db195aab6", null ],
       [ "READY_EXECUTE", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a32e1445895e83fb95fa7fb3876d8ff91", null ],
       [ "EXECUTED", "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a71ceed164ea4750776c99b47b9725dbc", null ]
     ] ],

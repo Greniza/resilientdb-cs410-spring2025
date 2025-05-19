@@ -19,7 +19,7 @@ var searchData=
   ['messagemanager_3a_3agetshardcount_16',['GetShardCount',['../d7/d18/classresdb_1_1MessageManager.html#acdf923a05defb7b6ade573aa2031a58a',1,'resdb::MessageManager']]],
   ['messagemanager_3a_3agetshardofnode_17',['GetShardOfNode',['../d7/d18/classresdb_1_1MessageManager.html#a35b464de41e78903b39ab91697a11ba9',1,'resdb::MessageManager']]],
   ['messagemanager_3a_3agetshardsize_18',['GetShardSize',['../d7/d18/classresdb_1_1MessageManager.html#a8c6f0b8442d80b01deb17f4f54bc73b1',1,'resdb::MessageManager']]],
-  ['messagemanager_3a_3aidsinsameshard_19',['IDsInSameShard',['../d7/d18/classresdb_1_1MessageManager.html#a7acdd597fd6beecf1d9ef82365a263bb',1,'resdb::MessageManager']]],
+  ['messagemanager_3a_3anodesinsameshard_19',['NodesInSameShard',['../d7/d18/classresdb_1_1MessageManager.html#abb8a46e40bb8dfebaa67cb443ed7514f',1,'resdb::MessageManager']]],
   ['messages_5f_20',['messages_',['../d9/d92/classresdb_1_1GeoTransactionExecutor.html#a05dfd4890a5b040fb0970fe229554d51',1,'resdb::GeoTransactionExecutor']]],
   ['metric_5fnames_21',['metric_names',['../d5/d10/namespaceresdb.html#a2ba745d54e501d8ff5710c47441aad5e',1,'resdb']]],
   ['metricname_22',['MetricName',['../d5/d10/namespaceresdb.html#a903a063ebd51c5fd151a96b7324b62f6',1,'resdb']]],

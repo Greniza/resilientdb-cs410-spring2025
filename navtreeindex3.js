@@ -207,10 +207,12 @@ var NAVTREEINDEX3 =
 "d5/d10/namespaceresdb.html#a90d9d655454585293866274a273df0bc":[0,0,7,113],
 "d5/d10/namespaceresdb.html#a92bea99ce90c0c721d002ab634ffa2b0":[0,0,7,100],
 "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0":[0,0,7,92],
+"d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a1cbdd9ed33037a3563800c0db195aab6":[0,0,7,92,5],
 "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a3279973d22efc152fd87dfe4f1710def":[0,0,7,92,1],
-"d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a32e1445895e83fb95fa7fb3876d8ff91":[0,0,7,92,4],
+"d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a32e1445895e83fb95fa7fb3876d8ff91":[0,0,7,92,6],
 "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a61578c8a1b468d7935d2bdf02dea3d1c":[0,0,7,92,2],
-"d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a71ceed164ea4750776c99b47b9725dbc":[0,0,7,92,5],
+"d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a71ceed164ea4750776c99b47b9725dbc":[0,0,7,92,7],
+"d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a85908c860217921cf533c905da41b166":[0,0,7,92,4],
 "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a8f60578a1667fd6eb91ee90a6e368fab":[0,0,7,92,0],
 "d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0af630efee5e3abf6506559b871738ad3d":[0,0,7,92,3],
 "d5/d10/namespaceresdb.html#a97c32c8baa5b98233ee9dc1cc0a30c13":[0,0,7,94],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "d5/d3e/classresdb_1_1LRUCache.html#a1886dafde65024014deea676a1a8904c":[0,0,7,35,5],
 "d5/d3e/classresdb_1_1LRUCache.html#a1886dafde65024014deea676a1a8904c":[1,0,0,31,5],
 "d5/d3e/classresdb_1_1LRUCache.html#a402c9265915c03891b1f67fb2dbc8b57":[0,0,7,35,7],
-"d5/d3e/classresdb_1_1LRUCache.html#a402c9265915c03891b1f67fb2dbc8b57":[1,0,0,31,7],
-"d5/d3e/classresdb_1_1LRUCache.html#a5c0212233adebdbe500dde8d6a826a24":[0,0,7,35,2],
-"d5/d3e/classresdb_1_1LRUCache.html#a5c0212233adebdbe500dde8d6a826a24":[1,0,0,31,2]
+"d5/d3e/classresdb_1_1LRUCache.html#a402c9265915c03891b1f67fb2dbc8b57":[1,0,0,31,7]
 };
