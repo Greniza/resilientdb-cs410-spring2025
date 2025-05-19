@@ -23,11 +23,14 @@
 
 namespace resdb {
 
-SystemInfo::SystemInfo() : primary_id_(1), view_(1) {}
+SystemInfo::SystemInfo() : primary_id_(1), view_(1) {
+  SetShardCount(4); // we do a little hardcoding
+}
 
 SystemInfo::SystemInfo(const ResDBConfig& config)
     : primary_id_(config.GetReplicaInfos()[0].id()), view_(1) {
   SetReplicas(config.GetReplicaInfos());
+  SetShardCount(4); // we do a little hardcoding
   LOG(ERROR) << "get primary id:" << primary_id_;
 }
 
