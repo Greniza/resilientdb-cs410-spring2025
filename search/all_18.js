@@ -51,10 +51,11 @@ var searchData=
   ['node_5fexporter_48',['Node_exporter',['..//github/workspace/platform/statistic/README.md#autotoc_md57',1,'']]],
   ['node_5fexporter_49',['node_exporter',['..//github/workspace/monitoring/README.md#autotoc_md37',1,'Download node_exporter'],['..//github/workspace/platform/statistic/README.md#autotoc_md52',1,'Install node_exporter']]],
   ['node_5fto_5fshard_5f_50',['node_to_shard_',['../d9/d27/classresdb_1_1SystemInfo.html#a42942c64d8a457d2b60b92b212d5409d',1,'resdb::SystemInfo']]],
-  ['non_20ubuntu_20account_51',['Using non-ubuntu account',['..//github/workspace/scripts/deploy/README.md#autotoc_md102',1,'']]],
-  ['non_20version_20based_20function_52',['Non-Version-Based Function',['..//github/workspace/README.md#autotoc_md90',1,'']]],
-  ['none_53',['NONE',['../d1/db2/classresdb_1_1ViewChangeManager.html#acd229d978d381feb3b0301faf83b0c81a457ab33cb8e4a477304072393fc9f1ef',1,'resdb::ViewChangeManager']]],
-  ['none_54',['None',['../d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a8f60578a1667fd6eb91ee90a6e368fab',1,'resdb']]],
-  ['num_55',['num',['../d5/db6/classresdb_1_1BatchQueue.html#a881837f76bf243bdd21eefd3c1a5fc34',1,'resdb::BatchQueue']]],
-  ['num_5fexecute_5ftx_56',['NUM_EXECUTE_TX',['../d5/d10/namespaceresdb.html#a903a063ebd51c5fd151a96b7324b62f6a0c1472ae78252d10895510a09238f43e',1,'resdb']]]
+  ['nodesinsameshard_51',['NodesInSameShard',['../d7/d18/classresdb_1_1MessageManager.html#a3ad6ab308acbb4c4d3a4986bc7b06e46',1,'resdb::MessageManager']]],
+  ['non_20ubuntu_20account_52',['Using non-ubuntu account',['..//github/workspace/scripts/deploy/README.md#autotoc_md102',1,'']]],
+  ['non_20version_20based_20function_53',['Non-Version-Based Function',['..//github/workspace/README.md#autotoc_md90',1,'']]],
+  ['none_54',['NONE',['../d1/db2/classresdb_1_1ViewChangeManager.html#acd229d978d381feb3b0301faf83b0c81a457ab33cb8e4a477304072393fc9f1ef',1,'resdb::ViewChangeManager']]],
+  ['none_55',['None',['../d5/d10/namespaceresdb.html#a9365b7af8267b084d545559cc0f87cb0a8f60578a1667fd6eb91ee90a6e368fab',1,'resdb']]],
+  ['num_56',['num',['../d5/db6/classresdb_1_1BatchQueue.html#a881837f76bf243bdd21eefd3c1a5fc34',1,'resdb::BatchQueue']]],
+  ['num_5fexecute_5ftx_57',['NUM_EXECUTE_TX',['../d5/d10/namespaceresdb.html#a903a063ebd51c5fd151a96b7324b62f6a0c1472ae78252d10895510a09238f43e',1,'resdb']]]
 ];
