@@ -105,12 +105,12 @@ uint32_t SystemInfo::GetShardOfNode(uint32_t node_id) const {
 //Returns invalid if there is no primary
 uint32_t SystemInfo::GetPrimaryOfShard(uint32_t shard_id) const {
   auto it = shard_primaries_.find(shard_id);
-  return it != shard_primaries.end() ? it->second : UINT_MAX;
+  return it != shard_primaries_.end() ? it->second : UINT_MAX;
 
 }
 
 //Sets # of Shards & clears shard mapping
-void SysttemInfo::SetShardCount(size_t count){
+void SystemInfo::SetShardCount(size_t count) {
 
   shard_count_ = count;
   node_to_shard_.clear();
@@ -128,15 +128,15 @@ void SystemInfo::AddReplicaToShard(const ReplicaInfo& replica)  {
  //Check for initalization
   if(shard_count_ == 0) {
     LOG(ERROR) << "Set the shard count";
-    return
+    return;
   }
 
 //Find shard with smallest # of nodes
   size_t target = 0;
   size_t min_size = SIZE_MAX;
 
-  for(int i = 0; i < shard_count_; ++i){
-    size_t sz = shard_to_nodes[i].size();
+  for(unsigned int i = 0; i < shard_count_; ++i){
+    size_t sz = shard_to_nodes_[i].size();
     if (sz < min_size){
       target = i;
       min_size = sz;
