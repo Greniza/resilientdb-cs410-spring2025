@@ -56,7 +56,7 @@ void SystemInfo::AddReplica(const ReplicaInfo& replica) {
     }
   }
   LOG(ERROR) << "add new replica:" << replica.DebugString();
-  replicas_.push_back(replica);
+  AddReplicaToShard(replica);
 }
 
 void SystemInfo::ProcessRequest(const SystemInfoRequest& request) {
@@ -131,7 +131,7 @@ void SystemInfo::AddReplicaToShard(const ReplicaInfo& replica)  {
     return;
   }
 
-//Find shard with smallest # of nodes
+  //Find shard with smallest # of nodes
   size_t target = 0;
   size_t min_size = SIZE_MAX;
 
@@ -142,22 +142,23 @@ void SystemInfo::AddReplicaToShard(const ReplicaInfo& replica)  {
       min_size = sz;
     }
   }
-//Add replica
-replicas_.push_back(replica);
+  //Add replica
+  replicas_.push_back(replica);
 
-//Record which shard the node belongs to 
-node_to_shard_[replica.id()] = target;
+  //Record which shard the node belongs to 
+  node_to_shard_[replica.id()] = target;
 
-//Add node to list
-shard_to_nodes_[target].push_back(replica.id());
+  //Add node to list
+  shard_to_nodes_[target].push_back(replica.id());
 
-//Check heirarchy, and designates as primary if it is first
-if(shard_primaries_.find(target) == shard_primaries_.end()){
-  shard_primaries_[target] = replica.id();
+  //Check heirarchy, and designates as primary if it is first
+  if(shard_primaries_.find(target) == shard_primaries_.end()){
+    shard_primaries_[target] = replica.id();
+  }
+  //Log for debug
+  LOG(INFO) << "Node: " << replica.id() << "Shard: " << target;
+
 }
-//Log for debug
-LOG(INFO) << "Node: " << replica.id() << "Shard: " << target;
 
- }
 } // namespace resdb
  
