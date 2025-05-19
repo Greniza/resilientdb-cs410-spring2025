@@ -457,7 +457,7 @@ $(function(){initNavTree('de/d75/pbft_2response__manager_8cpp_source.html','../.
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>  batch_request.SerializeToString(new_request-&gt;mutable_data());</div>
 <div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>  new_request-&gt;set_hash(<a class="code hl_function" href="../../d4/d30/classresdb_1_1SignatureVerifier.html#acf7b6e124421e09d9f13155a3daea5f5">SignatureVerifier::CalculateHash</a>(new_request-&gt;data()));</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>  new_request-&gt;set_proxy_id(config_.GetSelfInfo().id());</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>  <span class="keywordtype">int</span> target = system_info_-&gt;GetPrimaryOfShard(total_num_ % system_info_-&gt;GetShardCount());</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>  <span class="keywordtype">int</span> target = system_info_-&gt;GetPrimaryOfShard(send_num_ % system_info_-&gt;GetShardCount());</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  replica_communicator_-&gt;SendMessage(*new_request, target);</div>
 <div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>  send_num_++;</div>
 <div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>  <span class="comment">// LOG(INFO) &lt;&lt; &quot;send msg to primary:&quot; &lt;&lt; GetPrimary()</span></div>

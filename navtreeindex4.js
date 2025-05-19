@@ -1,6 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"d5/d3e/classresdb_1_1LRUCache.html#ac41c771954c5334557dcf964ac94b35e":[0,0,7,35,3],
 "d5/d3e/classresdb_1_1LRUCache.html#ac41c771954c5334557dcf964ac94b35e":[1,0,0,31,3],
 "d5/d4c/resdb__txn__accessor__test_8cpp.html":[2,0,6,0,6],
 "d5/d4c/resdb__txn__accessor__test_8cpp_source.html":[2,0,6,0,6],
@@ -249,5 +248,6 @@ var NAVTREEINDEX4 =
 "d6/dfb/namespaceresdb_1_1comm.html#a3fa16a6ab86b7d4bb7df6274807b9cf0a0fb835cf20450addcca83a41138a6d99":[0,0,7,1,0,2],
 "d6/dfb/namespaceresdb_1_1comm.html#a3fa16a6ab86b7d4bb7df6274807b9cf0a656c7750c6d88232e2000ee50133f6e8":[0,0,7,1,0,0],
 "d6/dfb/namespaceresdb_1_1comm.html#a3fa16a6ab86b7d4bb7df6274807b9cf0a7d7b08a9ac7cdfbcb52782b32fde0230":[0,0,7,1,0,1],
-"d6/dfb/namespaceresdb_1_1comm.html#a79c1017c46a4abc33043d8538731262f":[0,0,7,1,1]
+"d6/dfb/namespaceresdb_1_1comm.html#a79c1017c46a4abc33043d8538731262f":[0,0,7,1,1],
+"d6/dfb/namespaceresdb_1_1comm.html#ae0ff4fd3b174ea1135b011d1975c6eec":[0,0,7,1,2]
 };

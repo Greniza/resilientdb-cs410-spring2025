@@ -25,7 +25,6 @@ var classresdb_1_1MessageManager =
     [ "GetShardOfNode", "d7/d18/classresdb_1_1MessageManager.html#acfe25abe9d06808736dbbc742a523700", null ],
     [ "GetShardSize", "d7/d18/classresdb_1_1MessageManager.html#ad79ee5ebd08112f3b1c9e436c19e6865", null ],
     [ "GetStorage", "d7/d18/classresdb_1_1MessageManager.html#a5f80acfd2861da00ce8ec8d4c0dedd6e", null ],
-    [ "GetSystemInfo", "d7/d18/classresdb_1_1MessageManager.html#a151367b7619bef470fa22d3a65904cb7", null ],
     [ "GetTransactionState", "d7/d18/classresdb_1_1MessageManager.html#a210330fdb27ab9259f8e65f0e2af7d44", null ],
     [ "IsPreapared", "d7/d18/classresdb_1_1MessageManager.html#a84ab69569fb75a020efd07269a33e625", null ],
     [ "NodesInSameShard", "d7/d18/classresdb_1_1MessageManager.html#a3ad6ab308acbb4c4d3a4986bc7b06e46", null ],
