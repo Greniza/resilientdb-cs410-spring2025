@@ -22,12 +22,9 @@ var searchData=
   ['broadcast_5fcall_5f_19',['broadcast_call_',['../dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a4e51fc97c6b9434bb94646d2cda61797',1,'resdb::common::ProtocolBase']]],
   ['broadcastcallfunctype_20',['BroadcastCallFuncType',['../dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a6e76f4fca590eaabbb00824164ef851a',1,'resdb::common::ProtocolBase']]],
   ['broadcastmsg_21',['BroadCastMsg',['../de/d0d/classresdb_1_1Stats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'resdb::Stats::BroadCastMsg()'],['../db/df7/classStats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'Stats::BroadCastMsg()']]],
-  ['broadcasttoallshardleaders_22',['BroadcastToAllShardLeaders',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a943cc084797d5095812e118b7d6a6199',1,'resdb::ReplicaCommunicator']]],
-  ['broadcasttoshard_23',['BroadCastToShard',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a13e1249374ec1e2f043452ab8d1b17c8',1,'resdb::ReplicaCommunicator']]],
-  ['broadcasttoshardparticipants_24',['BroadcastToShardParticipants',['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a3741aa8b89fc0440fbbced1005a94c0b',1,'resdb::ReplicaCommunicator']]],
-  ['buff_25',['buff',['../dd/dd6/structresdb_1_1DataInfo.html#a7f39b19f8d8d6456e5d6f8a1959ec222',1,'resdb::DataInfo']]],
-  ['buffer_5f_26',['buffer_',['../d1/d44/classresdb_1_1Recovery.html#a16d630355aca59e4cf89d258939d761e',1,'resdb::Recovery']]],
-  ['buffer_5fsize_5f_27',['buffer_size_',['../d1/d44/classresdb_1_1Recovery.html#ace4eacb35dd3c48d924c653a9e8dbddd',1,'resdb::Recovery']]],
-  ['build_28',['Bazel build',['..//github/workspace/platform/statistic/README.md#autotoc_md70',1,'']]],
-  ['build_20and_20deploy_20resilientdb_29',['Build and Deploy ResilientDB',['..//github/workspace/README.md#autotoc_md81',1,'']]]
+  ['buff_22',['buff',['../dd/dd6/structresdb_1_1DataInfo.html#a7f39b19f8d8d6456e5d6f8a1959ec222',1,'resdb::DataInfo']]],
+  ['buffer_5f_23',['buffer_',['../d1/d44/classresdb_1_1Recovery.html#a16d630355aca59e4cf89d258939d761e',1,'resdb::Recovery']]],
+  ['buffer_5fsize_5f_24',['buffer_size_',['../d1/d44/classresdb_1_1Recovery.html#ace4eacb35dd3c48d924c653a9e8dbddd',1,'resdb::Recovery']]],
+  ['build_25',['Bazel build',['..//github/workspace/platform/statistic/README.md#autotoc_md70',1,'']]],
+  ['build_20and_20deploy_20resilientdb_26',['Build and Deploy ResilientDB',['..//github/workspace/README.md#autotoc_md81',1,'']]]
 ];
