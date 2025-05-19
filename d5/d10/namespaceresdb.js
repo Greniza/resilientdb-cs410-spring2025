@@ -160,6 +160,7 @@ var namespaceresdb =
     [ "GetDNSName", "d5/d10/namespaceresdb.html#ac6bc2e098eb060942e97f31c12d3660a", null ],
     [ "GetHash", "d5/d10/namespaceresdb.html#ab2cf1b4bf34a1ea57df6cbeaa24acc09", null ],
     [ "GetRSS", "d5/d10/namespaceresdb.html#a53023271e488f84297ec146a42e9efc1", null ],
+    [ "GetSystemInfo", "d5/d10/namespaceresdb.html#a9569b43775a27e6cb51cc831fad6712a", null ],
     [ "GetTcpUrl", "d5/d10/namespaceresdb.html#ab7bef7d6e060002099f2b78248b34cbc", null ],
     [ "NewRequest", "d5/d10/namespaceresdb.html#a26e13db44e53ac446f5fc96fb4cf4848", null ],
     [ "NewRequest", "d5/d10/namespaceresdb.html#a56d3b8c76b7936e7fc14a38d5ef31745", null ],

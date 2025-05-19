@@ -1,5 +1,8 @@
 var NAVTREEINDEX7 =
 {
+"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a703bf9e3ec560c4a7f20ec24ac0122de":[1,0,0,1,1,6],
+"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a703bf9e3ec560c4a7f20ec24ac0122de":[1,0,0,1,1,7],
+"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a7d414fceddccb9146ceff3d34198b96c":[0,0,7,3,1,4],
 "d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a7d414fceddccb9146ceff3d34198b96c":[0,0,7,3,1,5],
 "d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a7d414fceddccb9146ceff3d34198b96c":[1,0,0,1,1,4],
 "d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a7d414fceddccb9146ceff3d34198b96c":[1,0,0,1,1,5],
@@ -246,8 +249,5 @@ var NAVTREEINDEX7 =
 "da/d86/classresdb_1_1ResDBPoCConfig.html#af8008f29832da49713fea7a8bdef6a08":[1,0,0,58,3],
 "da/d92/pbft_2transaction__utils_8cpp.html":[2,0,8,2,2,2,26],
 "da/d92/pbft_2transaction__utils_8cpp_source.html":[2,0,8,2,2,2,26],
-"da/da7/contract_2contract__client_8h.html":[2,0,6,1,1],
-"da/da7/contract_2contract__client_8h_source.html":[2,0,6,1,1],
-"da/dae/contract__manager_8cpp.html":[2,0,4,1,1,3],
-"da/dae/contract__manager_8cpp_source.html":[2,0,4,1,1,3]
+"da/da7/contract_2contract__client_8h.html":[2,0,6,1,1]
 };

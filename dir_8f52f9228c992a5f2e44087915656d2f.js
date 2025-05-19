@@ -11,7 +11,7 @@ var dir_8f52f9228c992a5f2e44087915656d2f =
     [ "lock_free_collector_pool.cpp", "dc/d92/lock__free__collector__pool_8cpp.html", null ],
     [ "lock_free_collector_pool.h", "dc/db8/lock__free__collector__pool_8h.html", "dc/db8/lock__free__collector__pool_8h" ],
     [ "lock_free_collector_pool_test.cpp", "d2/dfd/lock__free__collector__pool__test_8cpp.html", null ],
-    [ "message_manager.cpp", "dd/d32/message__manager_8cpp.html", null ],
+    [ "message_manager.cpp", "dd/d32/message__manager_8cpp.html", "dd/d32/message__manager_8cpp" ],
     [ "message_manager.h", "d3/d62/message__manager_8h.html", "d3/d62/message__manager_8h" ],
     [ "mock_checkpoint_manager.h", "d7/d74/mock__checkpoint__manager_8h.html", "d7/d74/mock__checkpoint__manager_8h" ],
     [ "performance_manager.cpp", "d9/db3/pbft_2performance__manager_8cpp.html", null ],
