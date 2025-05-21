@@ -67,10 +67,5 @@ if __name__ == '__main__':
         tps += t
         lat += l
 
-    #Avoid divide by zero error
-    if len(tps) == 0 or len(lat) == 0:
-        print(f"ERROR: num tps = {len(tps)}, num lat = {len(lat)}\n")
-        
-    else:
-        cal_tps(tps)
-        cal_lat(lat)
+    cal_tps(tps)
+    cal_lat(lat)

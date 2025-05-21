@@ -70,6 +70,7 @@ do
   if [ $(($idx+$CLIENT_NUM)) -gt $tot ] ; then
     $CERT_TOOLS_BIN ${output_cert_path} ${ADMIN_PRIVATE_KEY} ${ADMIN_PUBLIC_KEY} ${public_key} ${idx} ${ip} ${port} client
     echo "${idx} ${ip} ${port}" >> client.config
+  
   else
     $CERT_TOOLS_BIN ${output_cert_path} ${ADMIN_PRIVATE_KEY} ${ADMIN_PUBLIC_KEY} ${public_key} ${idx} ${ip} ${port} replica
     echo "${idx} ${ip} ${port}" >> server.config
