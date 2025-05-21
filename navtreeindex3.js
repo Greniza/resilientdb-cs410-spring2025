@@ -99,8 +99,6 @@ var NAVTREEINDEX3 =
 "d4/dbb/classresdb_1_1KVClient.html#aeb8ba2021b40e6fa1eff734d6cfa1324":[1,0,0,27,1],
 "d4/dc2/utxo__client_8cpp.html":[2,0,6,4,0],
 "d4/dc2/utxo__client_8cpp_source.html":[2,0,6,4,0],
-"d4/ddd/calculate__result_8py.html":[2,0,9,0,0,0],
-"d4/ddd/calculate__result_8py_source.html":[2,0,9,0,0,0],
 "d4/de4/classresdb_1_1MockReplicaCommunicator.html":[0,0,7,43],
 "d4/de4/classresdb_1_1MockReplicaCommunicator.html":[1,0,0,39],
 "d4/de4/classresdb_1_1MockReplicaCommunicator.html#a1a565739f395261b7bfa4a6cdf30484d":[0,0,7,43,0],
@@ -249,5 +247,7 @@ var NAVTREEINDEX3 =
 "d5/d3e/classresdb_1_1LRUCache.html#a7ff49fd56077f72d842e0675408c8a33":[1,0,0,31,8],
 "d5/d3e/classresdb_1_1LRUCache.html#a80fe2fa2e12d532b7870937497e8fdbd":[0,0,7,35,6],
 "d5/d3e/classresdb_1_1LRUCache.html#a80fe2fa2e12d532b7870937497e8fdbd":[1,0,0,31,6],
-"d5/d3e/classresdb_1_1LRUCache.html#ac41c771954c5334557dcf964ac94b35e":[0,0,7,35,3]
+"d5/d3e/classresdb_1_1LRUCache.html#ac41c771954c5334557dcf964ac94b35e":[0,0,7,35,3],
+"d5/d3e/classresdb_1_1LRUCache.html#ac41c771954c5334557dcf964ac94b35e":[1,0,0,31,3],
+"d5/d4c/resdb__txn__accessor__test_8cpp.html":[2,0,6,0,6]
 };

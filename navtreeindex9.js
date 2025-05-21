@@ -48,6 +48,8 @@ var NAVTREEINDEX9 =
 "dc/d89/structresdb_1_1ConsensusManager_1_1QueueItem.html#a9b66618d4122400764da5eef59531520":[1,0,0,16,0,0],
 "dc/d92/lock__free__collector__pool_8cpp.html":[2,0,8,2,2,2,8],
 "dc/d92/lock__free__collector__pool_8cpp_source.html":[2,0,8,2,2,2,8],
+"dc/d92/performance__local_2calculate__result_8py.html":[2,0,9,0,1,0],
+"dc/d92/performance__local_2calculate__result_8py_source.html":[2,0,9,0,1,0],
 "dc/d93/classresdb_1_1common_1_1ResponseManager.html":[0,0,7,2,3],
 "dc/d93/classresdb_1_1common_1_1ResponseManager.html":[1,0,0,0,3],
 "dc/d93/classresdb_1_1common_1_1ResponseManager.html#a0a72e9140e403a03511e019b9fb3a618":[0,0,7,2,3,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX9 =
 "dd/d33/classresdb_1_1ResDBTest.html#a3502ba5e74400c58ad154cca8ec7a130":[0,0,7,64,7],
 "dd/d33/classresdb_1_1ResDBTest.html#a3502ba5e74400c58ad154cca8ec7a130":[1,0,0,60,7],
 "dd/d33/classresdb_1_1ResDBTest.html#a36dd1b079900a620b2a87e4df8cc7309":[0,0,7,64,10],
-"dd/d33/classresdb_1_1ResDBTest.html#a36dd1b079900a620b2a87e4df8cc7309":[1,0,0,60,10],
-"dd/d33/classresdb_1_1ResDBTest.html#a37fdbe225949b3c093b7d57e7b3095f3":[0,0,7,64,13],
-"dd/d33/classresdb_1_1ResDBTest.html#a37fdbe225949b3c093b7d57e7b3095f3":[1,0,0,60,13]
+"dd/d33/classresdb_1_1ResDBTest.html#a36dd1b079900a620b2a87e4df8cc7309":[1,0,0,60,10]
 };

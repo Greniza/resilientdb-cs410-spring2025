@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['cal_5flat_0',['cal_lat',['../d8/d54/namespacecalculate__result.html#a233a7bb6dbe0581c88e2a30745f60979',1,'calculate_result']]],
-  ['cal_5ftps_1',['cal_tps',['../d8/d54/namespacecalculate__result.html#af92e8ae05c60047604ea79b47d147b0c',1,'calculate_result']]],
+  ['cal_5flat_0',['cal_lat',['../d8/d54/namespacecalculate__result.html#ad3ac28d6c4d700e6e8eae6d0822c34ee',1,'calculate_result']]],
+  ['cal_5ftps_1',['cal_tps',['../d8/d54/namespacecalculate__result.html#a92be8512833d3ad03cbf0eae1d031955',1,'calculate_result']]],
   ['calculatehash_2',['CalculateHash',['../d4/d30/classresdb_1_1SignatureVerifier.html#acf7b6e124421e09d9f13155a3daea5f5',1,'resdb::SignatureVerifier']]],
   ['calculateripemd160hash_3',['CalculateRIPEMD160Hash',['../da/d1b/namespaceresdb_1_1utils.html#a0fb26398b123f4828c8a3336ed4db061',1,'resdb::utils::CalculateRIPEMD160Hash()'],['../df/d82/namespaceresdb_1_1coin_1_1utils.html#a0fb26398b123f4828c8a3336ed4db061',1,'resdb::coin::utils::CalculateRIPEMD160Hash()']]],
   ['calculatesha256hash_4',['CalculateSHA256Hash',['../da/d1b/namespaceresdb_1_1utils.html#ab61a2f1c731d3cf28006f7e31b6659eb',1,'resdb::utils::CalculateSHA256Hash()'],['../df/d82/namespaceresdb_1_1coin_1_1utils.html#ab61a2f1c731d3cf28006f7e31b6659eb',1,'resdb::coin::utils::CalculateSHA256Hash()']]],

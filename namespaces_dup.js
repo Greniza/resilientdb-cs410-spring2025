@@ -9,14 +9,14 @@ var namespaces_dup =
       [ "witver", "d2/dd8/namespaceaddr.html#a2a524a14b1da6753e8baeb0cbdee65f4", null ]
     ] ],
     [ "calculate_result", "d8/d54/namespacecalculate__result.html", [
-      [ "cal_lat", "d8/d54/namespacecalculate__result.html#a233a7bb6dbe0581c88e2a30745f60979", null ],
-      [ "cal_tps", "d8/d54/namespacecalculate__result.html#af92e8ae05c60047604ea79b47d147b0c", null ],
-      [ "read_tps", "d8/d54/namespacecalculate__result.html#aa1a662b60cf2bab2562007eb11c40dde", null ],
+      [ "cal_lat", "d8/d54/namespacecalculate__result.html#ad3ac28d6c4d700e6e8eae6d0822c34ee", null ],
+      [ "cal_tps", "d8/d54/namespacecalculate__result.html#a92be8512833d3ad03cbf0eae1d031955", null ],
+      [ "read_tps", "d8/d54/namespacecalculate__result.html#a350f10dfe4c13ec1326f7218cb72fe93", null ],
       [ "files", "d8/d54/namespacecalculate__result.html#ac08e2e91d953ee230ca01355108282b8", null ],
       [ "l", "d8/d54/namespacecalculate__result.html#a4e5a360bbed73492f4946a8ddb62739b", null ],
-      [ "lat", "d8/d54/namespacecalculate__result.html#a9fdf00a7db597322101d8fbcbf9b2ea7", null ],
+      [ "lat", "d8/d54/namespacecalculate__result.html#a68bd4e286bf291c86318989ef8c2f922", null ],
       [ "t", "d8/d54/namespacecalculate__result.html#a659010e7ae3ab15439cde90a2a68cf4a", null ],
-      [ "tps", "d8/d54/namespacecalculate__result.html#ae1fbf3fa2a9030100bc693cad754de10", null ]
+      [ "tps", "d8/d54/namespacecalculate__result.html#a750a9fc1c40961b650cd859b971bbfb5", null ]
     ] ],
     [ "generate_mulregion_config", "df/d44/namespacegenerate__mulregion__config.html", [
       [ "GenerateJsonConfig", "df/d44/namespacegenerate__mulregion__config.html#aecd97f51038d5f4f2d9763bad807efcb", null ],

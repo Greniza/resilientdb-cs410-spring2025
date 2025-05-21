@@ -9,7 +9,7 @@ var searchData=
   ['timeout_5flength_5f_6',['timeout_length_',['../d3/da3/classresdb_1_1ComplaningClients.html#a22c4f02cf40f0d904b1ca5cfbb48d1e6',1,'resdb::ComplaningClients::timeout_length_'],['../d1/db2/classresdb_1_1ViewChangeManager.html#aa7ddc35f2c5e1fffe494ebe08832cb1a',1,'resdb::ViewChangeManager::timeout_length_']]],
   ['timeout_5ftime_7',['timeout_time',['../d7/dbd/classresdb_1_1PerformanceClientTimeout.html#a9f3bf51f5e7bef1c57312c49e68f990c',1,'resdb::PerformanceClientTimeout::timeout_time'],['../da/d3e/classresdb_1_1ResponseClientTimeout.html#ac5e08eb876606022c85b6c1b28abf190',1,'resdb::ResponseClientTimeout::timeout_time'],['../d9/d00/classresdb_1_1ViewChangeTimeout.html#a496a1bbeca7a76d12324ab90b947eaec',1,'resdb::ViewChangeTimeout::timeout_time']]],
   ['total_5fnum_5f_8',['total_num_',['../dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a28805ef7db80ef7c26a4f9e0d9eb64c5',1,'resdb::common::ProtocolBase']]],
-  ['tps_9',['tps',['../d8/d54/namespacecalculate__result.html#ae1fbf3fa2a9030100bc693cad754de10',1,'calculate_result']]],
+  ['tps_9',['tps',['../d8/d54/namespacecalculate__result.html#a750a9fc1c40961b650cd859b971bbfb5',1,'calculate_result']]],
   ['transaction_5fexecutor_5f_10',['transaction_executor_',['../db/deb/classresdb_1_1common_1_1Consensus.html#a9c9bf227aac460a0831ef8e1cc98ba08',1,'resdb::common::Consensus']]],
   ['txn_5faccessor_5f_11',['txn_accessor_',['../dc/db0/classresdb_1_1CheckPointManager.html#a3f47514c194ba66e77554552feeae5cf',1,'resdb::CheckPointManager']]],
   ['txn_5fcommand_12',['txn_command',['../df/dd9/structresdb_1_1VisualData.html#a904eb50dcdd11cc327b4a4377df253fd',1,'resdb::VisualData']]],
