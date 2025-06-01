@@ -6,5 +6,7 @@ var searchData=
   ['broadcast_3',['BroadCast',['../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c',1,'resdb::ConsensusManager::BroadCast()'],['../d3/d5e/classresdb_1_1ReplicaCommunicator.html#a14668b5802825c825f8a64eeb3388323',1,'resdb::ReplicaCommunicator::BroadCast()']]],
   ['broadcast_4',['Broadcast',['../dc/da3/classresdb_1_1common_1_1ProtocolBase.html#aa9a9bba3543f6ca0edefbe8562f044a8',1,'resdb::common::ProtocolBase::Broadcast()'],['../db/deb/classresdb_1_1common_1_1Consensus.html#a2449f5dcf95fa48e2bd0bacac5b5c451',1,'resdb::common::Consensus::Broadcast()']]],
   ['broadcastmsg_5',['BroadCastMsg',['../de/d0d/classresdb_1_1Stats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'resdb::Stats::BroadCastMsg()'],['../db/df7/classStats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'Stats::BroadCastMsg()']]],
-  ['broadcasttomyshard_6',['BroadcastToMyShard',['../dd/d4b/classresdb_1_1Commitment.html#a1eae52e6c5d5c4e0cca4c759f09928f4',1,'resdb::Commitment']]]
+  ['broadcasttomyshard_6',['BroadcastToMyShard',['../dd/d4b/classresdb_1_1Commitment.html#a1eae52e6c5d5c4e0cca4c759f09928f4',1,'resdb::Commitment']]],
+  ['broadcasttomyshardbutnotme_7',['BroadcastToMyShardButNotMe',['../dd/d4b/classresdb_1_1Commitment.html#aef947f16f097e8918b5a19300e985805',1,'resdb::Commitment']]],
+  ['broadcasttoshardleads_8',['BroadcastToShardLeads',['../dd/d4b/classresdb_1_1Commitment.html#a2a307a13d2cf81f4d5177d81d83d7987',1,'resdb::Commitment']]]
 ];

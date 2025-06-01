@@ -23,9 +23,11 @@ var searchData=
   ['broadcastcallfunctype_20',['BroadcastCallFuncType',['../dc/da3/classresdb_1_1common_1_1ProtocolBase.html#a6e76f4fca590eaabbb00824164ef851a',1,'resdb::common::ProtocolBase']]],
   ['broadcastmsg_21',['BroadCastMsg',['../de/d0d/classresdb_1_1Stats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'resdb::Stats::BroadCastMsg()'],['../db/df7/classStats.html#a16b7ccdd8a90a554b1e2161f66d3c650',1,'Stats::BroadCastMsg()']]],
   ['broadcasttomyshard_22',['BroadcastToMyShard',['../dd/d4b/classresdb_1_1Commitment.html#a1eae52e6c5d5c4e0cca4c759f09928f4',1,'resdb::Commitment']]],
-  ['buff_23',['buff',['../dd/dd6/structresdb_1_1DataInfo.html#a7f39b19f8d8d6456e5d6f8a1959ec222',1,'resdb::DataInfo']]],
-  ['buffer_5f_24',['buffer_',['../d1/d44/classresdb_1_1Recovery.html#a16d630355aca59e4cf89d258939d761e',1,'resdb::Recovery']]],
-  ['buffer_5fsize_5f_25',['buffer_size_',['../d1/d44/classresdb_1_1Recovery.html#ace4eacb35dd3c48d924c653a9e8dbddd',1,'resdb::Recovery']]],
-  ['build_26',['Bazel build',['..//github/workspace/platform/statistic/README.md#autotoc_md70',1,'']]],
-  ['build_20and_20deploy_20resilientdb_27',['Build and Deploy ResilientDB',['..//github/workspace/README.md#autotoc_md81',1,'']]]
+  ['broadcasttomyshardbutnotme_23',['BroadcastToMyShardButNotMe',['../dd/d4b/classresdb_1_1Commitment.html#aef947f16f097e8918b5a19300e985805',1,'resdb::Commitment']]],
+  ['broadcasttoshardleads_24',['BroadcastToShardLeads',['../dd/d4b/classresdb_1_1Commitment.html#a2a307a13d2cf81f4d5177d81d83d7987',1,'resdb::Commitment']]],
+  ['buff_25',['buff',['../dd/dd6/structresdb_1_1DataInfo.html#a7f39b19f8d8d6456e5d6f8a1959ec222',1,'resdb::DataInfo']]],
+  ['buffer_5f_26',['buffer_',['../d1/d44/classresdb_1_1Recovery.html#a16d630355aca59e4cf89d258939d761e',1,'resdb::Recovery']]],
+  ['buffer_5fsize_5f_27',['buffer_size_',['../d1/d44/classresdb_1_1Recovery.html#ace4eacb35dd3c48d924c653a9e8dbddd',1,'resdb::Recovery']]],
+  ['build_28',['Bazel build',['..//github/workspace/platform/statistic/README.md#autotoc_md70',1,'']]],
+  ['build_20and_20deploy_20resilientdb_29',['Build and Deploy ResilientDB',['..//github/workspace/README.md#autotoc_md81',1,'']]]
 ];

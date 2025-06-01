@@ -146,8 +146,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a61fcfbed3b1725f9f11da4e31feae68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1eae52e6c5d5c4e0cca4c759f09928f4" id="r_a1eae52e6c5d5c4e0cca4c759f09928f4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1eae52e6c5d5c4e0cca4c759f09928f4">BroadcastToMyShard</a> (const google::protobuf::Message &amp;message)</td></tr>
 <tr class="separator:a1eae52e6c5d5c4e0cca4c759f09928f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab646fef10dd4e3b199aa27781abdfdfa" id="r_ab646fef10dd4e3b199aa27781abdfdfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab646fef10dd4e3b199aa27781abdfdfa">Commitment::BroadcastToMyShardButNotMe</a> (const google::protobuf::Message &amp;message)</td></tr>
-<tr class="separator:ab646fef10dd4e3b199aa27781abdfdfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef947f16f097e8918b5a19300e985805" id="r_aef947f16f097e8918b5a19300e985805"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef947f16f097e8918b5a19300e985805">BroadcastToMyShardButNotMe</a> (const google::protobuf::Message &amp;message)</td></tr>
+<tr class="separator:aef947f16f097e8918b5a19300e985805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a307a13d2cf81f4d5177d81d83d7987" id="r_a2a307a13d2cf81f4d5177d81d83d7987"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a307a13d2cf81f4d5177d81d83d7987">BroadcastToShardLeads</a> (const google::protobuf::Message &amp;message)</td></tr>
+<tr class="separator:a2a307a13d2cf81f4d5177d81d83d7987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -266,8 +268,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab646fef10dd4e3b199aa27781abdfdfa" name="ab646fef10dd4e3b199aa27781abdfdfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab646fef10dd4e3b199aa27781abdfdfa">&#9670;&#160;</a></span>Commitment::BroadcastToMyShardButNotMe()</h2>
+<a id="aef947f16f097e8918b5a19300e985805" name="aef947f16f097e8918b5a19300e985805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef947f16f097e8918b5a19300e985805">&#9670;&#160;</a></span>BroadcastToMyShardButNotMe()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,7 +278,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void resdb::Commitment::Commitment::BroadcastToMyShardButNotMe </td>
+          <td class="memname">void resdb::Commitment::BroadcastToMyShardButNotMe </td>
           <td>(</td>
           <td class="paramtype">const google::protobuf::Message &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
           <td></td>
@@ -284,10 +286,39 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../df/d25/commitment_8cpp_source.html#l00433">433</a> of file <a class="el" href="../../df/d25/commitment_8cpp_source.html">commitment.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2a307a13d2cf81f4d5177d81d83d7987" name="a2a307a13d2cf81f4d5177d81d83d7987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a307a13d2cf81f4d5177d81d83d7987">&#9670;&#160;</a></span>BroadcastToShardLeads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resdb::Commitment::BroadcastToShardLeads </td>
+          <td>(</td>
+          <td class="paramtype">const google::protobuf::Message &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../df/d25/commitment_8cpp_source.html#l00446">446</a> of file <a class="el" href="../../df/d25/commitment_8cpp_source.html">commitment.cpp</a>.</p>
 
 </div>
 </div>
@@ -520,7 +551,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00067">67</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00068">68</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -544,7 +575,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00080">80</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00081">81</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -568,7 +599,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00069">69</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00070">70</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -592,7 +623,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00074">74</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00075">75</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -616,7 +647,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00068">68</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00069">69</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -640,7 +671,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00079">79</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00080">80</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -664,7 +695,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00077">77</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00078">78</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -688,7 +719,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00076">76</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00077">77</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -728,7 +759,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00071">71</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00072">72</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -768,7 +799,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00070">70</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00071">71</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
@@ -792,7 +823,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00073">73</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/dc3/commitment_8h_source.html#l00074">74</a> of file <a class="el" href="../../dd/dc3/commitment_8h_source.html">commitment.h</a>.</p>
 
 </div>
 </div>
