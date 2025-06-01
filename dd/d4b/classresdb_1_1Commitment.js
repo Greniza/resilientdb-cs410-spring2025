@@ -2,6 +2,8 @@ var classresdb_1_1Commitment =
 [
     [ "Commitment", "dd/d4b/classresdb_1_1Commitment.html#a7cbe79c34bd0694da632bd19fb2114a0", null ],
     [ "~Commitment", "dd/d4b/classresdb_1_1Commitment.html#a88083294ed66b6e6446a1cd0b8f01392", null ],
+    [ "BroadcastToMyShard", "dd/d4b/classresdb_1_1Commitment.html#a1eae52e6c5d5c4e0cca4c759f09928f4", null ],
+    [ "Commitment::BroadcastToMyShardButNotMe", "dd/d4b/classresdb_1_1Commitment.html#ab646fef10dd4e3b199aa27781abdfdfa", null ],
     [ "GetDuplicateManager", "dd/d4b/classresdb_1_1Commitment.html#a4b1bcaf6fb42276d1b019bd5f5fe420e", null ],
     [ "PostProcessExecutedMsg", "dd/d4b/classresdb_1_1Commitment.html#a61fcfbed3b1725f9f11da4e31feae68c", null ],
     [ "ProcessCommitMsg", "dd/d4b/classresdb_1_1Commitment.html#a26030536e901f2304479d8b01b5ea487", null ],
