@@ -59,6 +59,10 @@ class Commitment {
  protected:
   virtual int PostProcessExecutedMsg();
 
+  // Project 3 Utility Functions
+  virtual void BroadcastToMyShard(const google::protobuf::Message &message);
+  void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &message);
+
  protected:
   ResDBConfig config_;
   MessageManager* message_manager_;

@@ -149,9 +149,7 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
   user_request->set_primary_id(config_.GetSelfInfo().id());
 
   // Project 3: Broadcast to shard coordinators instead of all nodes
-  for (int i = 0; i<message_manager_->GetShardCount(); i++) {
-        replica_communicator_->SendMessage(*user_request, message_manager_->GetPrimaryOfShard(i));
-    }
+  BroadcastToShardLeads(*user_request);
   // replica_communicator_->BroadcastToAllShardLeaders(*user_request, message_manager_);
 
   return 0;
@@ -253,10 +251,13 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
       }
     }
     else {
+
+      // PROJECT 4 TODO: Change this to Paxos Promise / Accept
+      // (Once the leader sees enough Promises, which are prepare-type messages, it broadcasts Accept, which is also of prepare-type)
+
       // (PHASE 3.5)
       // Broadcast prepare to entire shard
-      for (int i = 0; i<message_manager_->GetShardOfNode(message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))); i++)
-        replica_communicator_->SendMessage(*prepare_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
+      BroadcastToMyShard(*prepare_request);
     }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
@@ -320,9 +321,11 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
       }
     }
     else {
+      
+      // PROJECT 4 TODO: Change this to Paxos Learn
+
       // We're on the local phase, so we broadcast the commit message locally
-      for (int i = 0; i<message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id())); i++)
-        replica_communicator_->SendMessage(*commit_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
+      BroadcastToMyShard(*commit_request);
     }
 
   }
@@ -368,21 +371,20 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
       global_stats_->RecordStateTime("commit");
     }
     else  {
+      
+      // PROJECT 4 TODO: Convert this to Paxos Prepare
+
       // (PHASE 3) Move to local PBFT
       // broadcast a propose request to current shard's participants (excluding self)
       std::unique_ptr<Request> propose_request = resdb::NewRequest(
         Request::TYPE_PRE_PREPARE, *request, config_.GetSelfInfo().id());
-      uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
-      for (int i = 0; i<message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id())); i++)
-        if (message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i] != config_.GetSelfInfo().id())
-        replica_communicator_->SendMessage(*propose_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
+      BroadcastToMyShardButNotMe(*propose_request);
       
       // We also broadcast a prepare request here, because we've implicitly bypassed proposing the 
       // txn to ourselves.
       std::unique_ptr<Request> prepare_request = resdb::NewRequest(
         Request::TYPE_PREPARE, *request, config_.GetSelfInfo().id());
-      for (int i = 0; i<message_manager_->GetShardSize(message_manager_->GetShardOfNode(config_.GetSelfInfo().id())); i++)
-        replica_communicator_->SendMessage(*prepare_request, message_manager_->GetNodesInShard(message_manager_->GetShardOfNode(config_.GetSelfInfo().id()))[i]);
+      BroadcastToMyShard(*prepare_request);
     }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
@@ -415,6 +417,38 @@ int Commitment::PostProcessExecutedMsg() {
   }
   return 0;
 }
+
+// Project 4 add-on messages
+// Frankly, these should've been written here in project 3.
+
+void Commitment::BroadcastToMyShard(const google::protobuf::Message &message) {
+  uint32_t my_shard_id = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+
+  for (int i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
+    replica_communicator_->SendMessage(message, message_manager_->GetNodesInShard(my_shard_id)[i]);
+  }
+}
+
+
+void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &message) {
+  uint32_t my_shard_id = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+
+  for (int i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
+    uint32_t target_node_id = message_manager_->GetNodesInShard(my_shard_id)[i];
+    
+    if (target_node_id != config_.GetSelfInfo().id()) {
+      replica_communicator_->SendMessage(message, message_manager_->GetNodesInShard(my_shard_id)[i]);
+    }
+  }
+}
+
+
+void Commitment::BroadcastToShardLeads(const google::protobuf::Message &message) {
+  for (int i = 0; i<message_manager_->GetShardCount(); i++) {
+    replica_communicator_->SendMessage(*message, message_manager_->GetPrimaryOfShard(i));
+  }
+}
+
 
 DuplicateManager* Commitment::GetDuplicateManager() {
   return duplicate_manager_.get();
