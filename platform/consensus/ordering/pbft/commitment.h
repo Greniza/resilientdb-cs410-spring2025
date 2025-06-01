@@ -61,7 +61,8 @@ class Commitment {
 
   // Project 3 Utility Functions
   virtual void BroadcastToMyShard(const google::protobuf::Message &message);
-  void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &message);
+  virtual void BroadcastToMyShardButNotMe(const google::protobuf::Message &message);
+  virtual void BroadcastToShardLeads(const google::protobuf::Message &message);
 
  protected:
   ResDBConfig config_;
