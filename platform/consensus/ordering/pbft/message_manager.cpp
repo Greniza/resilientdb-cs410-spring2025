@@ -205,6 +205,7 @@ bool MessageManager::MayConsensusChangeStatus(
       break;
     case TransactionStatue::READY_COMMIT:
       // (PHASE 3) Shard leaders move to local PBFT, sending proposal messages to their participants.
+      // (PAXOS PREPARE)
       if (type == Request::TYPE_COMMIT) {
         if (received_count >= 1) {
           return status->compare_exchange_strong(
@@ -215,18 +216,26 @@ bool MessageManager::MayConsensusChangeStatus(
       break;
     case TransactionStatue::READY_LOCAL_PREPARE:
       // (PHASE 4) Prepare phase of local PBFT
+      // (PAXOS PROMISE / ACCEPT)
       if (type == Request::TYPE_PREPARE) {
         bool ok = false;
-        if (config_.GetSelfInfo().id() != GetCurrentPrimary()) {
-          // Nonprimary nodes need to have recieved 2f+1 prepare requests
-          ok = (received_count >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
+        if (config_.GetSelfInfo().id() == GetCurrentPrimary()) {
+          // The primary recieved a prepare message from each shard leader and itself during 2PC.
+          // So, it needs one less because it does not recognize its own rebroadcast.
+          ok = (received_count - system_info_->GetShardCount() >=
+                _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
+        }
+        else if (config_.GetSelfInfo().id() == GetPrimaryOfNode(config_.GetSelfInfo().id())) {
+          // Similarly, the individual shard leads have previously seen a prepare from exactly themselves.
+          ok = (received_count >=
+                _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
         }
         else {
-          // The supercoordinator recieves votes in the form of prepare messages,
-          // and if we reach this point, we know that we've recieved one from
-          // each shard coordinator.
-          ok = (received_count - (system_info_->GetShardCount() - 1) >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
+          // Finally, if we're neither a local nor global leader, we only care about seeing 1.
+          ok = (received_count >= 1);
         }
+
+
         if (ok) {
           return status->compare_exchange_strong(
             old_status, TransactionStatue::READY_LOCAL_COMMIT,
@@ -244,6 +253,8 @@ bool MessageManager::MayConsensusChangeStatus(
           return true;
         }
       }
+      break;
+    default:
       break;
   }
   return ret;

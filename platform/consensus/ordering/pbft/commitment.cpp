@@ -252,12 +252,28 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
     }
     else {
 
-      // PROJECT 4 TODO: Change this to Paxos Promise / Accept
+      // PROJECT 4: Paxos Promise / Accept
       // (Once the leader sees enough Promises, which are prepare-type messages, it broadcasts Accept, which is also of prepare-type)
 
-      // (PHASE 3.5)
-      // Broadcast prepare to entire shard
-      BroadcastToMyShard(*prepare_request);
+      uint32_t my_shard_lead = message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
+
+      // PROMISE: We aren't a shard lead, and we just saw a Propose. (Promise number is handled... where exactly? TODO.)
+      uint64_t seq_ = request->seq();
+      if (config_.GetSelfInfo().id() != my_shard_lead) {
+        // I probably shouldn't be piggybacking on GetHighestPreparedSeq here.
+        if (message_manager_->GetHighestPreparedSeq() <= seq_) {
+          message_manager_->SetHighestPreparedSeq(seq_);
+          replica_communicator_->SendMessage(*prepare_request, my_shard_lead);
+        }
+        else {
+          return -2; // I think we want to return a -2, because it means that we've been sent a prepare we can't accept
+        }
+      }
+
+      // ACCEPT: We ARE the shard lead, and we just got enough Promises. Time to send an Accept.
+      else {
+        BroadcastToMyShard(*prepare_request);
+      }
     }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
@@ -322,10 +338,12 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     }
     else {
       
-      // PROJECT 4 TODO: Change this to Paxos Learn
-
-      // We're on the local phase, so we broadcast the commit message locally
-      BroadcastToMyShard(*commit_request);
+      // PROJECT 4: Paxos Learn
+      if (message_manager_->GetHighestPreparedSeq() <= seq_) {
+          message_manager_->SetHighestPreparedSeq(seq_);
+          BroadcastToMyShard(*commit_request);
+        }
+      
     }
 
   }
@@ -372,19 +390,12 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
     }
     else  {
       
-      // PROJECT 4 TODO: Convert this to Paxos Prepare
+      // PROJECT 4: Paxos Prepare (TODO: TXN numbering)
 
-      // (PHASE 3) Move to local PBFT
-      // broadcast a propose request to current shard's participants (excluding self)
+      // Send a Prepare to my shard.
       std::unique_ptr<Request> propose_request = resdb::NewRequest(
         Request::TYPE_PRE_PREPARE, *request, config_.GetSelfInfo().id());
       BroadcastToMyShardButNotMe(*propose_request);
-      
-      // We also broadcast a prepare request here, because we've implicitly bypassed proposing the 
-      // txn to ourselves.
-      std::unique_ptr<Request> prepare_request = resdb::NewRequest(
-        Request::TYPE_PREPARE, *request, config_.GetSelfInfo().id());
-      BroadcastToMyShard(*prepare_request);
     }
   }
   return ret == CollectorResultCode::INVALID ? -2 : 0;
@@ -393,7 +404,6 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
 // =========== private threads ===========================
 // If the transaction is executed, send back to the proxy.
 
-// TODO: Only one shard replies to the client.
 int Commitment::PostProcessExecutedMsg() {
   while (!stop_) {
     auto batch_resp = message_manager_->GetResponseMsg();
@@ -445,7 +455,7 @@ void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &mes
 
 void Commitment::BroadcastToShardLeads(const google::protobuf::Message &message) {
   for (int i = 0; i<message_manager_->GetShardCount(); i++) {
-    replica_communicator_->SendMessage(*message, message_manager_->GetPrimaryOfShard(i));
+    replica_communicator_->SendMessage(message, message_manager_->GetPrimaryOfShard(i));
   }
 }
 
