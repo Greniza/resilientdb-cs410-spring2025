@@ -606,7 +606,7 @@ $(function(){initNavTree('d0/df5/replica__communicator_8cpp_source.html','../../
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno"><a class="line" href="../../d3/d5e/classresdb_1_1ReplicaCommunicator.html#ad13ada80abc6ed59ae769f1a2ec6fdac">  466</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d5e/classresdb_1_1ReplicaCommunicator.html#ab8b0a3119de675fb700227bef378ad57">ReplicaCommunicator::SendMessage</a>(<span class="keyword">const</span> google::protobuf::Message&amp; message,</div>
 <div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>                                      int64_t node_id) {</div>
 <div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>  <span class="comment">// Logging for debug</span></div>
-<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>  LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;Searching for replica with ID: &quot;</span> &lt;&lt; node_id;</div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>  LOG(INFO) &lt;&lt; <span class="stringliteral">&quot;Searching for replica with ID: &quot;</span> &lt;&lt; node_id;</div>
 <div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>  ReplicaInfo target_replica;</div>
 <div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; replica : replicas_) {</div>
 <div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>    <span class="keywordflow">if</span> (replica.id() == node_id) {</div>
