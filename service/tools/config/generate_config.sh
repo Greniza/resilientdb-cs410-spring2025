@@ -26,7 +26,7 @@ base_port=$1; shift
 
 iplist=$@
 
-echo "generage certificates"
+echo "generate certificates"
 
 echo "base path:"$base_path
 echo "key path:"$key_path

@@ -17,7 +17,20 @@
 # under the License.
 #
 
+#Added 17 IPs -> 16 Replicas + 1 Client
 iplist=(
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
+127.0.0.1
 127.0.0.1
 127.0.0.1
 127.0.0.1
@@ -28,7 +41,7 @@ iplist=(
 WORKSPACE=$PWD
 CERT_PATH=$PWD/service/tools/data/cert/
 CONFIG_PATH=$PWD/service/tools/config/
-PORT_BASE=20000
+PORT_BASE=10000
 CLIENT_NUM=1
 
 ./service/tools/config/generate_config.sh ${WORKSPACE} ${CERT_PATH} ${CERT_PATH} ${CONFIG_PATH} ${CERT_PATH} ${CLIENT_NUM} ${PORT_BASE} ${iplist[@]} 

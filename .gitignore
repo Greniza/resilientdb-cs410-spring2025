@@ -21,3 +21,6 @@ resdb/
 100*_db/
 gmon.out
 scripts/deploy/data/cert/*
+service/tools/data/cert
+server*.log
+client.log

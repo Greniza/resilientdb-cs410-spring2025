@@ -465,6 +465,8 @@ void ReplicaCommunicator::BroadCast(const google::protobuf::Message& message) {
 
 void ReplicaCommunicator::SendMessage(const google::protobuf::Message& message,
                                       int64_t node_id) {
+  // Logging for debug
+  LOG(ERROR) << "Searching for replica with ID: " << node_id;
   ReplicaInfo target_replica;
   for (const auto& replica : replicas_) {
     if (replica.id() == node_id) {
@@ -482,7 +484,8 @@ void ReplicaCommunicator::SendMessage(const google::protobuf::Message& message,
   }
 
   if (target_replica.ip().empty()) {
-    LOG(ERROR) << "no replica info";
+    // LOG for tracing replica ip
+    LOG(ERROR) << "Target replica ID: " << target_replica.id();
     return;
   }
 
