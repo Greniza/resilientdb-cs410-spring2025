@@ -12,23 +12,18 @@ num_replicas=16
 #Generate keys / certificates for each node 
 echo "generating keys and certificates for 16 replicas and 1 client"
 ./node-auth.sh $num_replicas
-echo "Waiting..."
-sleep 30
+sleep 10
 
 # Initialize the servers
 echo "starting service..."
 ./service/tools/kv/server_tools/start_kv_service.sh &
 echo "Waiting for build to finish"
-sleep 240
+sleep 20
 echo "Build finished"
 echo ""
 
 SERVICE_PID=$!
 echo "service started in background (PID: $SERVICE_PID)."
-
-#Wait to check if servers are active
-echo "Waiting for server log check..."
-sleep 60
 
 #Build bazel api tools
 echo "Building bazel api-tools..."
@@ -44,11 +39,12 @@ echo "Beginning basic benchmark"
 
 while [ $SECONDS -le 30 ]
 do
-    for j in $(seq 1 1000)
+    for j in $(seq 1 10)
     do
     echo "setting key $j"
     # $SRV_TOOL --config $CONF --cmd set --key $j --value $SECONDS
     $SRV_TOOL $CONF set $j $SECONDS > /dev/null
+    sleep 1
     echo "Setting key = $j value = $SECONDS"
     done
 done

@@ -30,7 +30,12 @@ SystemInfo::SystemInfo() : primary_id_(1), view_(1) {
 SystemInfo::SystemInfo(const ResDBConfig& config)
     : primary_id_(config.GetReplicaInfos()[0].id()), view_(1) {
   SetReplicas(config.GetReplicaInfos());
+  // LOG(ERROR) << "REPLICA INFOS: "<<config.GetReplicaInfos()
   SetShardCount(4); // we do a little hardcoding
+  for (size_t i=0; i<GetReplicas().size(); i++) {
+    AddReplicaToShard(replicas_[i]);
+  }
+  // AddReplicaToShard(replicas_)
   LOG(ERROR) << "get primary id:" << primary_id_;
 }
 
@@ -58,7 +63,7 @@ void SystemInfo::AddReplica(const ReplicaInfo& replica) {
       return;
     }
   }
-  LOG(ERROR) << "add new replica:" << replica.DebugString();
+  LOG(ERROR) << "add new replica: (In AddReplica)" << replica.DebugString();
   AddReplicaToShard(replica);
 }
 
@@ -68,6 +73,7 @@ void SystemInfo::ProcessRequest(const SystemInfoRequest& request) {
       NewReplicaRequest info;
       if (info.ParseFromString(request.request())) {
         AddReplica(info.replica_info());
+        LOG(ERROR) << "Adding a new replica (In ProcessRequest)";
       }
     } break;
     default:
@@ -100,15 +106,27 @@ std::vector<uint32_t> SystemInfo::GetNodesInShard(uint32_t shard_id) const {
 //Returns Specific ID of given node
 //Reutns invalid id if not assigned
 uint32_t SystemInfo::GetShardOfNode(uint32_t node_id) const {
-  auto it = node_to_shard_.find(node_id);
-  return it != node_to_shard_.end() ? it->second : UINT32_MAX;
+  // auto it = node_to_shard_.find(node_id);
+  // return it != node_to_shard_.end() ? it->second : UINT32_MAX;
+  for (const auto& pair : node_to_shard_) {
+    if (pair.first == node_id) {
+        return pair.second;
+    }
+  }
+  return UINT32_MAX;
 }
 
 //Returns the NodeID that is primary for a given shard ID
 //Returns invalid if there is no primary
 uint32_t SystemInfo::GetPrimaryOfShard(uint32_t shard_id) const {
-  auto it = shard_primaries_.find(shard_id);
-  return it != shard_primaries_.end() ? it->second : UINT_MAX;
+  // auto it = shard_primaries_.find(shard_id);
+  // return it != shard_primaries_.end() ? it->second : UINT32_MAX;
+  for (const auto& pair : shard_primaries_) {
+        if (pair.first == shard_id) {
+            return pair.second;
+        }
+    }
+    return UINT32_MAX;
 
 }
 
@@ -139,17 +157,21 @@ void SystemInfo::AddReplicaToShard(const ReplicaInfo& replica)  {
   size_t min_size = SIZE_MAX;
 
   for(unsigned int i = 0; i < shard_count_; ++i){
-    size_t sz = shard_to_nodes_[i].size();
+    auto it = shard_to_nodes_.find(i);
+    size_t sz =(it != shard_to_nodes_.end()) ? it->second.size() : 0;
     if (sz < min_size){
       target = i;
       min_size = sz;
+      
     }
   }
   //Add replica
-  replicas_.push_back(replica);
+  // replicas_.push_back(replica);
+  // LOG(ERROR) << "Target is Shard: "<< target << " With shard size: " << min_size;
 
   //Record which shard the node belongs to 
   node_to_shard_[replica.id()] = target;
+  // LOG(ERROR) << "Replica: " << replica.id() << " Added to Shard: " << target;
 
   //Add node to list
   shard_to_nodes_[target].push_back(replica.id());
@@ -159,7 +181,7 @@ void SystemInfo::AddReplicaToShard(const ReplicaInfo& replica)  {
     shard_primaries_[target] = replica.id();
   }
   //Log for debug
-  LOG(INFO) << "Node: " << replica.id() << "Shard: " << target;
+  LOG(ERROR) << "Node: " << replica.id() << " Shard: " << target;
 
 }
 
