@@ -466,7 +466,7 @@ void ReplicaCommunicator::BroadCast(const google::protobuf::Message& message) {
 void ReplicaCommunicator::SendMessage(const google::protobuf::Message& message,
                                       int64_t node_id) {
   // Logging for debug
-  LOG(ERROR) << "Searching for replica with ID: " << node_id;
+  LOG(INFO) << "Searching for replica with ID: " << node_id;
   ReplicaInfo target_replica;
   for (const auto& replica : replicas_) {
     if (replica.id() == node_id) {

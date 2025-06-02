@@ -64,8 +64,9 @@ echo ""
 check_server_ready() {
     local node_num=$1
     local log_file=$2
-    local ready_message="Server $node_num is ready"
-    
+    # local ready_message="Server $node_num is ready"
+    #Check if all replicas can connect before claiming ready
+    local ready_message="receive public size:16"
     if [ -f "$log_file" ] && grep -q "$ready_message" "$log_file"; then
         return 0
     else
@@ -223,7 +224,7 @@ for node_num in $(seq 0 $((num_replicas-1))); do
     echo "  Started with PID: $pid"
 
     # Brief pause between starts
-    sleep 1
+    sleep 0.01
 
     # Quick check if process started (but don't wait for ready)
     if ! check_process_running $pid $node_num; then

@@ -434,7 +434,7 @@ int Commitment::PostProcessExecutedMsg() {
 void Commitment::BroadcastToMyShard(const google::protobuf::Message &message) {
   uint32_t my_shard_id = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
 
-  for (int i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
+  for (size_t i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
     replica_communicator_->SendMessage(message, message_manager_->GetNodesInShard(my_shard_id)[i]);
   }
 }
@@ -443,7 +443,7 @@ void Commitment::BroadcastToMyShard(const google::protobuf::Message &message) {
 void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &message) {
   uint32_t my_shard_id = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
 
-  for (int i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
+  for (size_t i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
     uint32_t target_node_id = message_manager_->GetNodesInShard(my_shard_id)[i];
     
     if (target_node_id != config_.GetSelfInfo().id()) {
@@ -454,7 +454,7 @@ void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &mes
 
 
 void Commitment::BroadcastToShardLeads(const google::protobuf::Message &message) {
-  for (int i = 0; i<message_manager_->GetShardCount(); i++) {
+  for (size_t i = 0; i<message_manager_->GetShardCount(); i++) {
     replica_communicator_->SendMessage(message, message_manager_->GetPrimaryOfShard(i));
   }
 }
