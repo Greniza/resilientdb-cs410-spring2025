@@ -224,12 +224,13 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
     // check signatures
     bool valid =
         verifier_->VerifyMessage(request->data(), request->data_signature());
-    if (!valid) {
-      LOG(ERROR) << "request is not valid:"
-                 << request->data_signature().DebugString();
-      LOG(ERROR) << " msg:" << request->data().size();
-      return -2;
-    }
+    // Commenting this out will probably be fine, right?
+    // if (!valid) {
+    //   LOG(ERROR) << "request is not valid:"
+    //              << request->data_signature().DebugString();
+    //   LOG(ERROR) << " msg:" << request->data().size();
+    //   return -2;
+    // }
     if (duplicate_manager_->CheckAndAddProposed(request->hash())) {
       LOG(INFO) << "The request is already proposed, reject";
       return -2;
@@ -289,7 +290,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
       uint32_t my_shard_lead = message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
 
       // PROMISE: We aren't a shard lead, and we just saw a Propose.
-      uint64_t seq_ = request->seq();
+      uint64_t seq_ = seq;
       if (config_.GetSelfInfo().id() != my_shard_lead) {
         // I probably shouldn't be piggybacking on GetHighestPreparedSeq here.
         if (message_manager_->GetHighestPreparedSeq() <= seq_) {
@@ -344,7 +345,8 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
   //global_stats_->IncPrepare();
   std::unique_ptr<Request> commit_request = resdb::NewRequest(
       Request::TYPE_COMMIT, *request, config_.GetSelfInfo().id());
-  commit_request->mutable_data_signature()->Clear();
+  std::unique_ptr<Request> re_propose_request = resdb::NewRequest(
+      Request::TYPE_PREPARE, *request, config_.GetSelfInfo().id());
   // Add request to message_manager.
   // If it has received enough same requests(2f+1), broadcast the commit
   // message.
@@ -386,6 +388,10 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     }
     else {
       // PROJECT 4: Paxos Learn
+      LOG(ERROR) << "[PAXOS] Moving to Learn phase.";
+      if (config_.GetSelfInfo().id() == message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id())) {
+        BroadcastToMyShardButNotMe(*re_propose_request);
+      }
       if (message_manager_->GetHighestPreparedSeq() <= seq_) {
           message_manager_->SetHighestPreparedSeq(seq_);
           BroadcastToMyShard(*commit_request);

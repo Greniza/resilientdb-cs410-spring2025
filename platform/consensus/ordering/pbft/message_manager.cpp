@@ -234,7 +234,7 @@ bool MessageManager::MayConsensusChangeStatus(
         }
         else if (config_.GetSelfInfo().id() == GetPrimaryOfNode(config_.GetSelfInfo().id())) {
           // Similarly, the individual shard leads have previously seen a prepare from exactly themselves.
-          ok = (received_count >=
+          ok = (received_count - 1 >=
                 _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
         }
         else {
