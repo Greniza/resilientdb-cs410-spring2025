@@ -64,9 +64,9 @@ echo ""
 check_server_ready() {
     local node_num=$1
     local log_file=$2
-    # local ready_message="Server $node_num is ready"
+    local ready_message="Server $node_num is ready"
     #Check if all replicas can connect before claiming ready
-    local ready_message="receive public size:16"
+    # local ready_message="receive public size:16"
     if [ -f "$log_file" ] && grep -q "$ready_message" "$log_file"; then
         return 0
     else
@@ -156,6 +156,7 @@ wait_for_client_ready() {
     local client_num=$2
     local log_file="client.log"  # Use original log file name
     local ready_message="Server $client_num is ready"  
+    # local ready_message="receive public size:17"
     
     echo "Waiting for client (node $client_num) to be ready..."
     echo "Monitoring log file: $log_file"

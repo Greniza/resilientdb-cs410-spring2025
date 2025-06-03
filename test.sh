@@ -49,7 +49,7 @@ do
     sleep 1
 done
 
-sleep 10
+sleep 120
 
 #Stop the servers
 killall -9 kv_service

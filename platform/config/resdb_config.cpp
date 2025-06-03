@@ -119,16 +119,16 @@ size_t ResDBConfig::GetReplicaNum() const { return replicas_.size(); }
 int ResDBConfig::GetMinDataReceiveNum() const {
   // 2PC CHANGE!
   int f = replicas_.size() - 1;
-  f = 3; // Change for 16-replica 4-way sharding
-  return f;
+  //f = 3; // Change for 16-replica 4-way sharding // Changed again for server start
+  return 16;
   // return std::max(2 * f + 1, 1);
 }
 
 int ResDBConfig::GetMinClientReceiveNum() const {
   // 2PC CHANGE!
   int f = replicas_.size() - 1;
-  f = 3; // Change for 16-replica 4-way sharding
-  return f;
+  // f = 3; // Change for 16-replica 4-way sharding // Changed again for server start
+  return 17;
   // int f = (replicas_.size() - 1) / 3;
   // return std::max(f + 1, 1);
 }
