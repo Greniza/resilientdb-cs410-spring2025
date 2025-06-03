@@ -167,7 +167,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
     replica_communicator_->SendMessage(*request, message_manager_->GetPrimaryOfShard(shard));
 
-    LOG(INFO) << "Subnode recieved message meant for shard coordinator in, "
+    LOG(ERROR) << "Subnode recieved message meant for shard coordinator in, "
               << message_manager_->GetPrimaryOfShard(shard);
     return -3;
   }
@@ -195,7 +195,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
 
 
   // Propose may come from either shard coord or primary
-  if ((request->sender_id() != message_manager_->GetCurrentPrimary()) &&
+  if ((config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id())) &&
       (request->sender_id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
     LOG(ERROR) << "the request is not from primary/shard coordinator. sender:"
                << request->sender_id() << " seq:" << request->seq();
@@ -248,22 +248,21 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
   message_manager_->SetPrimary(request->primary_id());
   CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
   message_manager_->SetPrimary((old_primary));
-  
+
   if (ret == CollectorResultCode::STATE_CHANGED) {
-    
-    if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {
+    if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {  // This is hanging the entire database?
+                                                                                                      // Not even the function itself, just the function call?
+                                                                                                      // What the hell?
       // (PHASE 1)
-      replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
-    
-      if (config_.GetSelfInfo().id() != request->primary_id()) {
-        replica_communicator_->SendMessage(*prepare_request,  request->primary_id());
-      }
+      LOG(ERROR) << "[2PC] TXN proposal successful. Sending primary an affirmative vote.";
+      replica_communicator_->SendMessage(*prepare_request,  request->primary_id());
     }
     else {
 
       // PROJECT 4: Paxos Promise / Accept
       // (Once the leader sees enough Promises, which are prepare-type messages, it broadcasts Accept, which is also of prepare-type)
 
+      LOG(ERROR) << "[PAX] Recieved Propose.";
       uint32_t my_shard_lead = message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
 
       // PROMISE: We aren't a shard lead, and we just saw a Propose.
@@ -285,11 +284,13 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
       }
     }
   }
+  LOG(ERROR) << "8";
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
 // If receive 2f+1 prepare message, broadcast a commit message.
 int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_ptr<Request> request) {
+  LOG(ERROR) << "Recieved prepare-type for TXN (seq=" << request->seq() << ")";
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
   if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
@@ -298,7 +299,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
     replica_communicator_->SendMessage(*request, message_manager_->GetPrimaryOfShard(shard));
 
-    LOG(INFO) << "Subnode recieved message meant for coordinator, "
+    LOG(ERROR) << "Subnode recieved message meant for coordinator, "
               << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
     return -3;
   }
@@ -367,6 +368,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
 
 // If receive 2f+1 commit message, commit the request.
 int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
+  LOG(ERROR) << "Recieved commit-type for TXN (seq=" << request->seq() << ")";
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
   if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {

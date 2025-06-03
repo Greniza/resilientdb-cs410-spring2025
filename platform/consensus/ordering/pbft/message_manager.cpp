@@ -331,6 +331,7 @@ std::vector<RequestInfo> MessageManager::GetPreparedProof(uint64_t seq) {
 }
 
 TransactionStatue MessageManager::GetTransactionState(uint64_t seq) {
+  LOG(ERROR) << "7.6";
   return collector_pool_->GetCollector(seq)->GetStatus();
 }
 
