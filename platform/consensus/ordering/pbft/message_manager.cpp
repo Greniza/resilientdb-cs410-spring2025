@@ -333,6 +333,22 @@ std::vector<RequestInfo> MessageManager::GetPreparedProof(uint64_t seq) {
 TransactionStatue MessageManager::GetTransactionState(uint64_t seq) {
   LOG(ERROR) << "7.6";
   return collector_pool_->GetCollector(seq)->GetStatus();
+  // LOG(ERROR) << "[DBG] Entered GetTransactionState(seq=" << seq << ")";
+
+  // LOG(ERROR) << "[DBG] About to call collector_pool_->GetCollector(" << seq << ")";
+  // auto* collector = collector_pool_->GetCollector(seq);
+  // LOG(ERROR) << "[DBG] Returned from GetCollector: " << collector;
+
+  // if (collector == nullptr) {
+  //   LOG(ERROR) << "[ERR] GetCollector returned nullptr for seq=" << seq;
+  //   // (bail out or handle as appropriate)
+  //   return TransactionStatue::UNKNOWN;  
+  // }
+
+  // LOG(ERROR) << "[DBG] Calling collector->GetStatus()";
+  // auto status = collector->GetStatus();
+  // LOG(ERROR) << "[DBG] Got status=" << status;
+  // return status;
 }
 
 int MessageManager::GetReplicaState(ReplicaState* state) {

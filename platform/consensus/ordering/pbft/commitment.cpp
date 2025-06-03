@@ -244,21 +244,42 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
 
   // Add request to message_manager.
   // Changed for project 3
+  // uint32_t old_primary = message_manager_->GetCurrentPrimary();
+  // message_manager_->SetPrimary(request->primary_id());
+  // CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  // message_manager_->SetPrimary((old_primary));
+
+  // if (ret == CollectorResultCode::STATE_CHANGED) {
+  //   LOG(ERROR) << "??? hangs here";
+  //   if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {  // This is hanging the entire database?
+  //                                                                                                     // Not even the function itself, just the function call?
+  //                                                                                                     // What the hell?
+  //     // (PHASE 1)
+  //     LOG(ERROR) << "[2PC] TXN proposal successful. Sending primary an affirmative vote.";
+  //     replica_communicator_->SendMessage(*prepare_request,  request->primary_id());
+  //   }
+  //   else {
+  
+  //CHANGED- Pull seq and primary id out of the request prior to moving request
+  uint64_t seq = request->seq();              
+  uint32_t primary = request->primary_id();
+
+  // Now move request into AddConsensusMsg
   uint32_t old_primary = message_manager_->GetCurrentPrimary();
-  message_manager_->SetPrimary(request->primary_id());
-  CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
-  message_manager_->SetPrimary((old_primary));
+  message_manager_->SetPrimary(primary);
+  CollectorResultCode ret =
+      message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  message_manager_->SetPrimary(old_primary);
 
   if (ret == CollectorResultCode::STATE_CHANGED) {
-    LOG(ERROR) << "??? hangs here";
-    if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {  // This is hanging the entire database?
-                                                                                                      // Not even the function itself, just the function call?
-                                                                                                      // What the hell?
-      // (PHASE 1)
+    LOG(ERROR) << "??? no longer hanging here";
+
+    // use the saved 'seq' instead of `request->seq()`
+    if (message_manager_->GetTransactionState(seq) ==
+        TransactionStatue::READY_PREPARE) {
       LOG(ERROR) << "[2PC] TXN proposal successful. Sending primary an affirmative vote.";
-      replica_communicator_->SendMessage(*prepare_request,  request->primary_id());
-    }
-    else {
+      replica_communicator_->SendMessage(*prepare_request, primary);
+    } else {
 
       // PROJECT 4: Paxos Promise / Accept
       // (Once the leader sees enough Promises, which are prepare-type messages, it broadcasts Accept, which is also of prepare-type)
