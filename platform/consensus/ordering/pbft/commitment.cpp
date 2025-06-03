@@ -250,6 +250,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
   message_manager_->SetPrimary((old_primary));
 
   if (ret == CollectorResultCode::STATE_CHANGED) {
+    LOG(ERROR) << "??? hangs here";
     if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {  // This is hanging the entire database?
                                                                                                       // Not even the function itself, just the function call?
                                                                                                       // What the hell?
@@ -284,7 +285,6 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
       }
     }
   }
-  LOG(ERROR) << "8";
   return ret == CollectorResultCode::INVALID ? -2 : 0;
 }
 
