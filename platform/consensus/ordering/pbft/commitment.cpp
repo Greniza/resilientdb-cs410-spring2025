@@ -158,7 +158,7 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
 
 // Receive the pre-prepare message from the primary.
 int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
-  LOG(ERROR) << "Recieved propose-type for TXN (seq=" << request->seq() << ")";
+  LOG(ERROR) << "Recieved propose-type for TXN (seq=" << request->seq() << ", sent by=" << request->sender_id() << ")";;
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
   if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))              // Not sent by my coordinator AND
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {  // I am not a coordinator
@@ -272,13 +272,14 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
   message_manager_->SetPrimary(old_primary);
 
   if (ret == CollectorResultCode::STATE_CHANGED) {
-    LOG(ERROR) << "??? no longer hanging here";
+    // LOG(ERROR) << "??? no longer hanging here";
 
     // use the saved 'seq' instead of `request->seq()`
     if (message_manager_->GetTransactionState(seq) ==
         TransactionStatue::READY_PREPARE) {
       LOG(ERROR) << "[2PC] TXN proposal successful. Sending primary an affirmative vote.";
       replica_communicator_->SendMessage(*prepare_request, primary);
+      replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
     } else {
 
       // PROJECT 4: Paxos Promise / Accept
@@ -311,7 +312,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
 
 // If receive 2f+1 prepare message, broadcast a commit message.
 int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_ptr<Request> request) {
-  LOG(ERROR) << "Recieved prepare-type for TXN (seq=" << request->seq() << ")";
+  LOG(ERROR) << "Recieved prepare-type for TXN (seq="  << request->seq() << ", sent by=" << request->sender_id() << ")";
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
   if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
@@ -335,6 +336,11 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     message_manager_->SetPrimary((old_primary));
     return ret;
   }
+
+
+  uint64_t seq = request->seq();              
+  uint32_t primary = request->primary_id();
+
   //global_stats_->IncPrepare();
   std::unique_ptr<Request> commit_request = resdb::NewRequest(
       Request::TYPE_COMMIT, *request, config_.GetSelfInfo().id());
@@ -342,11 +348,12 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
   // Add request to message_manager.
   // If it has received enough same requests(2f+1), broadcast the commit
   // message.
-  uint64_t seq_ = request->seq();
+  uint64_t seq_ = seq;
   uint32_t old_primary = message_manager_->GetCurrentPrimary();
-  message_manager_->SetPrimary(request->primary_id());
+  message_manager_->SetPrimary(primary);
   CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
   message_manager_->SetPrimary((old_primary));
+
   if (ret == CollectorResultCode::STATE_CHANGED) {
     if (message_manager_->GetHighestPreparedSeq() < seq_) {
       message_manager_->SetHighestPreparedSeq(seq_);
@@ -368,13 +375,16 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     if (message_manager_->GetTransactionState(seq_) == TransactionStatue::READY_COMMIT) {
       // (PHASE 2)
       global_stats_->RecordStateTime("prepare");
-      if (config_.GetSelfInfo().id() == request->primary_id()) {
-        replica_communicator_->BroadCast(*commit_request);
+      if (config_.GetSelfInfo().id() == primary) {
+        LOG(ERROR) << "[2PC] Primary saw enough yes votes to move to commit.";
+        BroadcastToShardLeads(*commit_request);
         // 2PC MOD
+      }
+      else {
+        LOG(ERROR) << "[2PC] Nonprimary saw its own vote, moves to ready_commit.";
       }
     }
     else {
-      
       // PROJECT 4: Paxos Learn
       if (message_manager_->GetHighestPreparedSeq() <= seq_) {
           message_manager_->SetHighestPreparedSeq(seq_);
@@ -389,7 +399,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
 
 // If receive 2f+1 commit message, commit the request.
 int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
-  LOG(ERROR) << "Recieved commit-type for TXN (seq=" << request->seq() << ")";
+  LOG(ERROR) << "Recieved commit-type for TXN (seq=" << request->seq() << ", sent by=" << request->sender_id() << ")";
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
   if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
       && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
@@ -419,16 +429,23 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
   // commit the request.
 
   // Altered for project 3.
+
+  uint64_t seq = request->seq();              
+  uint32_t primary = request->primary_id();
+  std::unique_ptr<Request> propose_request = resdb::NewRequest(
+        Request::TYPE_PRE_PREPARE, *request, config_.GetSelfInfo().id());
+
   uint32_t old_primary = message_manager_->GetCurrentPrimary();
-  message_manager_->SetPrimary(request->primary_id());
+  message_manager_->SetPrimary(primary);
   resdb::CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
   message_manager_->SetPrimary((old_primary));
   if (ret == CollectorResultCode::STATE_CHANGED) {
     
     // LOG(ERROR)<<request->data().size();
     // global_stats_->GetTransactionDetails(request->data());
-    if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_EXECUTE) {
+    if (message_manager_->GetTransactionState(seq) == TransactionStatue::READY_EXECUTE) {
       // (PHASE 5) In this case, we've actually performed a commit operation
+      LOG(ERROR) << "TXN executed locally.";
       global_stats_->RecordStateTime("commit");
     }
     else  {
@@ -436,8 +453,7 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
       // PROJECT 4: Paxos Prepare (TODO: TXN numbering)
 
       // Send a Prepare to my shard.
-      std::unique_ptr<Request> propose_request = resdb::NewRequest(
-        Request::TYPE_PRE_PREPARE, *request, config_.GetSelfInfo().id());
+      LOG(ERROR) << "TXN recieved Commit on nonlocal, moving to local phase.";
       BroadcastToMyShardButNotMe(*propose_request);
     }
   }
@@ -476,8 +492,10 @@ int Commitment::PostProcessExecutedMsg() {
 
 void Commitment::BroadcastToMyShard(const google::protobuf::Message &message) {
   uint32_t my_shard_id = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+  LOG(ERROR) << "[BTMS] Broadcasting to my shard (" << my_shard_id << ")";
 
   for (size_t i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
+    LOG(ERROR) << "[BTMSBNM]\t\tSending to " << message_manager_->GetNodesInShard(my_shard_id)[i] << " ...";
     replica_communicator_->SendMessage(message, message_manager_->GetNodesInShard(my_shard_id)[i]);
   }
 }
@@ -485,11 +503,13 @@ void Commitment::BroadcastToMyShard(const google::protobuf::Message &message) {
 
 void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &message) {
   uint32_t my_shard_id = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
+  LOG(ERROR) << "[BTMSBNM] Broatcasting to everyone else in my shard (" << my_shard_id << ")";
 
   for (size_t i = 0; i<message_manager_->GetShardSize(my_shard_id); i++) {
     uint32_t target_node_id = message_manager_->GetNodesInShard(my_shard_id)[i];
     
     if (target_node_id != config_.GetSelfInfo().id()) {
+      LOG(ERROR) << "[BTMSBNM]\t\tSending to " << target_node_id << " ...";
       replica_communicator_->SendMessage(message, message_manager_->GetNodesInShard(my_shard_id)[i]);
     }
   }
