@@ -32,5 +32,6 @@ var classresdb_1_1MessageManager =
     [ "SetDuplicateManager", "d7/d18/classresdb_1_1MessageManager.html#a086f2369e6e992e3f186cd8c4c60a168", null ],
     [ "SetHighestPreparedSeq", "d7/d18/classresdb_1_1MessageManager.html#a4cf2194e60da0708bcc87d09c2a4a133", null ],
     [ "SetLastCommittedTime", "d7/d18/classresdb_1_1MessageManager.html#a0265ab61f90ec9af5043de1bc977a718", null ],
-    [ "SetNextSeq", "d7/d18/classresdb_1_1MessageManager.html#ac1f9731985836ead3438abaa99509c62", null ]
+    [ "SetNextSeq", "d7/d18/classresdb_1_1MessageManager.html#ac1f9731985836ead3438abaa99509c62", null ],
+    [ "SetPrimary", "d7/d18/classresdb_1_1MessageManager.html#a77a9bef0ce3fcc48fe292237ce6f9d8d", null ]
 ];

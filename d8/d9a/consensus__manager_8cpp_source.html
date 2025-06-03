@@ -347,193 +347,194 @@ $(function(){initNavTree('d8/d9a/consensus__manager_8cpp_source.html','../../');
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>  }</div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;receive public size:&quot;</span> &lt;&lt; hb_info.public_keys().size()</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>             &lt;&lt; <span class="stringliteral">&quot; primary:&quot;</span> &lt;&lt; hb_info.primary()</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>             &lt;&lt; <span class="stringliteral">&quot; version:&quot;</span> &lt;&lt; hb_info.version()</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>             &lt;&lt; <span class="stringliteral">&quot; from region:&quot;</span> &lt;&lt; request-&gt;region_info().region_id()</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>             &lt;&lt; <span class="stringliteral">&quot; sender:&quot;</span> &lt;&lt; hb_info.sender()</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>             &lt;&lt; <span class="stringliteral">&quot; last send:&quot;</span> &lt;&lt; hb_info.hb_version()</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>             &lt;&lt; <span class="stringliteral">&quot; current v:&quot;</span> &lt;&lt; hb_[hb_info.sender()];</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>  <span class="keywordflow">if</span> (request-&gt;region_info().region_id() ==</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>      <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData().self_region_id()) {</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetPublicKeyCertificateInfo()</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            .public_key()</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            .public_key_info()</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            .type() == CertificateKeyInfo::CLIENT) {</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>      <span class="comment">// TODO count 2f+1 before setting a new primary</span></div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>      <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">SetPrimary</a>(hb_info.primary(), hb_info.version());</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    }</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>  }</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  <span class="keywordtype">int</span> replica_num = 0;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  <span class="comment">// Update the public keys received from others.</span></div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; public_key : hb_info.public_keys()) {</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a> &amp;&amp; !<a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a>-&gt;AddPublicKey(public_key)) {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>      LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;set public key fail from:&quot;</span></div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                 &lt;&lt; public_key.public_key_info().node_id();</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    }</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keywordflow">if</span> (request-&gt;region_info().region_id() !=</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData().self_region_id()) {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>      <span class="comment">// LOG(ERROR) &lt;&lt; &quot;key from other region:&quot;</span></div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>      <span class="comment">//           &lt;&lt; request-&gt;region_info().region_id();</span></div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    }</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    ReplicaInfo info;</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    info.set_ip(public_key.public_key_info().ip());</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    info.set_port(public_key.public_key_info().port());</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    info.set_id(public_key.public_key_info().node_id());</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordflow">if</span> (info.ip().empty()) {</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>      LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;public doesn&#39;t have ip, skip&quot;</span>;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    }</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="comment">// Check whether there is a new replica joining.</span></div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="comment">// TODO notify new replica</span></div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">if</span> (public_key.public_key_info().type() == CertificateKeyInfo::REPLICA) {</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>      replica_num++;</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>      <span class="keywordflow">if</span> (!ReplicaExisted(info, replicas)) {</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        <span class="comment">// AddNewReplica(info);</span></div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>      }</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>      <span class="keywordflow">if</span> (!ReplicaExisted(info, clients_)) {</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">AddNewClient</a>(info);</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>      }</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    }</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>  }</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>  <span class="keywordflow">if</span> (!hb_info.ip().empty() &amp;&amp; hb_info.hb_version() &gt; 0 &amp;&amp;</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>      hb_[hb_info.sender()] != hb_info.hb_version()) {</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    ReplicaInfo info;</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    info.set_ip(hb_info.ip());</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    info.set_port(hb_info.port());</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    info.set_id(hb_info.sender());</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    <span class="comment">// bc_client_-&gt;Flush(info);</span></div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    hb_[hb_info.sender()] = hb_info.hb_version();</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    SendHeartBeat();</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>  }</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>  <span class="keywordflow">if</span> (!is_ready_ &amp;&amp; replica_num &gt;= <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetMinDataReceiveNum()) {</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;============ Server &quot;</span> &lt;&lt; <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetSelfInfo().id()</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>               &lt;&lt; <span class="stringliteral">&quot; is ready &quot;</span></div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                  <span class="stringliteral">&quot;=====================&quot;</span>;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    is_ready_ = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>  }</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>}</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;[HEARTBEAT] &quot;</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>             &lt;&lt; <span class="stringliteral">&quot;receive public size:&quot;</span> &lt;&lt; hb_info.public_keys().size()</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>             &lt;&lt; <span class="stringliteral">&quot; primary:&quot;</span> &lt;&lt; hb_info.primary()</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>             &lt;&lt; <span class="stringliteral">&quot; version:&quot;</span> &lt;&lt; hb_info.version()</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>             &lt;&lt; <span class="stringliteral">&quot; from region:&quot;</span> &lt;&lt; request-&gt;region_info().region_id()</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>             &lt;&lt; <span class="stringliteral">&quot; sender:&quot;</span> &lt;&lt; hb_info.sender()</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>             &lt;&lt; <span class="stringliteral">&quot; last send:&quot;</span> &lt;&lt; hb_info.hb_version()</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>             &lt;&lt; <span class="stringliteral">&quot; current v:&quot;</span> &lt;&lt; hb_[hb_info.sender()];</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>  <span class="keywordflow">if</span> (request-&gt;region_info().region_id() ==</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>      <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData().self_region_id()) {</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetPublicKeyCertificateInfo()</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            .public_key()</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            .public_key_info()</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>            .type() == CertificateKeyInfo::CLIENT) {</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>      <span class="comment">// TODO count 2f+1 before setting a new primary</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>      <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">SetPrimary</a>(hb_info.primary(), hb_info.version());</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    }</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  }</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  <span class="keywordtype">int</span> replica_num = 0;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  <span class="comment">// Update the public keys received from others.</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; public_key : hb_info.public_keys()) {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a> &amp;&amp; !<a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a>-&gt;AddPublicKey(public_key)) {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>      LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;set public key fail from:&quot;</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                 &lt;&lt; public_key.public_key_info().node_id();</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    }</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <span class="keywordflow">if</span> (request-&gt;region_info().region_id() !=</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData().self_region_id()) {</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>      <span class="comment">// LOG(ERROR) &lt;&lt; &quot;key from other region:&quot;</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>      <span class="comment">//           &lt;&lt; request-&gt;region_info().region_id();</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    }</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    ReplicaInfo info;</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    info.set_ip(public_key.public_key_info().ip());</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    info.set_port(public_key.public_key_info().port());</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    info.set_id(public_key.public_key_info().node_id());</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keywordflow">if</span> (info.ip().empty()) {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>      LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;public doesn&#39;t have ip, skip&quot;</span>;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    }</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <span class="comment">// Check whether there is a new replica joining.</span></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="comment">// TODO notify new replica</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keywordflow">if</span> (public_key.public_key_info().type() == CertificateKeyInfo::REPLICA) {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>      replica_num++;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>      <span class="keywordflow">if</span> (!ReplicaExisted(info, replicas)) {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        <span class="comment">// AddNewReplica(info);</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>      }</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>      <span class="keywordflow">if</span> (!ReplicaExisted(info, clients_)) {</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">AddNewClient</a>(info);</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>      }</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    }</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>  }</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>  <span class="keywordflow">if</span> (!hb_info.ip().empty() &amp;&amp; hb_info.hb_version() &gt; 0 &amp;&amp;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>      hb_[hb_info.sender()] != hb_info.hb_version()) {</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    ReplicaInfo info;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    info.set_ip(hb_info.ip());</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    info.set_port(hb_info.port());</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    info.set_id(hb_info.sender());</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="comment">// bc_client_-&gt;Flush(info);</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    hb_[hb_info.sender()] = hb_info.hb_version();</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    SendHeartBeat();</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  }</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>  <span class="keywordflow">if</span> (!is_ready_ &amp;&amp; replica_num &gt;= <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetMinDataReceiveNum()) {</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;============ Server &quot;</span> &lt;&lt; <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetSelfInfo().id()</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>               &lt;&lt; <span class="stringliteral">&quot; is ready &quot;</span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                  <span class="stringliteral">&quot;=====================&quot;</span>;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    is_ready_ = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>  }</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>}</div>
 </div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
-<div class="foldopen" id="foldopen00302" data-start="{" data-end="}">
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a3c2e731d6921a66d99c25878b3cf930c">  302</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a3c2e731d6921a66d99c25878b3cf930c">ConsensusManager::ConsensusCommit</a>(std::unique_ptr&lt;Context&gt; context,</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                                      std::unique_ptr&lt;Request&gt; request) {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>}</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="foldopen" id="foldopen00303" data-start="{" data-end="}">
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a3c2e731d6921a66d99c25878b3cf930c">  303</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a3c2e731d6921a66d99c25878b3cf930c">ConsensusManager::ConsensusCommit</a>(std::unique_ptr&lt;Context&gt; context,</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                                      std::unique_ptr&lt;Request&gt; request) {</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>}</div>
 </div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="foldopen" id="foldopen00307" data-start="{" data-end="}">
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a7b4dcef53558f06a66b3d7fac75b162a">  307</a></span>std::vector&lt;ReplicaInfo&gt; <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a7b4dcef53558f06a66b3d7fac75b162a">ConsensusManager::GetClientReplicas</a>() {</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>  <span class="keywordflow">return</span> clients_;</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>}</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
+<div class="foldopen" id="foldopen00308" data-start="{" data-end="}">
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a7b4dcef53558f06a66b3d7fac75b162a">  308</a></span>std::vector&lt;ReplicaInfo&gt; <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a7b4dcef53558f06a66b3d7fac75b162a">ConsensusManager::GetClientReplicas</a>() {</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>  <span class="keywordflow">return</span> clients_;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>}</div>
 </div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
-<div class="foldopen" id="foldopen00311" data-start="{" data-end="}">
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0b75916105a323382321e50d95dec456">  311</a></span>std::vector&lt;ReplicaInfo&gt; <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0b75916105a323382321e50d95dec456">ConsensusManager::GetAllReplicas</a>() {</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>  <span class="keyword">auto</span> config_data = <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData();</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  std::vector&lt;ReplicaInfo&gt; ret;</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; r : config_data.region()) {</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; replica : r.replica_info()) {</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>      ret.push_back(replica);</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    }</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>  }</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>  <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>}</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
+<div class="foldopen" id="foldopen00312" data-start="{" data-end="}">
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0b75916105a323382321e50d95dec456">  312</a></span>std::vector&lt;ReplicaInfo&gt; <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0b75916105a323382321e50d95dec456">ConsensusManager::GetAllReplicas</a>() {</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  <span class="keyword">auto</span> config_data = <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData();</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  std::vector&lt;ReplicaInfo&gt; ret;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; r : config_data.region()) {</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; replica : r.replica_info()) {</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>      ret.push_back(replica);</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    }</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>  }</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>}</div>
 </div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> </div>
-<div class="foldopen" id="foldopen00322" data-start="{" data-end="}">
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c">  322</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c">ConsensusManager::BroadCast</a>(<span class="keyword">const</span> Request&amp; request) {</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>  <span class="keywordtype">int</span> ret = bc_client_-&gt;SendMessage(request);</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>  <span class="keywordflow">if</span> (ret &lt; 0) {</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;broadcast request fail:&quot;</span>;</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>  }</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>}</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
+<div class="foldopen" id="foldopen00323" data-start="{" data-end="}">
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c">  323</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c">ConsensusManager::BroadCast</a>(<span class="keyword">const</span> Request&amp; request) {</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>  <span class="keywordtype">int</span> ret = bc_client_-&gt;SendMessage(request);</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>  <span class="keywordflow">if</span> (ret &lt; 0) {</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;broadcast request fail:&quot;</span>;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>  }</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>}</div>
 </div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
-<div class="foldopen" id="foldopen00329" data-start="{" data-end="}">
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a574518f7c10d7de0c079dfdad4a4c536">  329</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a574518f7c10d7de0c079dfdad4a4c536">ConsensusManager::SendMessage</a>(<span class="keyword">const</span> google::protobuf::Message&amp; message,</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>                                   int64_t node_id) {</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>  std::vector&lt;ReplicaInfo&gt; replicas = <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac849142ab5ae823044a70383b106a0a3">GetReplicas</a>();</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>  ReplicaInfo target_replica;</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; replica : replicas) {</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    <span class="keywordflow">if</span> (replica.id() == node_id) {</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>      target_replica = replica;</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>      <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    }</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>  }</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>  <span class="keywordflow">if</span> (target_replica.ip().empty()) {</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>  }</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>  <span class="keywordtype">int</span> ret = bc_client_-&gt;SendMessage(message, target_replica);</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>  <span class="keywordflow">if</span> (ret &lt; 0) {</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;broadcast request fail:&quot;</span>;</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>  }</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>}</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
+<div class="foldopen" id="foldopen00330" data-start="{" data-end="}">
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a574518f7c10d7de0c079dfdad4a4c536">  330</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a574518f7c10d7de0c079dfdad4a4c536">ConsensusManager::SendMessage</a>(<span class="keyword">const</span> google::protobuf::Message&amp; message,</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>                                   int64_t node_id) {</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>  std::vector&lt;ReplicaInfo&gt; replicas = <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac849142ab5ae823044a70383b106a0a3">GetReplicas</a>();</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>  ReplicaInfo target_replica;</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; replica : replicas) {</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    <span class="keywordflow">if</span> (replica.id() == node_id) {</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>      target_replica = replica;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    }</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>  }</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span> </div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>  <span class="keywordflow">if</span> (target_replica.ip().empty()) {</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>  }</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>  <span class="keywordtype">int</span> ret = bc_client_-&gt;SendMessage(message, target_replica);</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>  <span class="keywordflow">if</span> (ret &lt; 0) {</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    LOG(ERROR) &lt;&lt; <span class="stringliteral">&quot;broadcast request fail:&quot;</span>;</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>  }</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>}</div>
 </div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> </div>
-<div class="foldopen" id="foldopen00350" data-start="{" data-end="}">
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#aebd2d390f956d6128174963605dc1dbe">  350</a></span>std::unique_ptr&lt;ReplicaCommunicator&gt; <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#aebd2d390f956d6128174963605dc1dbe">ConsensusManager::GetReplicaClient</a>(</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    <span class="keyword">const</span> std::vector&lt;ReplicaInfo&gt;&amp; replicas, <span class="keywordtype">bool</span> is_use_long_conn) {</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>  <span class="keywordflow">return</span> std::make_unique&lt;ReplicaCommunicator&gt;(</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>      replicas,</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>      <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a> == <span class="keyword">nullptr</span> || <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData().not_need_signature()</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>          ? <span class="keyword">nullptr</span></div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>          : <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a>.get(),</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>      is_use_long_conn, <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetOutputWorkerNum(), <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetTcpBatchNum());</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>}</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
+<div class="foldopen" id="foldopen00351" data-start="{" data-end="}">
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#aebd2d390f956d6128174963605dc1dbe">  351</a></span>std::unique_ptr&lt;ReplicaCommunicator&gt; <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#aebd2d390f956d6128174963605dc1dbe">ConsensusManager::GetReplicaClient</a>(</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    <span class="keyword">const</span> std::vector&lt;ReplicaInfo&gt;&amp; replicas, <span class="keywordtype">bool</span> is_use_long_conn) {</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>  <span class="keywordflow">return</span> std::make_unique&lt;ReplicaCommunicator&gt;(</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>      replicas,</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>      <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a> == <span class="keyword">nullptr</span> || <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetConfigData().not_need_signature()</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>          ? <span class="keyword">nullptr</span></div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>          : <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">verifier_</a>.get(),</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>      is_use_long_conn, <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetOutputWorkerNum(), <a class="code hl_variable" href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">config_</a>.GetTcpBatchNum());</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>}</div>
 </div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#ad36706c5920f10c6200b3dad3b79534e">  360</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ad36706c5920f10c6200b3dad3b79534e">ConsensusManager::AddNewReplica</a>(<span class="keyword">const</span> ReplicaInfo&amp; info) {}</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
-<div class="foldopen" id="foldopen00362" data-start="{" data-end="}">
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">  362</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">ConsensusManager::AddNewClient</a>(<span class="keyword">const</span> ReplicaInfo&amp; info) {</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>  clients_.push_back(info);</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>  bc_client_-&gt;UpdateClientReplicas(clients_);</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>}</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span> </div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#ad36706c5920f10c6200b3dad3b79534e">  361</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ad36706c5920f10c6200b3dad3b79534e">ConsensusManager::AddNewReplica</a>(<span class="keyword">const</span> ReplicaInfo&amp; info) {}</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> </div>
+<div class="foldopen" id="foldopen00363" data-start="{" data-end="}">
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">  363</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">ConsensusManager::AddNewClient</a>(<span class="keyword">const</span> ReplicaInfo&amp; info) {</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>  clients_.push_back(info);</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>  bc_client_-&gt;UpdateClientReplicas(clients_);</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>}</div>
 </div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">  367</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">ConsensusManager::SetPrimary</a>(uint32_t primary, uint64_t version) {}</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a5d13be9749d0960aab81fef99500b3c7">  369</a></span>uint32_t <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a5d13be9749d0960aab81fef99500b3c7">ConsensusManager::GetPrimary</a>() { <span class="keywordflow">return</span> 1; }</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#afddbd1de6fd7a2a629e593e879fc1b5e">  371</a></span>uint32_t <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#afddbd1de6fd7a2a629e593e879fc1b5e">ConsensusManager::GetVersion</a>() { <span class="keywordflow">return</span> 1; }</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>}  <span class="comment">// namespace resdb</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">  368</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">ConsensusManager::SetPrimary</a>(uint32_t primary, uint64_t version) {}</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#a5d13be9749d0960aab81fef99500b3c7">  370</a></span>uint32_t <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#a5d13be9749d0960aab81fef99500b3c7">ConsensusManager::GetPrimary</a>() { <span class="keywordflow">return</span> 1; }</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno"><a class="line" href="../../da/d19/classresdb_1_1ConsensusManager.html#afddbd1de6fd7a2a629e593e879fc1b5e">  372</a></span>uint32_t <a class="code hl_function" href="../../da/d19/classresdb_1_1ConsensusManager.html#afddbd1de6fd7a2a629e593e879fc1b5e">ConsensusManager::GetVersion</a>() { <span class="keywordflow">return</span> 1; }</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>}  <span class="comment">// namespace resdb</span></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a023b9259270f16d3361a4b1e3aafbd22"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a023b9259270f16d3361a4b1e3aafbd22">resdb::ConsensusManager::Process</a></div><div class="ttdeci">virtual int Process(std::unique_ptr&lt; Context &gt; context, std::unique_ptr&lt; DataInfo &gt; request_info)</div><div class="ttdef"><b>Definition</b> <a href="#l00163">consensus_manager.cpp:163</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a0b75916105a323382321e50d95dec456"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a0b75916105a323382321e50d95dec456">resdb::ConsensusManager::GetAllReplicas</a></div><div class="ttdeci">std::vector&lt; ReplicaInfo &gt; GetAllReplicas()</div><div class="ttdef"><b>Definition</b> <a href="#l00311">consensus_manager.cpp:311</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a0ef369732b69f2073f5ed4abca09170c"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c">resdb::ConsensusManager::BroadCast</a></div><div class="ttdeci">virtual void BroadCast(const Request &amp;request)</div><div class="ttdef"><b>Definition</b> <a href="#l00322">consensus_manager.cpp:322</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a0b75916105a323382321e50d95dec456"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a0b75916105a323382321e50d95dec456">resdb::ConsensusManager::GetAllReplicas</a></div><div class="ttdeci">std::vector&lt; ReplicaInfo &gt; GetAllReplicas()</div><div class="ttdef"><b>Definition</b> <a href="#l00312">consensus_manager.cpp:312</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a0ef369732b69f2073f5ed4abca09170c"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a0ef369732b69f2073f5ed4abca09170c">resdb::ConsensusManager::BroadCast</a></div><div class="ttdeci">virtual void BroadCast(const Request &amp;request)</div><div class="ttdef"><b>Definition</b> <a href="#l00323">consensus_manager.cpp:323</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a0f94d4f9eea5b4f7c3385619575b614d"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a0f94d4f9eea5b4f7c3385619575b614d">resdb::ConsensusManager::Stop</a></div><div class="ttdeci">void Stop()</div><div class="ttdef"><b>Definition</b> <a href="#l00071">consensus_manager.cpp:71</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a16c33f11ace1b062e79c6b31271a6b93"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a16c33f11ace1b062e79c6b31271a6b93">resdb::ConsensusManager::ProcessHeartBeat</a></div><div class="ttdeci">int ProcessHeartBeat(std::unique_ptr&lt; Context &gt; context, std::unique_ptr&lt; Request &gt; request)</div><div class="ttdef"><b>Definition</b> <a href="#l00216">consensus_manager.cpp:216</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a3c2e731d6921a66d99c25878b3cf930c"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a3c2e731d6921a66d99c25878b3cf930c">resdb::ConsensusManager::ConsensusCommit</a></div><div class="ttdeci">virtual int ConsensusCommit(std::unique_ptr&lt; Context &gt; context, std::unique_ptr&lt; Request &gt; request)</div><div class="ttdef"><b>Definition</b> <a href="#l00302">consensus_manager.cpp:302</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a3c2e731d6921a66d99c25878b3cf930c"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a3c2e731d6921a66d99c25878b3cf930c">resdb::ConsensusManager::ConsensusCommit</a></div><div class="ttdeci">virtual int ConsensusCommit(std::unique_ptr&lt; Context &gt; context, std::unique_ptr&lt; Request &gt; request)</div><div class="ttdef"><b>Definition</b> <a href="#l00303">consensus_manager.cpp:303</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a41ca34dae45da5f416e6539c441da3ac"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a41ca34dae45da5f416e6539c441da3ac">resdb::ConsensusManager::~ConsensusManager</a></div><div class="ttdeci">virtual ~ConsensusManager()</div><div class="ttdef"><b>Definition</b> <a href="#l00052">consensus_manager.cpp:52</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a4d8b91c23bf209de4510fc2e088f205d"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">resdb::ConsensusManager::SetPrimary</a></div><div class="ttdeci">virtual void SetPrimary(uint32_t primary, uint64_t version)</div><div class="ttdef"><b>Definition</b> <a href="#l00367">consensus_manager.cpp:367</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a574518f7c10d7de0c079dfdad4a4c536"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a574518f7c10d7de0c079dfdad4a4c536">resdb::ConsensusManager::SendMessage</a></div><div class="ttdeci">virtual void SendMessage(const google::protobuf::Message &amp;message, int64_t node_id)</div><div class="ttdef"><b>Definition</b> <a href="#l00329">consensus_manager.cpp:329</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a4d8b91c23bf209de4510fc2e088f205d"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a4d8b91c23bf209de4510fc2e088f205d">resdb::ConsensusManager::SetPrimary</a></div><div class="ttdeci">virtual void SetPrimary(uint32_t primary, uint64_t version)</div><div class="ttdef"><b>Definition</b> <a href="#l00368">consensus_manager.cpp:368</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a574518f7c10d7de0c079dfdad4a4c536"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a574518f7c10d7de0c079dfdad4a4c536">resdb::ConsensusManager::SendMessage</a></div><div class="ttdeci">virtual void SendMessage(const google::protobuf::Message &amp;message, int64_t node_id)</div><div class="ttdef"><b>Definition</b> <a href="#l00330">consensus_manager.cpp:330</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a5a706d7931fb764202c4d9076c888a33"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a5a706d7931fb764202c4d9076c888a33">resdb::ConsensusManager::IsReady</a></div><div class="ttdeci">bool IsReady() const</div><div class="ttdef"><b>Definition</b> <a href="#l00069">consensus_manager.cpp:69</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a5d13be9749d0960aab81fef99500b3c7"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a5d13be9749d0960aab81fef99500b3c7">resdb::ConsensusManager::GetPrimary</a></div><div class="ttdeci">virtual uint32_t GetPrimary()</div><div class="ttdef"><b>Definition</b> <a href="#l00369">consensus_manager.cpp:369</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a5d13be9749d0960aab81fef99500b3c7"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a5d13be9749d0960aab81fef99500b3c7">resdb::ConsensusManager::GetPrimary</a></div><div class="ttdeci">virtual uint32_t GetPrimary()</div><div class="ttdef"><b>Definition</b> <a href="#l00370">consensus_manager.cpp:370</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a6ee5d408e5db8134290afa5dbe162568"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a6ee5d408e5db8134290afa5dbe162568">resdb::ConsensusManager::UpdateBroadCastClient</a></div><div class="ttdeci">void UpdateBroadCastClient()</div><div class="ttdef"><b>Definition</b> <a href="#l00057">consensus_manager.cpp:57</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a7536d10a4e29b1af6b9fd93acc7217b9"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a7536d10a4e29b1af6b9fd93acc7217b9">resdb::ConsensusManager::ConsensusManager</a></div><div class="ttdeci">ConsensusManager(const ResDBConfig &amp;config)</div><div class="ttdef"><b>Definition</b> <a href="#l00043">consensus_manager.cpp:43</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a7b4dcef53558f06a66b3d7fac75b162a"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a7b4dcef53558f06a66b3d7fac75b162a">resdb::ConsensusManager::GetClientReplicas</a></div><div class="ttdeci">virtual std::vector&lt; ReplicaInfo &gt; GetClientReplicas()</div><div class="ttdef"><b>Definition</b> <a href="#l00307">consensus_manager.cpp:307</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a7b4dcef53558f06a66b3d7fac75b162a"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a7b4dcef53558f06a66b3d7fac75b162a">resdb::ConsensusManager::GetClientReplicas</a></div><div class="ttdeci">virtual std::vector&lt; ReplicaInfo &gt; GetClientReplicas()</div><div class="ttdef"><b>Definition</b> <a href="#l00308">consensus_manager.cpp:308</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_a7d8d63c3a1fbc3e1e23fbfa0763e6eb8"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#a7d8d63c3a1fbc3e1e23fbfa0763e6eb8">resdb::ConsensusManager::GetSignatureVerifier</a></div><div class="ttdeci">SignatureVerifier * GetSignatureVerifier()</div><div class="ttdef"><b>Definition</b> <a href="#l00065">consensus_manager.cpp:65</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ac209b2c17ea2f1285a14b445f2172583"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ac209b2c17ea2f1285a14b445f2172583">resdb::ConsensusManager::GetBroadCastClient</a></div><div class="ttdeci">ReplicaCommunicator * GetBroadCastClient()</div><div class="ttdef"><b>Definition</b> <a href="#l00061">consensus_manager.cpp:61</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ac849142ab5ae823044a70383b106a0a3"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ac849142ab5ae823044a70383b106a0a3">resdb::ConsensusManager::GetReplicas</a></div><div class="ttdeci">virtual std::vector&lt; ReplicaInfo &gt; GetReplicas()=0</div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ac941e4df8d4b9802b7b3b29758f92f73"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ac941e4df8d4b9802b7b3b29758f92f73">resdb::ConsensusManager::config_</a></div><div class="ttdeci">ResDBConfig config_</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d73/consensus__manager_8h_source.html#l00096">consensus_manager.h:96</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ad36706c5920f10c6200b3dad3b79534e"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ad36706c5920f10c6200b3dad3b79534e">resdb::ConsensusManager::AddNewReplica</a></div><div class="ttdeci">virtual void AddNewReplica(const ReplicaInfo &amp;info)</div><div class="ttdef"><b>Definition</b> <a href="#l00360">consensus_manager.cpp:360</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ad36706c5920f10c6200b3dad3b79534e"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ad36706c5920f10c6200b3dad3b79534e">resdb::ConsensusManager::AddNewReplica</a></div><div class="ttdeci">virtual void AddNewReplica(const ReplicaInfo &amp;info)</div><div class="ttdef"><b>Definition</b> <a href="#l00361">consensus_manager.cpp:361</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_aded3d44b3131103f6c8849491fa4e346"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#aded3d44b3131103f6c8849491fa4e346">resdb::ConsensusManager::Dispatch</a></div><div class="ttdeci">virtual int Dispatch(std::unique_ptr&lt; Context &gt; context, std::unique_ptr&lt; Request &gt; request)</div><div class="ttdef"><b>Definition</b> <a href="#l00208">consensus_manager.cpp:208</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ae0917eb77f77b11ec6d170b887a373b7"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">resdb::ConsensusManager::AddNewClient</a></div><div class="ttdeci">void AddNewClient(const ReplicaInfo &amp;info)</div><div class="ttdef"><b>Definition</b> <a href="#l00362">consensus_manager.cpp:362</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ae0917eb77f77b11ec6d170b887a373b7"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ae0917eb77f77b11ec6d170b887a373b7">resdb::ConsensusManager::AddNewClient</a></div><div class="ttdeci">void AddNewClient(const ReplicaInfo &amp;info)</div><div class="ttdef"><b>Definition</b> <a href="#l00363">consensus_manager.cpp:363</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_ae177488994172fcd48047151832529bf"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#ae177488994172fcd48047151832529bf">resdb::ConsensusManager::verifier_</a></div><div class="ttdeci">std::unique_ptr&lt; SignatureVerifier &gt; verifier_</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d73/consensus__manager_8h_source.html#l00097">consensus_manager.h:97</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_aebd2d390f956d6128174963605dc1dbe"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#aebd2d390f956d6128174963605dc1dbe">resdb::ConsensusManager::GetReplicaClient</a></div><div class="ttdeci">virtual std::unique_ptr&lt; ReplicaCommunicator &gt; GetReplicaClient(const std::vector&lt; ReplicaInfo &gt; &amp;replicas, bool is_use_long_conn=false)</div><div class="ttdef"><b>Definition</b> <a href="#l00350">consensus_manager.cpp:350</a></div></div>
-<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_afddbd1de6fd7a2a629e593e879fc1b5e"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#afddbd1de6fd7a2a629e593e879fc1b5e">resdb::ConsensusManager::GetVersion</a></div><div class="ttdeci">virtual uint32_t GetVersion()</div><div class="ttdef"><b>Definition</b> <a href="#l00371">consensus_manager.cpp:371</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_aebd2d390f956d6128174963605dc1dbe"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#aebd2d390f956d6128174963605dc1dbe">resdb::ConsensusManager::GetReplicaClient</a></div><div class="ttdeci">virtual std::unique_ptr&lt; ReplicaCommunicator &gt; GetReplicaClient(const std::vector&lt; ReplicaInfo &gt; &amp;replicas, bool is_use_long_conn=false)</div><div class="ttdef"><b>Definition</b> <a href="#l00351">consensus_manager.cpp:351</a></div></div>
+<div class="ttc" id="aclassresdb_1_1ConsensusManager_html_afddbd1de6fd7a2a629e593e879fc1b5e"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#afddbd1de6fd7a2a629e593e879fc1b5e">resdb::ConsensusManager::GetVersion</a></div><div class="ttdeci">virtual uint32_t GetVersion()</div><div class="ttdef"><b>Definition</b> <a href="#l00372">consensus_manager.cpp:372</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ConsensusManager_html_aff784e311e586b5399d47c822bb34b14"><div class="ttname"><a href="../../da/d19/classresdb_1_1ConsensusManager.html#aff784e311e586b5399d47c822bb34b14">resdb::ConsensusManager::Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition</b> <a href="#l00078">consensus_manager.cpp:78</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ReplicaCommunicator_html"><div class="ttname"><a href="../../d3/d5e/classresdb_1_1ReplicaCommunicator.html">resdb::ReplicaCommunicator</a></div><div class="ttdef"><b>Definition</b> <a href="../../d0/dd9/replica__communicator_8h_source.html#l00039">replica_communicator.h:39</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ResDBConfig_html"><div class="ttname"><a href="../../db/ddb/classresdb_1_1ResDBConfig.html">resdb::ResDBConfig</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d9a/resdb__config_8h_source.html#l00028">resdb_config.h:28</a></div></div>

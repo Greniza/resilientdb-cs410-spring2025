@@ -237,249 +237,252 @@ $(function(){initNavTree('d0/d41/resdb__config_8cpp_source.html','../../'); init
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a288793f30d8165a26089e157f87b0631">  119</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a288793f30d8165a26089e157f87b0631">ResDBConfig::GetMinDataReceiveNum</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <span class="comment">// 2PC CHANGE!</span></div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <span class="keywordtype">int</span> f = replicas_.size() - 1;</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  <span class="keywordflow">return</span> f;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="comment">// return std::max(2 * f + 1, 1);</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>}</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  f = 3; <span class="comment">// Change for 16-replica 4-way sharding</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <span class="keywordflow">return</span> f;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  <span class="comment">// return std::max(2 * f + 1, 1);</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
 </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="foldopen" id="foldopen00126" data-start="{" data-end="}">
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a2f169bcf96c9d9aab1ba06e204658a87">  126</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a2f169bcf96c9d9aab1ba06e204658a87">ResDBConfig::GetMinClientReceiveNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  <span class="comment">// 2PC CHANGE!</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  <span class="keywordtype">int</span> f = replicas_.size() - 1;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  <span class="keywordflow">return</span> f;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  <span class="comment">// int f = (replicas_.size() - 1) / 3;</span></div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  <span class="comment">// return std::max(f + 1, 1);</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="foldopen" id="foldopen00127" data-start="{" data-end="}">
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a2f169bcf96c9d9aab1ba06e204658a87">  127</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a2f169bcf96c9d9aab1ba06e204658a87">ResDBConfig::GetMinClientReceiveNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  <span class="comment">// 2PC CHANGE!</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  <span class="keywordtype">int</span> f = replicas_.size() - 1;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  f = 3; <span class="comment">// Change for 16-replica 4-way sharding</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  <span class="keywordflow">return</span> f;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  <span class="comment">// int f = (replicas_.size() - 1) / 3;</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  <span class="comment">// return std::max(f + 1, 1);</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}</div>
 </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a7d4134fc5a25643ede8883c301574591">  134</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a7d4134fc5a25643ede8883c301574591">ResDBConfig::GetMinCheckpointReceiveNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="comment">// 2PC CHANGE!</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  <span class="keywordtype">int</span> f = replicas_.size() - 1;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  <span class="keywordflow">return</span> f;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  <span class="comment">// int f = (replicas_.size() - 1) / 3;</span></div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  <span class="comment">// return std::max(f + 1, 1);</span></div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>}</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="foldopen" id="foldopen00136" data-start="{" data-end="}">
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a7d4134fc5a25643ede8883c301574591">  136</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a7d4134fc5a25643ede8883c301574591">ResDBConfig::GetMinCheckpointReceiveNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  <span class="comment">// 2PC CHANGE!</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  <span class="keywordtype">int</span> f = replicas_.size() - 1;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  f = 3; <span class="comment">// Change for 16-replica 4-way sharding</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  <span class="keywordflow">return</span> f;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  <span class="comment">// int f = (replicas_.size() - 1) / 3;</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>  <span class="comment">// return std::max(f + 1, 1);</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>}</div>
 </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="foldopen" id="foldopen00142" data-start="{" data-end="}">
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a76f1ddcf02a3467b79bcf871347f4231">  142</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a76f1ddcf02a3467b79bcf871347f4231">ResDBConfig::GetMaxMaliciousReplicaNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="comment">// 2PC CHANGE!</span></div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  <span class="comment">// int f = (replicas_.size() - 1) / 3;</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  <span class="comment">// return std::max(f, 0);</span></div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>}</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="foldopen" id="foldopen00145" data-start="{" data-end="}">
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a76f1ddcf02a3467b79bcf871347f4231">  145</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a76f1ddcf02a3467b79bcf871347f4231">ResDBConfig::GetMaxMaliciousReplicaNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  <span class="comment">// 2PC CHANGE!</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  <span class="comment">// int f = (replicas_.size() - 1) / 3;</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  <span class="comment">// return std::max(f, 0);</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>}</div>
 </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="foldopen" id="foldopen00149" data-start="{" data-end="}">
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a702674a1d72d0c3ff9240bcd75811813">  149</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a702674a1d72d0c3ff9240bcd75811813">ResDBConfig::SetClientTimeoutMs</a>(<span class="keywordtype">int</span> timeout_ms) {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  client_timeout_ms_ = timeout_ms;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>}</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="foldopen" id="foldopen00152" data-start="{" data-end="}">
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a702674a1d72d0c3ff9240bcd75811813">  152</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a702674a1d72d0c3ff9240bcd75811813">ResDBConfig::SetClientTimeoutMs</a>(<span class="keywordtype">int</span> timeout_ms) {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  client_timeout_ms_ = timeout_ms;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>}</div>
 </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#adac6ea8534b37765a76383ded84b5e14">  153</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#adac6ea8534b37765a76383ded84b5e14">ResDBConfig::GetClientTimeoutMs</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> client_timeout_ms_; }</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="comment">// Logging</span></div>
-<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#aa4d1a0a71d28b5e7a59f3fc0f24fb717">  156</a></span>std::string <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#aa4d1a0a71d28b5e7a59f3fc0f24fb717">ResDBConfig::GetCheckPointLoggingPath</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  <span class="keywordflow">return</span> checkpoint_logging_path_;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>}</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#adac6ea8534b37765a76383ded84b5e14">  156</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#adac6ea8534b37765a76383ded84b5e14">ResDBConfig::GetClientTimeoutMs</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> client_timeout_ms_; }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment">// Logging</span></div>
+<div class="foldopen" id="foldopen00159" data-start="{" data-end="}">
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#aa4d1a0a71d28b5e7a59f3fc0f24fb717">  159</a></span>std::string <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#aa4d1a0a71d28b5e7a59f3fc0f24fb717">ResDBConfig::GetCheckPointLoggingPath</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  <span class="keywordflow">return</span> checkpoint_logging_path_;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>}</div>
 </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="foldopen" id="foldopen00160" data-start="{" data-end="}">
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a9442c8816ec1183a61b8278e0fa1ff1a">  160</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a9442c8816ec1183a61b8278e0fa1ff1a">ResDBConfig::SetCheckPointLoggingPath</a>(<span class="keyword">const</span> std::string&amp; path) {</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  checkpoint_logging_path_ = path;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>}</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="foldopen" id="foldopen00163" data-start="{" data-end="}">
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a9442c8816ec1183a61b8278e0fa1ff1a">  163</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a9442c8816ec1183a61b8278e0fa1ff1a">ResDBConfig::SetCheckPointLoggingPath</a>(<span class="keyword">const</span> std::string&amp; path) {</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  checkpoint_logging_path_ = path;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>}</div>
 </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="foldopen" id="foldopen00164" data-start="{" data-end="}">
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a5c45af267e01911ef108fd6055e9dadd">  164</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a5c45af267e01911ef108fd6055e9dadd">ResDBConfig::GetCheckPointWaterMark</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  <span class="keywordflow">return</span> checkpoint_water_mark_;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>}</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="foldopen" id="foldopen00167" data-start="{" data-end="}">
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a5c45af267e01911ef108fd6055e9dadd">  167</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a5c45af267e01911ef108fd6055e9dadd">ResDBConfig::GetCheckPointWaterMark</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  <span class="keywordflow">return</span> checkpoint_water_mark_;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}</div>
 </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="foldopen" id="foldopen00168" data-start="{" data-end="}">
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a232bf141e8a53ab4fafc3e059da98ef7">  168</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a232bf141e8a53ab4fafc3e059da98ef7">ResDBConfig::SetCheckPointWaterMark</a>(<span class="keywordtype">int</span> water_mark) {</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  checkpoint_water_mark_ = water_mark;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>}</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="foldopen" id="foldopen00171" data-start="{" data-end="}">
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a232bf141e8a53ab4fafc3e059da98ef7">  171</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a232bf141e8a53ab4fafc3e059da98ef7">ResDBConfig::SetCheckPointWaterMark</a>(<span class="keywordtype">int</span> water_mark) {</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  checkpoint_water_mark_ = water_mark;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>}</div>
 </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ac7bf51cca4c0b82cdea81af219690f43">  172</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ac7bf51cca4c0b82cdea81af219690f43">ResDBConfig::EnableCheckPoint</a>(<span class="keywordtype">bool</span> is_enable) {</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  is_enable_checkpoint_ = is_enable;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>}</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="foldopen" id="foldopen00175" data-start="{" data-end="}">
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ac7bf51cca4c0b82cdea81af219690f43">  175</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ac7bf51cca4c0b82cdea81af219690f43">ResDBConfig::EnableCheckPoint</a>(<span class="keywordtype">bool</span> is_enable) {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  is_enable_checkpoint_ = is_enable;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>}</div>
 </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a93e9f3bfda0a9ab731c01e506f7e0031">  176</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a93e9f3bfda0a9ab731c01e506f7e0031">ResDBConfig::IsCheckPointEnabled</a>() { <span class="keywordflow">return</span> is_enable_checkpoint_; }</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ac5a6ad5001f97a55eeb19c0e4cd4bc4a">  178</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ac5a6ad5001f97a55eeb19c0e4cd4bc4a">ResDBConfig::HeartBeatEnabled</a>() { <span class="keywordflow">return</span> hb_enabled_; }</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="foldopen" id="foldopen00180" data-start="{" data-end="}">
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a90b6b79ce297e988e53c26f380c50c0a">  180</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a90b6b79ce297e988e53c26f380c50c0a">ResDBConfig::SetHeartBeatEnabled</a>(<span class="keywordtype">bool</span> enable_heartbeat) {</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  hb_enabled_ = enable_heartbeat;</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>}</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a93e9f3bfda0a9ab731c01e506f7e0031">  179</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a93e9f3bfda0a9ab731c01e506f7e0031">ResDBConfig::IsCheckPointEnabled</a>() { <span class="keywordflow">return</span> is_enable_checkpoint_; }</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ac5a6ad5001f97a55eeb19c0e4cd4bc4a">  181</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ac5a6ad5001f97a55eeb19c0e4cd4bc4a">ResDBConfig::HeartBeatEnabled</a>() { <span class="keywordflow">return</span> hb_enabled_; }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="foldopen" id="foldopen00183" data-start="{" data-end="}">
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a90b6b79ce297e988e53c26f380c50c0a">  183</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a90b6b79ce297e988e53c26f380c50c0a">ResDBConfig::SetHeartBeatEnabled</a>(<span class="keywordtype">bool</span> enable_heartbeat) {</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  hb_enabled_ = enable_heartbeat;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>}</div>
 </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ac2ed87945a02fd14a4aed9e015cfd5fe">  184</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ac2ed87945a02fd14a4aed9e015cfd5fe">ResDBConfig::SignatureVerifierEnabled</a>() {</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  <span class="keywordflow">return</span> signature_verifier_enabled_;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>}</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="foldopen" id="foldopen00187" data-start="{" data-end="}">
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ac2ed87945a02fd14a4aed9e015cfd5fe">  187</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ac2ed87945a02fd14a4aed9e015cfd5fe">ResDBConfig::SignatureVerifierEnabled</a>() {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  <span class="keywordflow">return</span> signature_verifier_enabled_;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>}</div>
 </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="foldopen" id="foldopen00188" data-start="{" data-end="}">
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a75676bba0ad71fb1b3d7e8f59127182d">  188</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a75676bba0ad71fb1b3d7e8f59127182d">ResDBConfig::SetSignatureVerifierEnabled</a>(<span class="keywordtype">bool</span> enable_sv) {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  signature_verifier_enabled_ = enable_sv;</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>}</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="foldopen" id="foldopen00191" data-start="{" data-end="}">
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a75676bba0ad71fb1b3d7e8f59127182d">  191</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a75676bba0ad71fb1b3d7e8f59127182d">ResDBConfig::SetSignatureVerifierEnabled</a>(<span class="keywordtype">bool</span> enable_sv) {</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  signature_verifier_enabled_ = enable_sv;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>}</div>
 </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment">// Performance setting</span></div>
-<div class="foldopen" id="foldopen00193" data-start="{" data-end="}">
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#aa8a67de9e2f5020a9e1955cdb6bc13b9">  193</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#aa8a67de9e2f5020a9e1955cdb6bc13b9">ResDBConfig::IsPerformanceRunning</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>  <span class="keywordflow">return</span> is_performance_running_ || <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a464cd1a715b8e103a24e17e43306c010">GetConfigData</a>().is_performance_running();</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>}</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment">// Performance setting</span></div>
+<div class="foldopen" id="foldopen00196" data-start="{" data-end="}">
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#aa8a67de9e2f5020a9e1955cdb6bc13b9">  196</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#aa8a67de9e2f5020a9e1955cdb6bc13b9">ResDBConfig::IsPerformanceRunning</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  <span class="keywordflow">return</span> is_performance_running_ || <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a464cd1a715b8e103a24e17e43306c010">GetConfigData</a>().is_performance_running();</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>}</div>
 </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="foldopen" id="foldopen00197" data-start="{" data-end="}">
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a9e48528dcf8683b4a8e9118f992700c9">  197</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a9e48528dcf8683b4a8e9118f992700c9">ResDBConfig::RunningPerformance</a>(<span class="keywordtype">bool</span> is_performance_running) {</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>  is_performance_running_ = is_performance_running;</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>}</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="foldopen" id="foldopen00200" data-start="{" data-end="}">
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a9e48528dcf8683b4a8e9118f992700c9">  200</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a9e48528dcf8683b4a8e9118f992700c9">ResDBConfig::RunningPerformance</a>(<span class="keywordtype">bool</span> is_performance_running) {</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>  is_performance_running_ = is_performance_running;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
 </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="foldopen" id="foldopen00201" data-start="{" data-end="}">
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a2bbc3f241e364def035d1bf95335c462">  201</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a2bbc3f241e364def035d1bf95335c462">ResDBConfig::SetTestMode</a>(<span class="keywordtype">bool</span> is_test_mode) {</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>  is_test_mode_ = is_test_mode;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>}</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="foldopen" id="foldopen00204" data-start="{" data-end="}">
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a2bbc3f241e364def035d1bf95335c462">  204</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a2bbc3f241e364def035d1bf95335c462">ResDBConfig::SetTestMode</a>(<span class="keywordtype">bool</span> is_test_mode) {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>  is_test_mode_ = is_test_mode;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>}</div>
 </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a62b3cc96d167d858f489a7cd6cdbbfd9">  205</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a62b3cc96d167d858f489a7cd6cdbbfd9">ResDBConfig::IsTestMode</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> is_test_mode_; }</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="foldopen" id="foldopen00207" data-start="{" data-end="}">
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a67e77f0346f3264fc3087293d1b08e13">  207</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a67e77f0346f3264fc3087293d1b08e13">ResDBConfig::GetMaxProcessTxn</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  <span class="keywordflow">if</span> (config_data_.max_process_txn()) {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="keywordflow">return</span> config_data_.max_process_txn();</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  }</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  <span class="keywordflow">return</span> max_process_txn_;</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>}</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a62b3cc96d167d858f489a7cd6cdbbfd9">  208</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a62b3cc96d167d858f489a7cd6cdbbfd9">ResDBConfig::IsTestMode</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> is_test_mode_; }</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
+<div class="foldopen" id="foldopen00210" data-start="{" data-end="}">
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a67e77f0346f3264fc3087293d1b08e13">  210</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a67e77f0346f3264fc3087293d1b08e13">ResDBConfig::GetMaxProcessTxn</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  <span class="keywordflow">if</span> (config_data_.max_process_txn()) {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordflow">return</span> config_data_.max_process_txn();</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>  }</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>  <span class="keywordflow">return</span> max_process_txn_;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
 </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
-<div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a235cb7d08a852dd875c212e9808efd72">  214</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a235cb7d08a852dd875c212e9808efd72">ResDBConfig::SetMaxProcessTxn</a>(uint32_t num) {</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  config_data_.set_max_process_txn(num);</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>  max_process_txn_ = num;</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>}</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
+<div class="foldopen" id="foldopen00217" data-start="{" data-end="}">
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a235cb7d08a852dd875c212e9808efd72">  217</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a235cb7d08a852dd875c212e9808efd72">ResDBConfig::SetMaxProcessTxn</a>(uint32_t num) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  config_data_.set_max_process_txn(num);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>  max_process_txn_ = num;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>}</div>
 </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="foldopen" id="foldopen00219" data-start="{" data-end="}">
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ae8f129eab9ecb997db2e6aeca2083cb8">  219</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ae8f129eab9ecb997db2e6aeca2083cb8">ResDBConfig::GetMaxClientComplaintNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>  <span class="keywordflow">if</span> (config_data_.max_client_complaint_num()) {</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="keywordflow">return</span> config_data_.max_client_complaint_num();</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>  }</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>  <span class="keywordflow">return</span> 10;</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>}</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="foldopen" id="foldopen00222" data-start="{" data-end="}">
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ae8f129eab9ecb997db2e6aeca2083cb8">  222</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ae8f129eab9ecb997db2e6aeca2083cb8">ResDBConfig::GetMaxClientComplaintNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>  <span class="keywordflow">if</span> (config_data_.max_client_complaint_num()) {</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordflow">return</span> config_data_.max_client_complaint_num();</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>  }</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  <span class="keywordflow">return</span> 10;</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>}</div>
 </div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ad284baf49051050f23b3f89aad826c80">  226</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ad284baf49051050f23b3f89aad826c80">ResDBConfig::ClientBatchWaitTimeMS</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>  <span class="keywordflow">return</span> client_batch_wait_time_ms_;</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>}</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="foldopen" id="foldopen00229" data-start="{" data-end="}">
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#ad284baf49051050f23b3f89aad826c80">  229</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#ad284baf49051050f23b3f89aad826c80">ResDBConfig::ClientBatchWaitTimeMS</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>  <span class="keywordflow">return</span> client_batch_wait_time_ms_;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>}</div>
 </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="foldopen" id="foldopen00230" data-start="{" data-end="}">
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a7e0e67383210513f607ee06073de470f">  230</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a7e0e67383210513f607ee06073de470f">ResDBConfig::SetClientBatchWaitTimeMS</a>(uint32_t wait_time_ms) {</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  client_batch_wait_time_ms_ = wait_time_ms;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>}</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="foldopen" id="foldopen00233" data-start="{" data-end="}">
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a7e0e67383210513f607ee06073de470f">  233</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a7e0e67383210513f607ee06073de470f">ResDBConfig::SetClientBatchWaitTimeMS</a>(uint32_t wait_time_ms) {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>  client_batch_wait_time_ms_ = wait_time_ms;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>}</div>
 </div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="foldopen" id="foldopen00234" data-start="{" data-end="}">
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a7f6f5108206579cf8a169703b98ef5fe">  234</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a7f6f5108206579cf8a169703b98ef5fe">ResDBConfig::ClientBatchNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>  <span class="keywordflow">return</span> config_data_.client_batch_num();</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>}</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="foldopen" id="foldopen00237" data-start="{" data-end="}">
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a7f6f5108206579cf8a169703b98ef5fe">  237</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a7f6f5108206579cf8a169703b98ef5fe">ResDBConfig::ClientBatchNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>  <span class="keywordflow">return</span> config_data_.client_batch_num();</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>}</div>
 </div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="foldopen" id="foldopen00238" data-start="{" data-end="}">
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a13da2ebd15a15b13be2c307bbded8e53">  238</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a13da2ebd15a15b13be2c307bbded8e53">ResDBConfig::SetClientBatchNum</a>(uint32_t num) {</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>  config_data_.set_client_batch_num(num);</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>}</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="foldopen" id="foldopen00241" data-start="{" data-end="}">
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a13da2ebd15a15b13be2c307bbded8e53">  241</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a13da2ebd15a15b13be2c307bbded8e53">ResDBConfig::SetClientBatchNum</a>(uint32_t num) {</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  config_data_.set_client_batch_num(num);</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>}</div>
 </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a2502a45e927f3139e9e7b0f22efc44f7">  242</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a2502a45e927f3139e9e7b0f22efc44f7">ResDBConfig::GetWorkerNum</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> config_data_.worker_num(); }</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="foldopen" id="foldopen00244" data-start="{" data-end="}">
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a3669f8ea7516a477902af0e357d47b84">  244</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a3669f8ea7516a477902af0e357d47b84">ResDBConfig::GetInputWorkerNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  <span class="keywordflow">return</span> config_data_.input_worker_num();</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>}</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a2502a45e927f3139e9e7b0f22efc44f7">  245</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a2502a45e927f3139e9e7b0f22efc44f7">ResDBConfig::GetWorkerNum</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> config_data_.worker_num(); }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
+<div class="foldopen" id="foldopen00247" data-start="{" data-end="}">
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a3669f8ea7516a477902af0e357d47b84">  247</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a3669f8ea7516a477902af0e357d47b84">ResDBConfig::GetInputWorkerNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  <span class="keywordflow">return</span> config_data_.input_worker_num();</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>}</div>
 </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
-<div class="foldopen" id="foldopen00248" data-start="{" data-end="}">
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a06360dbc709e04d5ae624cac29aa2d7e">  248</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a06360dbc709e04d5ae624cac29aa2d7e">ResDBConfig::GetOutputWorkerNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  <span class="keywordflow">return</span> config_data_.output_worker_num();</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>}</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="foldopen" id="foldopen00251" data-start="{" data-end="}">
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a06360dbc709e04d5ae624cac29aa2d7e">  251</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a06360dbc709e04d5ae624cac29aa2d7e">ResDBConfig::GetOutputWorkerNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  <span class="keywordflow">return</span> config_data_.output_worker_num();</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>}</div>
 </div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
-<div class="foldopen" id="foldopen00252" data-start="{" data-end="}">
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a68a1433a814a5b1343759afe2665d6c8">  252</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a68a1433a814a5b1343759afe2665d6c8">ResDBConfig::GetTcpBatchNum</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  <span class="keywordflow">return</span> config_data_.tcp_batch_num();</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>}</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="foldopen" id="foldopen00255" data-start="{" data-end="}">
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a68a1433a814a5b1343759afe2665d6c8">  255</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a68a1433a814a5b1343759afe2665d6c8">ResDBConfig::GetTcpBatchNum</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>  <span class="keywordflow">return</span> config_data_.tcp_batch_num();</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>}</div>
 </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
-<div class="foldopen" id="foldopen00256" data-start="{" data-end="}">
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#af7020b8469395216dc22cd2e79c1e063">  256</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#af7020b8469395216dc22cd2e79c1e063">ResDBConfig::GetViewchangeCommitTimeout</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>  <span class="keywordflow">return</span> config_data_.view_change_timeout_ms()</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>             ? config_data_.view_change_timeout_ms()</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>             : viewchange_commit_timeout_ms_;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>}</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="foldopen" id="foldopen00259" data-start="{" data-end="}">
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#af7020b8469395216dc22cd2e79c1e063">  259</a></span>uint32_t <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#af7020b8469395216dc22cd2e79c1e063">ResDBConfig::GetViewchangeCommitTimeout</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>  <span class="keywordflow">return</span> config_data_.view_change_timeout_ms()</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>             ? config_data_.view_change_timeout_ms()</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>             : viewchange_commit_timeout_ms_;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>}</div>
 </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
-<div class="foldopen" id="foldopen00262" data-start="{" data-end="}">
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a16ed1247aedf8a39a0a2ccf903d8434a">  262</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a16ed1247aedf8a39a0a2ccf903d8434a">ResDBConfig::SetViewchangeCommitTimeout</a>(uint64_t timeout_ms) {</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>  config_data_.set_view_change_timeout_ms(timeout_ms);</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>}</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="foldopen" id="foldopen00265" data-start="{" data-end="}">
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno"><a class="line" href="../../db/ddb/classresdb_1_1ResDBConfig.html#a16ed1247aedf8a39a0a2ccf903d8434a">  265</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d6/d06/classResDBConfig.html#a16ed1247aedf8a39a0a2ccf903d8434a">ResDBConfig::SetViewchangeCommitTimeout</a>(uint64_t timeout_ms) {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  config_data_.set_view_change_timeout_ms(timeout_ms);</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>}</div>
 </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="comment">//Added for Assignment 3 </span></div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span><span class="comment">// config.set_shard_count(config_proto.shard_count()); //Logic for loading # of shards</span></div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>}  <span class="comment">// namespace resdb</span></div>
-<div class="ttc" id="aclassResDBConfig_html_a06360dbc709e04d5ae624cac29aa2d7e"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a06360dbc709e04d5ae624cac29aa2d7e">ResDBConfig::GetOutputWorkerNum</a></div><div class="ttdeci">uint32_t GetOutputWorkerNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00248">resdb_config.cpp:248</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a13da2ebd15a15b13be2c307bbded8e53"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a13da2ebd15a15b13be2c307bbded8e53">ResDBConfig::SetClientBatchNum</a></div><div class="ttdeci">void SetClientBatchNum(uint32_t num)</div><div class="ttdef"><b>Definition</b> <a href="#l00238">resdb_config.cpp:238</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a16ed1247aedf8a39a0a2ccf903d8434a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a16ed1247aedf8a39a0a2ccf903d8434a">ResDBConfig::SetViewchangeCommitTimeout</a></div><div class="ttdeci">void SetViewchangeCommitTimeout(uint64_t timeout_ms)</div><div class="ttdef"><b>Definition</b> <a href="#l00262">resdb_config.cpp:262</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a232bf141e8a53ab4fafc3e059da98ef7"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a232bf141e8a53ab4fafc3e059da98ef7">ResDBConfig::SetCheckPointWaterMark</a></div><div class="ttdeci">void SetCheckPointWaterMark(int water_mark)</div><div class="ttdef"><b>Definition</b> <a href="#l00168">resdb_config.cpp:168</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a235cb7d08a852dd875c212e9808efd72"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a235cb7d08a852dd875c212e9808efd72">ResDBConfig::SetMaxProcessTxn</a></div><div class="ttdeci">void SetMaxProcessTxn(uint32_t num)</div><div class="ttdef"><b>Definition</b> <a href="#l00214">resdb_config.cpp:214</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a2502a45e927f3139e9e7b0f22efc44f7"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a2502a45e927f3139e9e7b0f22efc44f7">ResDBConfig::GetWorkerNum</a></div><div class="ttdeci">uint32_t GetWorkerNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00242">resdb_config.cpp:242</a></div></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="comment">//Added for Assignment 3 </span></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="comment">// config.set_shard_count(config_proto.shard_count()); //Logic for loading # of shards</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>}  <span class="comment">// namespace resdb</span></div>
+<div class="ttc" id="aclassResDBConfig_html_a06360dbc709e04d5ae624cac29aa2d7e"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a06360dbc709e04d5ae624cac29aa2d7e">ResDBConfig::GetOutputWorkerNum</a></div><div class="ttdeci">uint32_t GetOutputWorkerNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00251">resdb_config.cpp:251</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a13da2ebd15a15b13be2c307bbded8e53"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a13da2ebd15a15b13be2c307bbded8e53">ResDBConfig::SetClientBatchNum</a></div><div class="ttdeci">void SetClientBatchNum(uint32_t num)</div><div class="ttdef"><b>Definition</b> <a href="#l00241">resdb_config.cpp:241</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a16ed1247aedf8a39a0a2ccf903d8434a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a16ed1247aedf8a39a0a2ccf903d8434a">ResDBConfig::SetViewchangeCommitTimeout</a></div><div class="ttdeci">void SetViewchangeCommitTimeout(uint64_t timeout_ms)</div><div class="ttdef"><b>Definition</b> <a href="#l00265">resdb_config.cpp:265</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a232bf141e8a53ab4fafc3e059da98ef7"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a232bf141e8a53ab4fafc3e059da98ef7">ResDBConfig::SetCheckPointWaterMark</a></div><div class="ttdeci">void SetCheckPointWaterMark(int water_mark)</div><div class="ttdef"><b>Definition</b> <a href="#l00171">resdb_config.cpp:171</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a235cb7d08a852dd875c212e9808efd72"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a235cb7d08a852dd875c212e9808efd72">ResDBConfig::SetMaxProcessTxn</a></div><div class="ttdeci">void SetMaxProcessTxn(uint32_t num)</div><div class="ttdef"><b>Definition</b> <a href="#l00217">resdb_config.cpp:217</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a2502a45e927f3139e9e7b0f22efc44f7"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a2502a45e927f3139e9e7b0f22efc44f7">ResDBConfig::GetWorkerNum</a></div><div class="ttdeci">uint32_t GetWorkerNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00245">resdb_config.cpp:245</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_a288793f30d8165a26089e157f87b0631"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a288793f30d8165a26089e157f87b0631">ResDBConfig::GetMinDataReceiveNum</a></div><div class="ttdeci">int GetMinDataReceiveNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00119">resdb_config.cpp:119</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a2bbc3f241e364def035d1bf95335c462"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a2bbc3f241e364def035d1bf95335c462">ResDBConfig::SetTestMode</a></div><div class="ttdeci">void SetTestMode(bool)</div><div class="ttdef"><b>Definition</b> <a href="#l00201">resdb_config.cpp:201</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a2f169bcf96c9d9aab1ba06e204658a87"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a2f169bcf96c9d9aab1ba06e204658a87">ResDBConfig::GetMinClientReceiveNum</a></div><div class="ttdeci">int GetMinClientReceiveNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00126">resdb_config.cpp:126</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a3669f8ea7516a477902af0e357d47b84"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a3669f8ea7516a477902af0e357d47b84">ResDBConfig::GetInputWorkerNum</a></div><div class="ttdeci">uint32_t GetInputWorkerNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00244">resdb_config.cpp:244</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a2bbc3f241e364def035d1bf95335c462"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a2bbc3f241e364def035d1bf95335c462">ResDBConfig::SetTestMode</a></div><div class="ttdeci">void SetTestMode(bool)</div><div class="ttdef"><b>Definition</b> <a href="#l00204">resdb_config.cpp:204</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a2f169bcf96c9d9aab1ba06e204658a87"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a2f169bcf96c9d9aab1ba06e204658a87">ResDBConfig::GetMinClientReceiveNum</a></div><div class="ttdeci">int GetMinClientReceiveNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00127">resdb_config.cpp:127</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a3669f8ea7516a477902af0e357d47b84"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a3669f8ea7516a477902af0e357d47b84">ResDBConfig::GetInputWorkerNum</a></div><div class="ttdeci">uint32_t GetInputWorkerNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00247">resdb_config.cpp:247</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_a3ecbc743465c10c809b9d9e0daf272df"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a3ecbc743465c10c809b9d9e0daf272df">ResDBConfig::GetReplicaNum</a></div><div class="ttdeci">size_t GetReplicaNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00117">resdb_config.cpp:117</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_a464cd1a715b8e103a24e17e43306c010"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a464cd1a715b8e103a24e17e43306c010">ResDBConfig::GetConfigData</a></div><div class="ttdeci">ResConfigData GetConfigData() const</div><div class="ttdef"><b>Definition</b> <a href="#l00109">resdb_config.cpp:109</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a5c45af267e01911ef108fd6055e9dadd"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a5c45af267e01911ef108fd6055e9dadd">ResDBConfig::GetCheckPointWaterMark</a></div><div class="ttdeci">int GetCheckPointWaterMark() const</div><div class="ttdef"><b>Definition</b> <a href="#l00164">resdb_config.cpp:164</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a62b3cc96d167d858f489a7cd6cdbbfd9"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a62b3cc96d167d858f489a7cd6cdbbfd9">ResDBConfig::IsTestMode</a></div><div class="ttdeci">bool IsTestMode() const</div><div class="ttdef"><b>Definition</b> <a href="#l00205">resdb_config.cpp:205</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a67e77f0346f3264fc3087293d1b08e13"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a67e77f0346f3264fc3087293d1b08e13">ResDBConfig::GetMaxProcessTxn</a></div><div class="ttdeci">uint32_t GetMaxProcessTxn() const</div><div class="ttdef"><b>Definition</b> <a href="#l00207">resdb_config.cpp:207</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a68a1433a814a5b1343759afe2665d6c8"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a68a1433a814a5b1343759afe2665d6c8">ResDBConfig::GetTcpBatchNum</a></div><div class="ttdeci">uint32_t GetTcpBatchNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00252">resdb_config.cpp:252</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a702674a1d72d0c3ff9240bcd75811813"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a702674a1d72d0c3ff9240bcd75811813">ResDBConfig::SetClientTimeoutMs</a></div><div class="ttdeci">void SetClientTimeoutMs(int timeout_ms)</div><div class="ttdef"><b>Definition</b> <a href="#l00149">resdb_config.cpp:149</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a75676bba0ad71fb1b3d7e8f59127182d"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a75676bba0ad71fb1b3d7e8f59127182d">ResDBConfig::SetSignatureVerifierEnabled</a></div><div class="ttdeci">void SetSignatureVerifierEnabled(bool enable_sv)</div><div class="ttdef"><b>Definition</b> <a href="#l00188">resdb_config.cpp:188</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a76f1ddcf02a3467b79bcf871347f4231"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a76f1ddcf02a3467b79bcf871347f4231">ResDBConfig::GetMaxMaliciousReplicaNum</a></div><div class="ttdeci">size_t GetMaxMaliciousReplicaNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00142">resdb_config.cpp:142</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a7d4134fc5a25643ede8883c301574591"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a7d4134fc5a25643ede8883c301574591">ResDBConfig::GetMinCheckpointReceiveNum</a></div><div class="ttdeci">int GetMinCheckpointReceiveNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00134">resdb_config.cpp:134</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a7e0e67383210513f607ee06073de470f"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a7e0e67383210513f607ee06073de470f">ResDBConfig::SetClientBatchWaitTimeMS</a></div><div class="ttdeci">void SetClientBatchWaitTimeMS(uint32_t wait_time_ms)</div><div class="ttdef"><b>Definition</b> <a href="#l00230">resdb_config.cpp:230</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a7f6f5108206579cf8a169703b98ef5fe"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a7f6f5108206579cf8a169703b98ef5fe">ResDBConfig::ClientBatchNum</a></div><div class="ttdeci">uint32_t ClientBatchNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00234">resdb_config.cpp:234</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a5c45af267e01911ef108fd6055e9dadd"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a5c45af267e01911ef108fd6055e9dadd">ResDBConfig::GetCheckPointWaterMark</a></div><div class="ttdeci">int GetCheckPointWaterMark() const</div><div class="ttdef"><b>Definition</b> <a href="#l00167">resdb_config.cpp:167</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a62b3cc96d167d858f489a7cd6cdbbfd9"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a62b3cc96d167d858f489a7cd6cdbbfd9">ResDBConfig::IsTestMode</a></div><div class="ttdeci">bool IsTestMode() const</div><div class="ttdef"><b>Definition</b> <a href="#l00208">resdb_config.cpp:208</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a67e77f0346f3264fc3087293d1b08e13"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a67e77f0346f3264fc3087293d1b08e13">ResDBConfig::GetMaxProcessTxn</a></div><div class="ttdeci">uint32_t GetMaxProcessTxn() const</div><div class="ttdef"><b>Definition</b> <a href="#l00210">resdb_config.cpp:210</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a68a1433a814a5b1343759afe2665d6c8"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a68a1433a814a5b1343759afe2665d6c8">ResDBConfig::GetTcpBatchNum</a></div><div class="ttdeci">uint32_t GetTcpBatchNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00255">resdb_config.cpp:255</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a702674a1d72d0c3ff9240bcd75811813"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a702674a1d72d0c3ff9240bcd75811813">ResDBConfig::SetClientTimeoutMs</a></div><div class="ttdeci">void SetClientTimeoutMs(int timeout_ms)</div><div class="ttdef"><b>Definition</b> <a href="#l00152">resdb_config.cpp:152</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a75676bba0ad71fb1b3d7e8f59127182d"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a75676bba0ad71fb1b3d7e8f59127182d">ResDBConfig::SetSignatureVerifierEnabled</a></div><div class="ttdeci">void SetSignatureVerifierEnabled(bool enable_sv)</div><div class="ttdef"><b>Definition</b> <a href="#l00191">resdb_config.cpp:191</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a76f1ddcf02a3467b79bcf871347f4231"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a76f1ddcf02a3467b79bcf871347f4231">ResDBConfig::GetMaxMaliciousReplicaNum</a></div><div class="ttdeci">size_t GetMaxMaliciousReplicaNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00145">resdb_config.cpp:145</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a7d4134fc5a25643ede8883c301574591"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a7d4134fc5a25643ede8883c301574591">ResDBConfig::GetMinCheckpointReceiveNum</a></div><div class="ttdeci">int GetMinCheckpointReceiveNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00136">resdb_config.cpp:136</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a7e0e67383210513f607ee06073de470f"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a7e0e67383210513f607ee06073de470f">ResDBConfig::SetClientBatchWaitTimeMS</a></div><div class="ttdeci">void SetClientBatchWaitTimeMS(uint32_t wait_time_ms)</div><div class="ttdef"><b>Definition</b> <a href="#l00233">resdb_config.cpp:233</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a7f6f5108206579cf8a169703b98ef5fe"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a7f6f5108206579cf8a169703b98ef5fe">ResDBConfig::ClientBatchNum</a></div><div class="ttdeci">uint32_t ClientBatchNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00237">resdb_config.cpp:237</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_a8283e666d29ecb9e301d175889de9ba4"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a8283e666d29ecb9e301d175889de9ba4">ResDBConfig::GetPublicKeyCertificateInfo</a></div><div class="ttdeci">CertificateInfo GetPublicKeyCertificateInfo() const</div><div class="ttdef"><b>Definition</b> <a href="#l00105">resdb_config.cpp:105</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_a8c6b178bc0fd3efd488456907dbecbd6"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a8c6b178bc0fd3efd488456907dbecbd6">ResDBConfig::GetSelfInfo</a></div><div class="ttdeci">const ReplicaInfo &amp; GetSelfInfo() const</div><div class="ttdef"><b>Definition</b> <a href="#l00115">resdb_config.cpp:115</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a90b6b79ce297e988e53c26f380c50c0a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a90b6b79ce297e988e53c26f380c50c0a">ResDBConfig::SetHeartBeatEnabled</a></div><div class="ttdeci">void SetHeartBeatEnabled(bool enable_heartbeat)</div><div class="ttdef"><b>Definition</b> <a href="#l00180">resdb_config.cpp:180</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a93e9f3bfda0a9ab731c01e506f7e0031"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a93e9f3bfda0a9ab731c01e506f7e0031">ResDBConfig::IsCheckPointEnabled</a></div><div class="ttdeci">bool IsCheckPointEnabled()</div><div class="ttdef"><b>Definition</b> <a href="#l00176">resdb_config.cpp:176</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a9442c8816ec1183a61b8278e0fa1ff1a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a9442c8816ec1183a61b8278e0fa1ff1a">ResDBConfig::SetCheckPointLoggingPath</a></div><div class="ttdeci">void SetCheckPointLoggingPath(const std::string &amp;path)</div><div class="ttdef"><b>Definition</b> <a href="#l00160">resdb_config.cpp:160</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_a9e48528dcf8683b4a8e9118f992700c9"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a9e48528dcf8683b4a8e9118f992700c9">ResDBConfig::RunningPerformance</a></div><div class="ttdeci">void RunningPerformance(bool)</div><div class="ttdef"><b>Definition</b> <a href="#l00197">resdb_config.cpp:197</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_aa4d1a0a71d28b5e7a59f3fc0f24fb717"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#aa4d1a0a71d28b5e7a59f3fc0f24fb717">ResDBConfig::GetCheckPointLoggingPath</a></div><div class="ttdeci">std::string GetCheckPointLoggingPath() const</div><div class="ttdef"><b>Definition</b> <a href="#l00156">resdb_config.cpp:156</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_aa8a67de9e2f5020a9e1955cdb6bc13b9"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#aa8a67de9e2f5020a9e1955cdb6bc13b9">ResDBConfig::IsPerformanceRunning</a></div><div class="ttdeci">bool IsPerformanceRunning() const</div><div class="ttdef"><b>Definition</b> <a href="#l00193">resdb_config.cpp:193</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a90b6b79ce297e988e53c26f380c50c0a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a90b6b79ce297e988e53c26f380c50c0a">ResDBConfig::SetHeartBeatEnabled</a></div><div class="ttdeci">void SetHeartBeatEnabled(bool enable_heartbeat)</div><div class="ttdef"><b>Definition</b> <a href="#l00183">resdb_config.cpp:183</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a93e9f3bfda0a9ab731c01e506f7e0031"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a93e9f3bfda0a9ab731c01e506f7e0031">ResDBConfig::IsCheckPointEnabled</a></div><div class="ttdeci">bool IsCheckPointEnabled()</div><div class="ttdef"><b>Definition</b> <a href="#l00179">resdb_config.cpp:179</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a9442c8816ec1183a61b8278e0fa1ff1a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a9442c8816ec1183a61b8278e0fa1ff1a">ResDBConfig::SetCheckPointLoggingPath</a></div><div class="ttdeci">void SetCheckPointLoggingPath(const std::string &amp;path)</div><div class="ttdef"><b>Definition</b> <a href="#l00163">resdb_config.cpp:163</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_a9e48528dcf8683b4a8e9118f992700c9"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#a9e48528dcf8683b4a8e9118f992700c9">ResDBConfig::RunningPerformance</a></div><div class="ttdeci">void RunningPerformance(bool)</div><div class="ttdef"><b>Definition</b> <a href="#l00200">resdb_config.cpp:200</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_aa4d1a0a71d28b5e7a59f3fc0f24fb717"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#aa4d1a0a71d28b5e7a59f3fc0f24fb717">ResDBConfig::GetCheckPointLoggingPath</a></div><div class="ttdeci">std::string GetCheckPointLoggingPath() const</div><div class="ttdef"><b>Definition</b> <a href="#l00159">resdb_config.cpp:159</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_aa8a67de9e2f5020a9e1955cdb6bc13b9"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#aa8a67de9e2f5020a9e1955cdb6bc13b9">ResDBConfig::IsPerformanceRunning</a></div><div class="ttdeci">bool IsPerformanceRunning() const</div><div class="ttdef"><b>Definition</b> <a href="#l00196">resdb_config.cpp:196</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_ab55d2a1335bbc25b671ad4c7d261d833"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ab55d2a1335bbc25b671ad4c7d261d833">ResDBConfig::SetConfigData</a></div><div class="ttdeci">void SetConfigData(const ResConfigData &amp;config_data)</div><div class="ttdef"><b>Definition</b> <a href="#l00084">resdb_config.cpp:84</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_ac2ed87945a02fd14a4aed9e015cfd5fe"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ac2ed87945a02fd14a4aed9e015cfd5fe">ResDBConfig::SignatureVerifierEnabled</a></div><div class="ttdeci">bool SignatureVerifierEnabled()</div><div class="ttdef"><b>Definition</b> <a href="#l00184">resdb_config.cpp:184</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_ac5a6ad5001f97a55eeb19c0e4cd4bc4a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ac5a6ad5001f97a55eeb19c0e4cd4bc4a">ResDBConfig::HeartBeatEnabled</a></div><div class="ttdeci">bool HeartBeatEnabled()</div><div class="ttdef"><b>Definition</b> <a href="#l00178">resdb_config.cpp:178</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_ac7bf51cca4c0b82cdea81af219690f43"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ac7bf51cca4c0b82cdea81af219690f43">ResDBConfig::EnableCheckPoint</a></div><div class="ttdeci">void EnableCheckPoint(bool is_enable)</div><div class="ttdef"><b>Definition</b> <a href="#l00172">resdb_config.cpp:172</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_ad284baf49051050f23b3f89aad826c80"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ad284baf49051050f23b3f89aad826c80">ResDBConfig::ClientBatchWaitTimeMS</a></div><div class="ttdeci">uint32_t ClientBatchWaitTimeMS() const</div><div class="ttdef"><b>Definition</b> <a href="#l00226">resdb_config.cpp:226</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_adac6ea8534b37765a76383ded84b5e14"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#adac6ea8534b37765a76383ded84b5e14">ResDBConfig::GetClientTimeoutMs</a></div><div class="ttdeci">int GetClientTimeoutMs() const</div><div class="ttdef"><b>Definition</b> <a href="#l00153">resdb_config.cpp:153</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_ac2ed87945a02fd14a4aed9e015cfd5fe"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ac2ed87945a02fd14a4aed9e015cfd5fe">ResDBConfig::SignatureVerifierEnabled</a></div><div class="ttdeci">bool SignatureVerifierEnabled()</div><div class="ttdef"><b>Definition</b> <a href="#l00187">resdb_config.cpp:187</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_ac5a6ad5001f97a55eeb19c0e4cd4bc4a"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ac5a6ad5001f97a55eeb19c0e4cd4bc4a">ResDBConfig::HeartBeatEnabled</a></div><div class="ttdeci">bool HeartBeatEnabled()</div><div class="ttdef"><b>Definition</b> <a href="#l00181">resdb_config.cpp:181</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_ac7bf51cca4c0b82cdea81af219690f43"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ac7bf51cca4c0b82cdea81af219690f43">ResDBConfig::EnableCheckPoint</a></div><div class="ttdeci">void EnableCheckPoint(bool is_enable)</div><div class="ttdef"><b>Definition</b> <a href="#l00175">resdb_config.cpp:175</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_ad284baf49051050f23b3f89aad826c80"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ad284baf49051050f23b3f89aad826c80">ResDBConfig::ClientBatchWaitTimeMS</a></div><div class="ttdeci">uint32_t ClientBatchWaitTimeMS() const</div><div class="ttdef"><b>Definition</b> <a href="#l00229">resdb_config.cpp:229</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_adac6ea8534b37765a76383ded84b5e14"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#adac6ea8534b37765a76383ded84b5e14">ResDBConfig::GetClientTimeoutMs</a></div><div class="ttdeci">int GetClientTimeoutMs() const</div><div class="ttdef"><b>Definition</b> <a href="#l00156">resdb_config.cpp:156</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_ae5e1d332c3af26e735f2a5005a78c00d"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ae5e1d332c3af26e735f2a5005a78c00d">ResDBConfig::GetReplicaInfos</a></div><div class="ttdeci">const std::vector&lt; ReplicaInfo &gt; &amp; GetReplicaInfos() const</div><div class="ttdef"><b>Definition</b> <a href="#l00111">resdb_config.cpp:111</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_ae8f129eab9ecb997db2e6aeca2083cb8"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ae8f129eab9ecb997db2e6aeca2083cb8">ResDBConfig::GetMaxClientComplaintNum</a></div><div class="ttdeci">uint32_t GetMaxClientComplaintNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00219">resdb_config.cpp:219</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_ae8f129eab9ecb997db2e6aeca2083cb8"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#ae8f129eab9ecb997db2e6aeca2083cb8">ResDBConfig::GetMaxClientComplaintNum</a></div><div class="ttdeci">uint32_t GetMaxClientComplaintNum() const</div><div class="ttdef"><b>Definition</b> <a href="#l00222">resdb_config.cpp:222</a></div></div>
 <div class="ttc" id="aclassResDBConfig_html_af5d58d6f8f9eb0098241bca27f46377c"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#af5d58d6f8f9eb0098241bca27f46377c">ResDBConfig::GetPrivateKey</a></div><div class="ttdeci">KeyInfo GetPrivateKey() const</div><div class="ttdef"><b>Definition</b> <a href="#l00103">resdb_config.cpp:103</a></div></div>
-<div class="ttc" id="aclassResDBConfig_html_af7020b8469395216dc22cd2e79c1e063"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#af7020b8469395216dc22cd2e79c1e063">ResDBConfig::GetViewchangeCommitTimeout</a></div><div class="ttdeci">uint32_t GetViewchangeCommitTimeout() const</div><div class="ttdef"><b>Definition</b> <a href="#l00256">resdb_config.cpp:256</a></div></div>
+<div class="ttc" id="aclassResDBConfig_html_af7020b8469395216dc22cd2e79c1e063"><div class="ttname"><a href="../../d6/d06/classResDBConfig.html#af7020b8469395216dc22cd2e79c1e063">ResDBConfig::GetViewchangeCommitTimeout</a></div><div class="ttdeci">uint32_t GetViewchangeCommitTimeout() const</div><div class="ttdef"><b>Definition</b> <a href="#l00259">resdb_config.cpp:259</a></div></div>
 <div class="ttc" id="aclassresdb_1_1ResDBConfig_html_ae104228f4beabff79900152b8b78271f"><div class="ttname"><a href="../../db/ddb/classresdb_1_1ResDBConfig.html#ae104228f4beabff79900152b8b78271f">resdb::ResDBConfig::ResDBConfig</a></div><div class="ttdeci">ResDBConfig(const std::vector&lt; ReplicaInfo &gt; &amp;replicas, const ReplicaInfo &amp;self_info, ResConfigData config_data=ResConfigData())</div><div class="ttdef"><b>Definition</b> <a href="#l00026">resdb_config.cpp:26</a></div></div>
 <div class="ttc" id="anamespaceresdb_html"><div class="ttname"><a href="../../d5/d10/namespaceresdb.html">resdb</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d85/chain__state_8cpp_source.html#l00024">chain_state.cpp:24</a></div></div>
 <div class="ttc" id="aresdb__config_8h_html"><div class="ttname"><a href="../../d4/d9a/resdb__config_8h.html">resdb_config.h</a></div></div>

@@ -1,5 +1,7 @@
 var NAVTREEINDEX11 =
 {
+"de/d0d/classresdb_1_1Stats.html#af759d6f9f69374297546d3393b7e2856":[0,0,7,77,0],
+"de/d0d/classresdb_1_1Stats.html#af759d6f9f69374297546d3393b7e2856":[1,0,0,73,0],
 "de/d0d/classresdb_1_1Stats.html#af9dac0a1652714d7f634c644fe97b9f9":[0,0,7,77,26],
 "de/d0d/classresdb_1_1Stats.html#af9dac0a1652714d7f634c644fe97b9f9":[1,0,0,73,26],
 "de/d0d/classresdb_1_1Stats.html#afb0aab3d8fd3cc67b5603cd5d313933b":[0,0,7,77,29],
@@ -247,7 +249,5 @@ var NAVTREEINDEX11 =
 "df/d46/signature__verifier__interface_8h.html":[2,0,3,0,11],
 "df/d46/signature__verifier__interface_8h_source.html":[2,0,3,0,11],
 "df/d50/contract__manager_8h.html":[2,0,4,1,1,4],
-"df/d50/contract__manager_8h_source.html":[2,0,4,1,1,4],
-"df/d50/namespacekey__tester.html":[0,0,4],
-"df/d50/namespacekey__tester.html#a7839bbd6d1e002da20cf3d9cb2130328":[0,0,4,0]
+"df/d50/contract__manager_8h_source.html":[2,0,4,1,1,4]
 };

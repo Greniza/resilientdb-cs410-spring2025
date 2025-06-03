@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"d8/d40/resdb__state__accessor_8cpp_source.html":[2,0,6,0,1],
+"d8/d48/kv__client_8h.html":[2,0,6,2,3],
 "d8/d48/kv__client_8h_source.html":[2,0,6,2,3],
 "d8/d4f/classresdb_1_1MockAsyncReplicaClient.html":[0,0,7,38],
 "d8/d4f/classresdb_1_1MockAsyncReplicaClient.html":[1,0,0,34],
@@ -247,7 +249,5 @@ var NAVTREEINDEX6 =
 "d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a7f851a07003871b8b36823b5a3016e66":[1,0,0,1,1,8],
 "d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a8117b91288fa836789236c9a95c91186":[0,0,7,3,1,9],
 "d9/dfa/classresdb_1_1contract_1_1ContractClient.html#a8117b91288fa836789236c9a95c91186":[1,0,0,1,1,9],
-"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#af35f57de929a5b151bf49ba8a883cea0":[0,0,7,3,1,0],
-"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#af35f57de929a5b151bf49ba8a883cea0":[0,0,7,3,1,1],
-"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#af35f57de929a5b151bf49ba8a883cea0":[1,0,0,1,1,0]
+"d9/dfa/classresdb_1_1contract_1_1ContractClient.html#af35f57de929a5b151bf49ba8a883cea0":[0,0,7,3,1,0]
 };
