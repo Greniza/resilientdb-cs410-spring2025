@@ -121,6 +121,9 @@ class MessageManager {
   bool NodesInSameShard(uint32_t node_id_1, uint32_t node_id_2) const;
   uint32_t GetPrimaryOfNode(uint32_t node_id) const;
 
+  // Project 4 New Functions
+  void SetPrimary(uint32_t node_id);
+
  private:
 
   int _GetShardConsensusCount(uint32_t shard_id) const; // New for project 3

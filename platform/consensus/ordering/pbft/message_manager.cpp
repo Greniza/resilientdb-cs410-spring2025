@@ -116,6 +116,13 @@ int MessageManager::_GetShardConsensusCount(uint32_t shard_id) const {
 }
 // End Project 3 New Functions
 
+// New  Project 4
+// This is quick and dirty and I really don't like it.
+void MessageManager::SetPrimary(uint32_t node_id)  {
+  system_info_->SetPrimary(node_id);
+}
+
+
 uint64_t MessageManager ::GetCurrentView() const {
   return system_info_->GetCurrentView();
 }

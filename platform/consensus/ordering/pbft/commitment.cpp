@@ -78,12 +78,12 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
     return -2;
   }
 
-  if (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id())) {
+  if (config_.GetSelfInfo().id() != message_manager_->GetCurrentPrimary()) {
     // LOG(ERROR) << "current node is not primary. primary:"
     //            << message_manager_->GetCurrentPrimary()
     //            << " seq:" << user_request->seq()
     //            << " hash:" << user_request->hash();
-    LOG(INFO) << "NOT SHARD COORDINATOR, shard_coordinator is "
+    LOG(INFO) << "NOT MESSAGE RECIEVER, shard_coordinator is "
               << message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
     replica_communicator_->SendMessage(*user_request,
                                        message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()));
@@ -146,9 +146,10 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
   user_request->set_current_view(message_manager_->GetCurrentView());
   user_request->set_seq(*seq);
   user_request->set_sender_id(config_.GetSelfInfo().id());
-  user_request->set_primary_id(config_.GetSelfInfo().id());
+  user_request->set_primary_id(message_manager_->GetPrimaryOfShard(*seq % message_manager_->GetShardCount())); // Set the primary of the request
 
   // Project 3: Broadcast to shard coordinators instead of all nodes
+  LOG(ERROR) << "New TXN recieved. (seq=" << *seq << ", pri=" << user_request->primary_id() << ")";
   BroadcastToShardLeads(*user_request);
   // replica_communicator_->BroadcastToAllShardLeaders(*user_request, message_manager_);
 
@@ -157,9 +158,10 @@ int Commitment::ProcessNewRequest(std::unique_ptr<Context> context, std::unique_
 
 // Receive the pre-prepare message from the primary.
 int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_ptr<Request> request) {
+  LOG(ERROR) << "Recieved propose-type for TXN (seq=" << request->seq() << ")";
   // If a non-coordinator recieves a message from outside the shard, retransmit to shard coord and end.
-  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))
-      && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {
+  if (! (message_manager_->NodesInSameShard(request->sender_id(), config_.GetSelfInfo().id()))              // Not sent by my coordinator AND
+      && (config_.GetSelfInfo().id() != message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id()))) {  // I am not a coordinator
     
     // Retransmit to shard coord
     uint32_t shard = message_manager_->GetShardOfNode(config_.GetSelfInfo().id());
@@ -184,8 +186,11 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
                  << " data seq:" << request->seq();
       return 0;
     }
-    return message_manager_->AddConsensusMsg(context->signature,
-                                             std::move(request));
+    uint32_t old_primary = message_manager_->GetCurrentPrimary();
+    message_manager_->SetPrimary(request->primary_id());
+    resdb::CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+    message_manager_->SetPrimary((old_primary));
+    return ret;
   }
 
 
@@ -239,15 +244,19 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
 
   // Add request to message_manager.
   // Changed for project 3
+  uint32_t old_primary = message_manager_->GetCurrentPrimary();
+  message_manager_->SetPrimary(request->primary_id());
   CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  message_manager_->SetPrimary((old_primary));
+  
   if (ret == CollectorResultCode::STATE_CHANGED) {
     
     if (message_manager_->GetTransactionState(request->seq()) == TransactionStatue::READY_PREPARE) {
       // (PHASE 1)
       replica_communicator_->SendMessage(*prepare_request, config_.GetSelfInfo().id());
     
-      if (request->sender_id() != message_manager_->GetCurrentPrimary()) {
-        replica_communicator_->SendMessage(*prepare_request,  message_manager_->GetCurrentPrimary());
+      if (config_.GetSelfInfo().id() != request->primary_id()) {
+        replica_communicator_->SendMessage(*prepare_request,  request->primary_id());
       }
     }
     else {
@@ -257,7 +266,7 @@ int Commitment::ProcessProposeMsg(std::unique_ptr<Context> context, std::unique_
 
       uint32_t my_shard_lead = message_manager_->GetPrimaryOfNode(config_.GetSelfInfo().id());
 
-      // PROMISE: We aren't a shard lead, and we just saw a Propose. (Promise number is handled... where exactly? TODO.)
+      // PROMISE: We aren't a shard lead, and we just saw a Propose.
       uint64_t seq_ = request->seq();
       if (config_.GetSelfInfo().id() != my_shard_lead) {
         // I probably shouldn't be piggybacking on GetHighestPreparedSeq here.
@@ -298,8 +307,11 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     return -2;
   }
   if (request->is_recovery()) {
-    return message_manager_->AddConsensusMsg(context->signature,
-                                             std::move(request));
+    uint32_t old_primary = message_manager_->GetCurrentPrimary();
+    message_manager_->SetPrimary(request->primary_id());
+    CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+    message_manager_->SetPrimary((old_primary));
+    return ret;
   }
   //global_stats_->IncPrepare();
   std::unique_ptr<Request> commit_request = resdb::NewRequest(
@@ -309,7 +321,10 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
   // If it has received enough same requests(2f+1), broadcast the commit
   // message.
   uint64_t seq_ = request->seq();
+  uint32_t old_primary = message_manager_->GetCurrentPrimary();
+  message_manager_->SetPrimary(request->primary_id());
   CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  message_manager_->SetPrimary((old_primary));
   if (ret == CollectorResultCode::STATE_CHANGED) {
     if (message_manager_->GetHighestPreparedSeq() < seq_) {
       message_manager_->SetHighestPreparedSeq(seq_);
@@ -331,7 +346,7 @@ int Commitment::ProcessPrepareMsg(std::unique_ptr<Context> context,std::unique_p
     if (message_manager_->GetTransactionState(seq_) == TransactionStatue::READY_COMMIT) {
       // (PHASE 2)
       global_stats_->RecordStateTime("prepare");
-      if (config_.GetSelfInfo().id() == message_manager_->GetCurrentPrimary()) {
+      if (config_.GetSelfInfo().id() == request->primary_id()) {
         replica_communicator_->BroadCast(*commit_request);
         // 2PC MOD
       }
@@ -369,8 +384,11 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
     return -2;
   }
   if (request->is_recovery()) {
-    return message_manager_->AddConsensusMsg(context->signature,
-                                             std::move(request));
+    uint32_t old_primary = message_manager_->GetCurrentPrimary();
+    message_manager_->SetPrimary(request->primary_id());
+    CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+    message_manager_->SetPrimary((old_primary));
+    return ret;
   }
   //global_stats_->IncCommit();
   // Add request to message_manager.
@@ -378,8 +396,10 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
   // commit the request.
 
   // Altered for project 3.
-  CollectorResultCode ret =
-      message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  uint32_t old_primary = message_manager_->GetCurrentPrimary();
+  message_manager_->SetPrimary(request->primary_id());
+  resdb::CollectorResultCode ret = message_manager_->AddConsensusMsg(context->signature, std::move(request));
+  message_manager_->SetPrimary((old_primary));
   if (ret == CollectorResultCode::STATE_CHANGED) {
     
     // LOG(ERROR)<<request->data().size();
@@ -454,9 +474,12 @@ void Commitment::BroadcastToMyShardButNotMe(const google::protobuf::Message &mes
 
 
 void Commitment::BroadcastToShardLeads(const google::protobuf::Message &message) {
+  LOG(ERROR) << "[BTSL] Broadcasting to shard leaders...";
   for (size_t i = 0; i<message_manager_->GetShardCount(); i++) {
+    LOG(ERROR) << "[BTSL]\t\tSending to " << message_manager_->GetPrimaryOfShard(i) << ", who is the primary of " << i << " ..." ;
     replica_communicator_->SendMessage(message, message_manager_->GetPrimaryOfShard(i));
   }
+  LOG(ERROR) << "[BTSL] Done!";
 }
 
 

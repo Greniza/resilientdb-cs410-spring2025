@@ -257,14 +257,15 @@ int PerformanceManager::BatchProposeMsg() {
   eval_ready_future_.get();
   while (!stop_) {
     // std::lock_guard<std::mutex> lk(mutex_);
-    bool dosleep = false;
-    for (uint32_t i=0; i<system_info_->GetShardCount(); i++) {
-      if (send_num_[system_info_->GetPrimaryOfShard(i)] >= config_.GetMaxProcessTxn()) {
-        dosleep = true;
-        break;
-      }
-    }
-    if (dosleep) {
+    // bool dosleep = false;
+    // for (uint32_t i=0; i<system_info_->GetShardCount(); i++) {
+    //   if (send_num_[system_info_->GetPrimaryOfShard(i)] >= config_.GetMaxProcessTxn()) {
+    //     dosleep = true;
+    //     break;
+    //   }
+    // }
+    // if (dosleep) {
+    if (send_num_[GetPrimary()] >= config_.GetMaxProcessTxn()) {
       usleep(100000);
       continue;
     }

@@ -39,15 +39,17 @@ echo "Beginning basic benchmark"
 
 while [ $SECONDS -le 30 ]
 do
-    for j in $(seq 1 10)
+    for j in $(seq 1 1)
     do
-    echo "setting key $j"
-    # $SRV_TOOL --config $CONF --cmd set --key $j --value $SECONDS
-    $SRV_TOOL $CONF set $j $SECONDS > /dev/null
-    sleep 1
-    echo "Setting key = $j value = $SECONDS"
+        echo "setting key $j"
+        # $SRV_TOOL --config $CONF --cmd set --key $j --value $SECONDS
+        $SRV_TOOL $CONF set $j $SECONDS > /dev/null
+        echo "Setting key = $j value = $SECONDS"
     done
+    sleep 1
 done
+
+sleep 10
 
 #Stop the servers
 killall -9 kv_service
