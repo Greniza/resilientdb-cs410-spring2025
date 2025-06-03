@@ -253,7 +253,19 @@ bool MessageManager::MayConsensusChangeStatus(
     case TransactionStatue::READY_LOCAL_COMMIT:
       // (PHASE 5) Commit phase of local PBFT
       if (type == Request::TYPE_COMMIT) {
-        if (received_count >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id()))) {
+        bool ok;
+        if (config_.GetSelfInfo().id() != GetCurrentPrimary() && config_.GetSelfInfo().id() == GetPrimaryOfNode(config_.GetSelfInfo().id())) {
+          // The primary recieved a prepare message from each shard leader and itself during 2PC.
+          // So, it needs one less because it does not recognize its own rebroadcast.
+          ok = (received_count - 1 >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
+        }
+
+        else {
+          ok = (received_count >= _GetShardConsensusCount(GetShardOfNode(config_.GetSelfInfo().id())));
+        }
+
+
+        if (ok) {
           return status->compare_exchange_strong(
               old_status, TransactionStatue::READY_EXECUTE,
               std::memory_order_acq_rel, std::memory_order_acq_rel);

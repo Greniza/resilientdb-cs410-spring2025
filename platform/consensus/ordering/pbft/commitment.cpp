@@ -449,7 +449,7 @@ int Commitment::ProcessCommitMsg(std::unique_ptr<Context> context, std::unique_p
     
     // LOG(ERROR)<<request->data().size();
     // global_stats_->GetTransactionDetails(request->data());
-    if (message_manager_->GetTransactionState(seq) == TransactionStatue::READY_EXECUTE) {
+    if (message_manager_->GetTransactionState(seq) != TransactionStatue::READY_LOCAL_PREPARE) {
       // (PHASE 5) In this case, we've actually performed a commit operation
       LOG(ERROR) << "TXN executed locally.";
       global_stats_->RecordStateTime("commit");
