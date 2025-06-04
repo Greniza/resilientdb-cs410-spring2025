@@ -9,5 +9,6 @@ var searchData=
   ['lockfreequeue_3c_20resdb_3a_3aqueueitem_20_3e_6',['LockFreeQueue&lt; resdb::QueueItem &gt;',['../da/dd3/classresdb_1_1LockFreeQueue.html',1,'resdb']]],
   ['lockfreequeue_3c_20std_3a_3apair_3c_20uint64_5ft_2c_20std_3a_3astring_20_3e_20_3e_7',['LockFreeQueue&lt; std::pair&lt; uint64_t, std::string &gt; &gt;',['../da/dd3/classresdb_1_1LockFreeQueue.html',1,'resdb']]],
   ['lockfreequeue_3c_20std_3a_3astring_20_3e_8',['LockFreeQueue&lt; std::string &gt;',['../da/dd3/classresdb_1_1LockFreeQueue.html',1,'resdb']]],
-  ['lrucache_9',['LRUCache',['../d5/d3e/classresdb_1_1LRUCache.html',1,'resdb']]]
+  ['loganalyzer_9',['LogAnalyzer',['../d1/dba/classreplica__performance_1_1LogAnalyzer.html',1,'replica_performance']]],
+  ['lrucache_10',['LRUCache',['../d5/d3e/classresdb_1_1LRUCache.html',1,'resdb']]]
 ];

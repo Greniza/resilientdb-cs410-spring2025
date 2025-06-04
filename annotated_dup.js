@@ -1,5 +1,8 @@
 var annotated_dup =
 [
+    [ "replica_performance", "d7/d09/namespacereplica__performance.html", [
+      [ "LogAnalyzer", "d1/dba/classreplica__performance_1_1LogAnalyzer.html", "d1/dba/classreplica__performance_1_1LogAnalyzer" ]
+    ] ],
     [ "resdb", "d5/d10/namespaceresdb.html", [
       [ "common", "d3/d56/namespaceresdb_1_1common.html", [
         [ "Consensus", "db/deb/classresdb_1_1common_1_1Consensus.html", "db/deb/classresdb_1_1common_1_1Consensus" ],

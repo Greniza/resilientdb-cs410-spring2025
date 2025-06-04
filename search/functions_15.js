@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['waitallserverstarted_0',['WaitAllServerStarted',['../dd/d33/classresdb_1_1ResDBTest.html#a3502ba5e74400c58ad154cca8ec7a130',1,'resdb::ResDBTest']]],
-  ['waitexecutordone_1',['WaitExecutorDone',['../dd/d33/classresdb_1_1ResDBTest.html#ae13cd064b3bc5461e332cf86d87ddbdf',1,'resdb::ResDBTest']]],
-  ['waitforexecute_2',['WaitForExecute',['../da/dfa/classresdb_1_1TransactionExecutor.html#a3940d8991a1a3b23aed11ccf275d2759',1,'resdb::TransactionExecutor']]],
-  ['waitsignal_3',['WaitSignal',['../dc/db0/classresdb_1_1CheckPointManager.html#a1d19a475ddd9da10d245f1d3cc18b692',1,'resdb::CheckPointManager']]],
-  ['wallet_4',['Wallet',['../df/ddc/classresdb_1_1utxo_1_1Wallet.html#a231235c4069d9538b664b1e56583c56c',1,'resdb::utxo::Wallet::Wallet()'],['../de/d7d/classWallet.html#a231235c4069d9538b664b1e56583c56c',1,'Wallet::Wallet()']]],
-  ['writekey_5',['WriteKey',['../d2/dca/certificate__tools_8cpp.html#ac96a2ad300caa716ed04c964c1044585',1,'WriteKey(const std::string &amp;key, const std::string &amp;file_name):&#160;certificate_tools.cpp'],['../d3/dff/key__generator__tools_8cpp.html#af8c49cb2a746afe79300eaf5cc22f398',1,'WriteKey(const KeyInfo &amp;key, const std::string &amp;file_name):&#160;key_generator_tools.cpp']]]
+  ['verifyclientrequest_0',['VerifyClientRequest',['../da/d52/classresdb_1_1PreVerifyConsensusServicePBFT.html#a958946a9f9ada53bbb8e8a1b02162bf8',1,'resdb::PreVerifyConsensusServicePBFT']]],
+  ['verifykey_1',['VerifyKey',['../d4/d30/classresdb_1_1SignatureVerifier.html#a08790752971f4f3d79190b86cff02315',1,'resdb::SignatureVerifier']]],
+  ['verifymessage_2',['VerifyMessage',['../d4/d30/classresdb_1_1SignatureVerifier.html#af2e7bd53e9d0d2ab3eb1dfa3540de789',1,'resdb::SignatureVerifier::VerifyMessage(const std::string &amp;message, const SignatureInfo &amp;sign)'],['../d4/d30/classresdb_1_1SignatureVerifier.html#aa3bc3f45f9486efb5412ee36089675bf',1,'resdb::SignatureVerifier::VerifyMessage(const google::protobuf::Message &amp;message, const SignatureInfo &amp;sign)'],['../d4/d30/classresdb_1_1SignatureVerifier.html#aab1500da0af60d65e1bf2b2ce9c85143',1,'resdb::SignatureVerifier::VerifyMessage(const std::string &amp;message, const KeyInfo &amp;public_key, const std::string &amp;signature)']]],
+  ['viewchangemanager_3',['ViewChangeManager',['../d1/db2/classresdb_1_1ViewChangeManager.html#a8ddc1e38dcc408f29c8d5d4f270b0184',1,'resdb::ViewChangeManager']]],
+  ['viewchangetimeout_4',['ViewChangeTimeout',['../d9/d00/classresdb_1_1ViewChangeTimeout.html#a9c3945db42eb9eca4614e7b95571466a',1,'resdb::ViewChangeTimeout']]]
 ];

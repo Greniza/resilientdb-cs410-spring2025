@@ -40,6 +40,7 @@ var hierarchy =
     [ "resdb::KeyGenerator", "d5/d5c/classresdb_1_1KeyGenerator.html", null ],
     [ "resdb::LockFreeCollectorPool", "d7/d31/classresdb_1_1LockFreeCollectorPool.html", null ],
     [ "resdb::LockFreeQueue< T >", "da/dd3/classresdb_1_1LockFreeQueue.html", null ],
+    [ "replica_performance.LogAnalyzer", "d1/dba/classreplica__performance_1_1LogAnalyzer.html", null ],
     [ "resdb::LRUCache< KeyType, ValueType >", "d5/d3e/classresdb_1_1LRUCache.html", null ],
     [ "resdb::MessageManager", "d7/d18/classresdb_1_1MessageManager.html", null ],
     [ "resdb::NetChannel", "de/dc3/classresdb_1_1NetChannel.html", [

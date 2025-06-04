@@ -44,5 +44,6 @@ var namespaces_dup =
       [ "new_path_dir", "d4/da4/namespacekv__operation.html#af100d75d3a11b3a5350dd9d129e89cb9", null ],
       [ "parent_dir", "d4/da4/namespacekv__operation.html#a47392bfe595983d56f6ed2ff1ed2e0dd", null ]
     ] ],
+    [ "replica_performance", "d7/d09/namespacereplica__performance.html", "d7/d09/namespacereplica__performance" ],
     [ "resdb", "d5/d10/namespaceresdb.html", "d5/d10/namespaceresdb" ]
 ];
