@@ -10,25 +10,25 @@ killall -9 kv_service || true;
 num_replicas=16
 
 #Generate keys / certificates for each node 
-echo "generating keys and certificates for 16 replicas and 1 client"
+# echo "generating keys and certificates for 16 replicas and 1 client"
 ./node-auth.sh $num_replicas
 sleep 10
 
 # Initialize the servers
 echo "starting service..."
 ./service/tools/kv/server_tools/start_kv_service.sh &
-echo "Waiting for build to finish"
+# echo "Waiting for build to finish"
 sleep 20
-echo "Build finished"
-echo ""
+# echo "Build finished"
+# echo ""
 
 SERVICE_PID=$!
 echo "service started in background (PID: $SERVICE_PID)."
 
 #Build bazel api tools
-echo "Building bazel api-tools..."
+# echo "Building bazel api-tools..."
 bazel build service/tools/kv/api_tools/kv_service_tools
-echo "Built bazel api-tools successfully."
+# echo "Built bazel api-tools successfully."
 
 #Run KV-set benchmark
 SECONDS=0
@@ -37,20 +37,20 @@ CONF="service/tools/config/interface/service.config"
 
 echo "Beginning basic benchmark"
 
-while [ $SECONDS -le 30 ]
+while [ $SECONDS -le 60 ]
 do
-    for j in $(seq 1 1)
+    for j in $(seq 1 10)
     do
-        echo "setting key $j"
+        # echo "setting key $j"
         # $SRV_TOOL --config $CONF --cmd set --key $j --value $SECONDS
         $SRV_TOOL $CONF set $j $SECONDS > /dev/null
-        echo "Setting key = $j value = $SECONDS"
+        # echo "Setting key = $j value = $SECONDS"
     done
     sleep 1
 done
 
-sleep 120
 
+sleep 10
 #Stop the servers
 killall -9 kv_service
 echo "Benchmark complete."
@@ -60,16 +60,16 @@ log_files=""
 for log in $(seq 0 $((num_replicas - 1)))
 do
     log_name="server$log.log"
-    echo "Found log: $log_name"
-    echo ""
+    # echo "Found log: $log_name"
+    # echo ""
     log_files="$log_files $log_name"
 done
-echo "Found log: client.log"
-echo ""
+# echo "Found log: client.log"
+# echo ""
 client_log="client.log"
 
 # Pass all server logs and client log to the Python script
 echo "Calculating throughput and latency"
-python3 scripts/deploy/performance/calculate_result.py $log_files $client_log
+python3 replica_performance.py $log_files $client_log
 echo "Done."
 
